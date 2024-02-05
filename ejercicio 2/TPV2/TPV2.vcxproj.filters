@@ -31,6 +31,12 @@
     <Filter Include="Source Files\json">
       <UniqueIdentifier>{f050c7fb-d995-4366-9eaf-e78d399a13f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\game">
+      <UniqueIdentifier>{dec047e4-7223-467e-9a25-991d5d3ccda2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game">
+      <UniqueIdentifier>{a3b17ea7-dc51-40e8-a27e-dea7695e3248}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\json\JSONValue.h">
@@ -93,65 +99,65 @@
     <ClInclude Include="src\utils\ptr_iterator.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\game\AIPaddle.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\game\BounceOnBorder.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\AIPaddle.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\Component.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\Container.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\EmptyRectangleRenderer.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\Game.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\GameCtrl.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\GameManager.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\GameObject.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\ImageRenderer.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\InfoMsgs.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\InputComponent.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\MovePaddleWithKeyBoard.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\MovePaddleWithMouse.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\PhysicsComponent.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\RectangleRenderer.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\RenderComponent.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\ScoreRenderer.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\SimpleMove.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="src\game\StopOnBorder.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -186,49 +192,49 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game\AIPaddle.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\BounceOnBorder.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\Containter.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\EmptyRectangleRenderer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\Game.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\GameCtrl.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\GameManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\ImageRenderer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\InfoMsgs.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\MovePaddleWithKeyBoard.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\MovePaddleWithMouse.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\RectangleRenderer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\ScoreRenderer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\SimpleMove.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="src\game\StopOnBorder.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
