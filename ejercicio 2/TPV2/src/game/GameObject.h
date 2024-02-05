@@ -11,6 +11,7 @@ class GameObject {
 public:
 	GameObject() :
 			pos_(), vel_(), width_(), height_() {
+		rot_ = 0.0f;
 	}
 	virtual ~GameObject() {
 	}
@@ -42,6 +43,12 @@ public:
 	inline void setWidth(float width) {
 		width_ = width;
 	}
+	inline void setRotation(float rot) {
+		rot_ = rot;
+	}
+	inline float getRotation() const {
+		return rot_;
+	}
 
 protected:
 
@@ -49,5 +56,6 @@ protected:
 	Vector2D vel_;
 	float width_;
 	float height_;
+	float rot_;
 };
 

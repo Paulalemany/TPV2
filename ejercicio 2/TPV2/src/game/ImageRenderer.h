@@ -13,5 +13,6 @@ public:
 	void render(Container *o) override;
 private:
 	Texture *img_;
+	float rot_;
 };
 
