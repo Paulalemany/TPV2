@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FighterCtrl.h" />
     <ClInclude Include="src\game\AIPaddle.h" />
     <ClInclude Include="src\game\BounceOnBorder.h" />
     <ClInclude Include="src\game\Component.h" />
     <ClInclude Include="src\game\Container.h" />
     <ClInclude Include="src\game\EmptyRectangleRenderer.h" />
-    <ClInclude Include="src\game\FighterCtrl.h" />
     <ClInclude Include="src\game\Game.h" />
     <ClInclude Include="src\game\GameCtrl.h" />
     <ClInclude Include="src\game\GameManager.h" />

@@ -159,7 +159,7 @@
     <ClInclude Include="src\game\StopOnBorder.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="src\game\FighterCtrl.h">
+    <ClInclude Include="FighterCtrl.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>

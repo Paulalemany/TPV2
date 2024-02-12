@@ -3,9 +3,12 @@
 
 #include "InputComponent.h"
 
-class FighterCtrl
-{
+class FighterCtrl : public InputComponent {
+
 public:
 	FighterCtrl();
+	virtual ~FighterCtrl();
+	void handleInput(Container* o) override;
 };
+
 
