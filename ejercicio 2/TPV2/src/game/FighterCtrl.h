@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "PhysicsComponent.h"
+#include "InputComponent.h"
 
 class FighterCtrl
 {
