@@ -6,6 +6,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Collisions.h"
 
+#include "FighterCtrl.h"
 #include "Container.h"
 #include "GameManager.h"
 #include "AIPaddle.h"
@@ -20,6 +21,7 @@
 #include "ScoreRenderer.h"
 #include "SimpleMove.h"
 #include "StopOnBorder.h"
+
 
 Game::Game() :
 		gm_(nullptr), //
@@ -38,7 +40,7 @@ Game::~Game() {
 void Game::init() {
 
 	// initialize the SDL singleton
-	SDLUtils::init("Ping Pong", 800, 600,
+	SDLUtils::init("Fighter", 800, 600,
 			"resources/config/test.resources.json");
 
 	fighter_ = new Container();
@@ -46,8 +48,11 @@ void Game::init() {
 					sdlutils().height() / 2);
 	fighter_->setWidth(50.0f);
 	fighter_->setHeight(50.0f);
-	fighter_->addComponent(new ImageRenderer(&sdlutils().images().at("fighter")));
+	//fighter_->addComponent(new FighterCtrl());
+	fighter_->addComponent(new ImageRenderer(&sdlutils().images().at("fighter"), 90.0f));
 	objs_.push_back(fighter_);
+
+
 //	// the ball
 //	ball_ = new Container();
 //	ball_->addComponent(new SimpleMove());

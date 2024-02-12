@@ -8,7 +8,7 @@ class Texture;
 
 class ImageRenderer: public RenderComponent {
 public:
-	ImageRenderer(Texture *img);
+	ImageRenderer(Texture *img, float r);
 	virtual ~ImageRenderer();
 	void render(Container *o) override;
 private:

@@ -20,6 +20,8 @@ public:
 	virtual void update() = 0;
 	virtual void render() = 0;
 
+
+	//Altura
 	inline float getHeight() const {
 		return height_;
 	}
@@ -28,21 +30,25 @@ public:
 		height_ = height;
 	}
 
+	//Posicion
 	inline Vector2D& getPos() {
 		return pos_;
 	}
 
+	//Velocidad
 	inline Vector2D& getVel() {
 		return vel_;
 	}
 
+	//Ancho
 	inline float getWidth() const {
 		return width_;
 	}
-
 	inline void setWidth(float width) {
 		width_ = width;
 	}
+
+	//Rotacion
 	inline void setRotation(float rot) {
 		rot_ = rot;
 	}
