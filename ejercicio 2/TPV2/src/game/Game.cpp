@@ -6,7 +6,6 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Collisions.h"
 
-#include "FighterCtrl.h"
 #include "Container.h"
 #include "GameManager.h"
 #include "AIPaddle.h"
