@@ -48,8 +48,10 @@ void Game::init() {
 					sdlutils().height() / 2);
 	fighter_->setWidth(50.0f);
 	fighter_->setHeight(50.0f);
+	fighter_->setRotation(90.0f);
 	fighter_->addComponent(new FighterCtrl());
-	fighter_->addComponent(new ImageRenderer(&sdlutils().images().at("fighter"), 90.0f));
+	fighter_->addComponent(new ImageRenderer(&sdlutils().images().at("fighter")));
+	fighter_->addComponent(new SimpleMove());
 	objs_.push_back(fighter_);
 
 
