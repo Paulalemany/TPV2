@@ -34,7 +34,9 @@ public:
 	inline Vector2D& getPos() {
 		return pos_;
 	}
-
+	inline void setPos(Vector2D newPos) {
+		pos_ = newPos;
+	}
 	//Velocidad
 	inline Vector2D& getVel() {
 		return vel_;
