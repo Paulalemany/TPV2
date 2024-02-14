@@ -134,6 +134,10 @@ public:
 	inline float operator *(const Vector2D &d) const {
 		return d.x_ * x_ + d.y_ * y_;
 	}
+	//sobrecarga de >
+	inline bool operator>(const Vector2D& other) const {
+		return magnitude() > other.magnitude();
+	}
 
 private:
 	float x_;  // first coordinate
