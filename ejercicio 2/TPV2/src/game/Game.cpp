@@ -23,6 +23,7 @@
 #include "FighterCtrl.h"
 #include "PhysicsComponent.h"
 #include "ShowAtOppositeSide.h"
+#include "DeAcceleration.h"
 
 Game::Game() :
 		gm_(nullptr), //
@@ -44,6 +45,7 @@ void Game::init() {
 	SDLUtils::init("Fighter", 800, 600,
 			"resources/config/test.resources.json");
 
+	//the fighter
 	fighter_ = new Container();
 	fighter_->getPos().set(sdlutils().width() / 2,
 					sdlutils().height() / 2);
@@ -54,6 +56,7 @@ void Game::init() {
 	fighter_->addComponent(new ImageRenderer(&sdlutils().images().at("fighter")));
 	fighter_->addComponent(new SimpleMove());
 	fighter_->addComponent(new ShowAtOppositeSide());
+	fighter_->addComponent(new DeAcceleration());
 	objs_.push_back(fighter_);
 
 
