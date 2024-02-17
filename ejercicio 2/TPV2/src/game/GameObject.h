@@ -40,6 +40,10 @@ public:
 		return vel_;
 	}
 
+	inline void setVel(Vector2D newVel) {
+		vel_ = newVel;
+	}
+
 	//Ancho
 	inline float getWidth() const {
 		return width_;

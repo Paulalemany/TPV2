@@ -5,8 +5,8 @@
 #include "../sdlutils/Texture.h"
 #include "Container.h"
 
-ImageRenderer::ImageRenderer(Texture *img, float r) :
-		img_(img), rot_(r){
+ImageRenderer::ImageRenderer(Texture *img):
+		img_(img){
 }
 
 ImageRenderer::~ImageRenderer() {
@@ -14,5 +14,5 @@ ImageRenderer::~ImageRenderer() {
 
 void ImageRenderer::render(Container *o) {
 	SDL_Rect dest = build_sdlrect(o->getPos(), o->getWidth(), o->getHeight());
-	img_->render(dest, rot_);
+	img_->render(dest, o->getRotation());
 }
