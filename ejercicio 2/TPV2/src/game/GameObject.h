@@ -34,16 +34,12 @@ public:
 	inline Vector2D& getPos() {
 		return pos_;
 	}
-	inline void setPos(Vector2D newPos) {
-		pos_ = newPos;
-	}
+
 	//Velocidad
 	inline Vector2D& getVel() {
 		return vel_;
 	}
-	inline void setVel(Vector2D newVel) {
-		vel_ = newVel;
-	}
+
 	//Ancho
 	inline float getWidth() const {
 		return width_;
