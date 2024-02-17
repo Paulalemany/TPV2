@@ -36,3 +36,4 @@ void FighterCtrl::handleInput(Container* o)
 	//if (SDL_KEYDOWN == evento.type) {
 
 	//	if (SDLK_LEFT == evento.key.keysym.sym) {
+}
