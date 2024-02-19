@@ -55,14 +55,14 @@ void Gun::update() {
 	int width = sdlutils().width();
 	int height = sdlutils().height();
 
-	//for (Bullet &b : bullets_) {
-	//	if (b.used) {
-	//		b.pos = b.pos + b.vel;
-	//		if (!b.pos.inRange(-b.width, width, -b.height, height)) {
-	//			b.used = false;
-	//		}
-	//	}
-	//}
+	for (Bullet &b : bullets_) {
+		if (b.used) {
+			b.pos = b.pos + b.vel;
+			if (!b.pos.inRange(-b.width, width, -b.height, height)) {
+				b.used = false;
+			}
+		}
+	}
 
 }
 
