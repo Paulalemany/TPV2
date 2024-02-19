@@ -2,21 +2,21 @@
 
 #pragma once
 #include "../ecs/Component.h"
-
 class Transform;
 
-class PacManCtrl: public ecs::Component {
+class Vector2D;
+
+class Follow: public ecs::Component {
 public:
+	__CMPID_DECL__(ecs::cmp::FOLLOW)
 
-	__CMPID_DECL__(ecs::cmp::PACMANCTRL)
-
-	PacManCtrl();
-	virtual ~PacManCtrl();
+	Follow(Vector2D &to_follow);
+	virtual ~Follow();
 	void initComponent() override;
 	void update() override;
 
 private:
-	void createStart();
+	Vector2D &to_follow_;
 	Transform *tr_;
 };
 

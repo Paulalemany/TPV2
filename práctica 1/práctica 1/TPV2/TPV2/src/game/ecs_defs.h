@@ -8,20 +8,25 @@
 #define _CMPS_LIST_ \
 	TRANSFORM, \
 	IMAGE, \
-	PACMANCTRL, \
-	STARMOTION, \
-	GAMECTRL, \
-	STOPONBORDER
+	DEACCELERATION, \
+	FIGHTERCTRL, \
+	SHOWATOPOSSITESIDE, \
+	FOLLOW, \
+	TOWARDSDESTINATION, \
+	GENERATIONS, \
+	HEALTH, \
+	GUN, \
+	IMAGEWITHFRAMES
 
 
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	STARS
+	ASTEROIDS
 
 // Handlers list - must have at least one element
 //
 #define _HDLRS_LIST_ \
-    PACMAN, \
+    FIGHTER, \
 	GAMEINFO
 

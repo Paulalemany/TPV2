@@ -2,21 +2,37 @@
 
 #include "Game.h"
 
-#include "../components/GameCtrl.h"
+#include "../components/DeAcceleration.h"
+#include "../components/FighterCtrl.h"
 #include "../components/Image.h"
-#include "../components/PacManCtrl.h"
-#include "../components/StopOnBorders.h"
+#include "../components/ShowAtOpossiteSide.h"
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
+#include "AsteroidsUtils.h"
+#include "FighterUtils.h"
+#include "GameOverState.h"
+#include "NewGameState.h"
+#include "NewRoundState.h"
+
+#include "PausedState.h"
+#include "RunningState.h"
 
 using ecs::Manager;
 
 Game::Game() :
-		mngr_(nullptr) {
+		mngr_(new Manager()), //
+		ihdlr(ih()), //
+		current_state_(nullptr), //
+		paused_state_(nullptr), //
+		runing_state_(nullptr), //
+		newgame_state_(nullptr), //
+		newround_state_(nullptr), //
+		gameover_state_(nullptr) {
+
 }
 
 Game::~Game() {
@@ -26,33 +42,28 @@ Game::~Game() {
 void Game::init() {
 
 	// initialise the SDLUtils singleton
-	SDLUtils::init("Demo", 800, 600, "resources/config/resources.json");
+	SDLUtils::init("ASTEROIDS", 800, 600,
+			"resources/config/asteroids.resources.json");
 
-	// Create the manager
-	mngr_ = new Manager();
+	AsteroidsFacade *ast_facede = new AsteroidsUtils();
+	FighterFacade *fighter_facede = new FighterUtils();
 
-	// create the PacMan entity
-	//
-	auto pacman = mngr_->addEntity();
-	mngr_->setHandler(ecs::hdlr::PACMAN, pacman);
-	auto tr = mngr_->addComponent<Transform>(pacman);
-	auto s = 50.0f;
-	auto x = (sdlutils().width() - s) / 2.0f;
-	auto y = (sdlutils().height() - s) / 2.0f;
-	tr->init(Vector2D(x, y), Vector2D(), s, s, 0.0f);
-	mngr_->addComponent<Image>(pacman, &sdlutils().images().at("pacman"));
-	mngr_->addComponent<PacManCtrl>(pacman);
-	mngr_->addComponent<StopOnBorders>(pacman);
+	fighter_facede->create_fighter();
 
-	// create the game info entity
-	auto ginfo = mngr_->addEntity();
-	mngr_->setHandler(ecs::hdlr::GAMEINFO, ginfo);
-	mngr_->addComponent<GameCtrl>(ginfo);
+	paused_state_ = new PausedState();
+	runing_state_ = new RunningState(ast_facede, fighter_facede);
+	newgame_state_ = new NewGameState(fighter_facede);
+	newround_state_ = new NewRoundState(ast_facede, fighter_facede);
+	gameover_state_ = new GameOverState();
+
+	current_state_ = newgame_state_;
+
+
 }
 
 void Game::start() {
 
-	// a boolean to exit the loop
+// a boolean to exit the loop
 	bool exit = false;
 
 	auto &ihdlr = ih();
@@ -68,14 +79,7 @@ void Game::start() {
 			continue;
 		}
 
-		mngr_->update();
-		mngr_->refresh();
-
-		checkCollisions();
-
-		sdlutils().clearRenderer();
-		mngr_->render();
-		sdlutils().presentRenderer();
+		current_state_->update();
 
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
@@ -85,42 +89,3 @@ void Game::start() {
 
 }
 
-void Game::checkCollisions() {
-
-	// the PacMan's Transform
-	//
-	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
-	auto pTR = mngr_->getComponent<Transform>(pacman);
-
-	// the GameCtrl component
-	auto ginfo = mngr_->getHandler(ecs::hdlr::GAMEINFO);
-	auto gctrl = mngr_->getComponent<GameCtrl>(ginfo);
-
-	// For safety, we traverse with a normal loop until the current size. In this
-	// particular case we could use a for-each loop since the list stars is not
-	// modified.
-	//
-	auto &stars = mngr_->getEntities(ecs::grp::STARS);
-	auto n = stars.size();
-	for (auto i = 0u; i < n; i++) {
-		auto e = stars[i];
-		if (mngr_->isAlive(e)) { // if the star is active (it might have died in this frame)
-
-			// the Star's Transform
-			//
-			auto eTR = mngr_->getComponent<Transform>(e);
-
-			// check if PacMan collides with the Star (i.e., eat it)
-			if (Collisions::collides(pTR->getPos(), pTR->getWidth(),
-					pTR->getHeight(), //
-					eTR->getPos(), eTR->getWidth(), eTR->getHeight())) {
-				mngr_->setAlive(e, false);
-				gctrl->onStarEaten();
-
-				// play sound on channel 1 (if there is something playing there
-				// it will be cancelled
-				sdlutils().soundEffects().at("pacman_eat").play(0, 1);
-			}
-		}
-	}
-}
