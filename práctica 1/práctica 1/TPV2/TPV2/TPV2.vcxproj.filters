@@ -195,12 +195,6 @@
     <ClInclude Include="src\utils\Vector2D.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\game\MisilFacade.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\MisilUtils.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\json\JSONValue.cpp">
@@ -289,9 +283,6 @@
     </ClCompile>
     <ClCompile Include="src\utils\Vector2D.cpp">
       <Filter>Source Files\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\MisilUtils.cpp">
-      <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
