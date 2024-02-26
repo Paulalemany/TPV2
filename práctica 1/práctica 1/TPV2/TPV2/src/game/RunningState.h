@@ -8,10 +8,11 @@
 class InputHandler;
 class AsteroidsFacade;
 class FighterFacade;
+class MissileFacade;
 
 class RunningState: public GameState {
 public:
-	RunningState(AsteroidsFacade *ast_mngr, FighterFacade *fighter_mngr);
+	RunningState(AsteroidsFacade *ast_mngr, FighterFacade *fighter_mngr, MissileFacade* missile_mngr);
 	virtual ~RunningState();
 	void leave() override;
 	void update() override;
@@ -22,7 +23,9 @@ private:
 	InputHandler &ihdlr;
 	AsteroidsFacade *ast_mngr_;
 	FighterFacade *fighter_mngr_;
+	MissileFacade *missile_mngr_;
 	Uint32 lastTimeGeneratedAsteroids_;
+	Uint32 lastTimeGeneratedMissiles_;
 
 };
 

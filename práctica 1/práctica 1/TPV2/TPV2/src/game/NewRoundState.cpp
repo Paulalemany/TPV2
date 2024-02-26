@@ -7,13 +7,15 @@
 #include "../sdlutils/SDLUtils.h"
 #include "AsteroidsFacade.h"
 #include "FighterFacade.h"
+#include "MissileFacade.h"
 #include "Game.h"
 NewRoundState::NewRoundState(AsteroidsFacade *ast_mngr,
-		FighterFacade *fighter_mngr) :
+		FighterFacade *fighter_mngr, MissileFacade* missile_mngr) :
 		msg_(sdlutils().msgs().at("newround")), //
 		ihdlr(ih()), //
 		ast_mngr_(ast_mngr), //
-		fighter_mngr_(fighter_mngr) {
+		fighter_mngr_(fighter_mngr),
+		missile_mngr_(missile_mngr) {
 	float x = (sdlutils().width() - msg_.width()) / 2;
 	float y = (sdlutils().height() - msg_.height()) / 2;
 	dest_ = build_sdlrect(x, y, msg_.width(), msg_.height());
@@ -29,6 +31,7 @@ void NewRoundState::update() {
 	if (ihdlr.keyDownEvent() && ihdlr.isKeyDown(SDL_SCANCODE_RETURN)) {
 		fighter_mngr_->reset_fighter();
 		ast_mngr_->remove_all_asteroids();
+		missile_mngr_->remove_all_missiles();
 		ast_mngr_->create_asteroids(10);
 		Game::instance()->setState(Game::RUNNING);
 	}
