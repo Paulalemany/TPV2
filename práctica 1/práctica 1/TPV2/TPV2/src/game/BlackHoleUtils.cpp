@@ -66,25 +66,8 @@ void BlackHoleUtils::generateBlackHole(const Vector2D& p, int g)
 
 	auto a = mngr->addEntity(ecs::grp::BLACKHOLES);
 
-	mngr->addComponent<Transform>(a, p, Vector2D(0,0), 10 + 5 * g, 10 + 5 * g, 0.0f);
-	//mngr->addComponent<ShowAtOpossiteSide>(a);
-	//mngr->addComponent<Generations>(a, g);
+	mngr->addComponent<Transform>(a, p, Vector2D(0,0), 40 + 5 * g, 40 + 5 * g, 0.0f);
 
 	mngr->addComponent<Image>(a, &sdlutils().images().at("black-hole")); 
-
-	//int move_style = rand_.nextInt(0, 5);
-	//switch (move_style) {
-	//case 0: {
-	//	auto fighter = mngr->getHandler(ecs::hdlr::FIGHTER);
-	//	auto fighterTR = mngr->getComponent<Transform>(fighter);
-	//	mngr->addComponent<Follow>(a, fighterTR->getPos());
-	//	break;
-	//}
-	//case 1:
-	//	mngr->addComponent<TowardsDestination>(a);
-	//	break;
-	//default:
-	//	break;
-	//}
 
 }
