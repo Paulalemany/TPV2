@@ -2,7 +2,6 @@
 
 //Se pone el include de todos los componentes que se vayan a usar
 #include "../components/Image.h"
-#include "../components/ImageWithFrames.h"
 #include "../components/Transform.h"
 
 #include "../ecs/Manager.h"
@@ -30,19 +29,27 @@ BlackHoleUtils::~BlackHoleUtils()
 {
 }
 
-void BlackHoleUtils::create_blackHoles(int n)	//Crea el grupo
+void BlackHoleUtils::create_blackHoles(int n)
 {
-	double d = 360 / n;
-	double rad = 3.1416 / 180;
+	//Elegimos el radio en el que van a estar colocados los agujeros
+	auto r = rand_.nextInt(100, 300);	//Radio de centro fight pos
+	double d = 360 / n;					//Angulo de separación entre agujeros
+	//Hacemos que el centro del círculo sea donde está el fighter
+	auto mngr = Game::instance()->getMngr();
+	auto fighter = mngr->getHandler(ecs::hdlr::FIGHTER);
+	auto fighterTR = mngr->getComponent<Transform>(fighter);
+	Vector2D pos = fighterTR->getPos();
+	
 
 	//Se crean 6 normalmente
 	for (int i = 0; i < n; i++) {
 
-		//Pos definida por x e y - Se supone que se colocan en círculo con esta fórmula
-		/*double x = _radio * cos((d * i) * rad);
-		double y = _radio * sin((d * i) * rad);*/
-
-		int x = 20 * i, y =  20 * i;
+		//Radio random para el agujero
+		 
+		
+		//Los coloca al rededor del fight respetando el radio 
+		int x = pos.getX() + r * cos(d * i);
+		int y = pos.getY() + r * sin(d * i);
 
 		Vector2D pos = Vector2D(x, y);
 		auto g = rand_.nextInt(1, 4);
