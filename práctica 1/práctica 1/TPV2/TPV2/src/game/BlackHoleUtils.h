@@ -13,8 +13,9 @@ public:
 	void remove_all_blackHoles() override;
 
 private:
-	void generateBlackHole(const Vector2D& p, const Vector2D& v, int g);
+	void generateBlackHole(const Vector2D& p);
 	//No se si hay que poner aquí la posición
 	int _grados;	//Giro del agujero negro
+	double _radio;
 };
 

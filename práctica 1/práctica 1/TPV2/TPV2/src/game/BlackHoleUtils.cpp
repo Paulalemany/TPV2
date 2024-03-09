@@ -24,14 +24,65 @@ BlackHoleUtils::~BlackHoleUtils()
 {
 }
 
-void BlackHoleUtils::create_blackHoles(int n)
+void BlackHoleUtils::create_blackHoles(int n)	//Crea el grupo
 {
+	double d = 360 / n;
+	double rad = 3.1416 / 180;
+
+	//Se crean 6 normalmente
+	for (int i = 0; i < n; i++) {
+
+		//Pos definida por x e y - Se supone que se colocan en círculo con esta fórmula
+		double x = _radio * cos((d * i) * rad);
+		double y = _radio * sin((d * i) * rad);
+
+		Vector2D pos = Vector2D(x, y);
+
+		generateBlackHole(pos);
+
+	}
 }
 
-void BlackHoleUtils::remove_all_blackHoles()
+void BlackHoleUtils::remove_all_blackHoles()	//Elimina el grupo
 {
+	auto mngr = Game::instance()->getMngr();
+	for (auto e : mngr->getEntities(ecs::grp::BLACKHOLES)) {
+		mngr->setAlive(e, false);
+	}
+	mngr->refresh();
 }
 
-void BlackHoleUtils::generateBlackHole(const Vector2D& p, const Vector2D& v, int g)
+void BlackHoleUtils::generateBlackHole(const Vector2D& p)
 {
+	auto mngr = Game::instance()->getMngr();
+
+	auto a = mngr->addEntity(ecs::grp::BLACKHOLES);
+
+	//mngr->addComponent<Transform>(a, p, v, 10 + 5 * g, 10 + 5 * g, 0.0f);
+	//mngr->addComponent<ShowAtOpossiteSide>(a);
+	//mngr->addComponent<Generations>(a, g);
+
+	//mngr->addComponent<ImageWithFrames>(a, //
+	//	&sdlutils().images().at("asteroid"), //
+	//	5, 6, //
+	//	0, 0, //
+	//	85, 95, //
+	//	0, 0, //
+	//	5, 6);
+
+	//int move_style = rand_.nextInt(0, 5);
+	//switch (move_style) {
+	//case 0: {
+	//	auto fighter = mngr->getHandler(ecs::hdlr::FIGHTER);
+	//	auto fighterTR = mngr->getComponent<Transform>(fighter);
+	//	mngr->addComponent<Follow>(a, fighterTR->getPos());
+	//	break;
+	//}
+	//case 1:
+	//	mngr->addComponent<TowardsDestination>(a);
+	//	break;
+	//default:
+	//	break;
+	//}
+
 }

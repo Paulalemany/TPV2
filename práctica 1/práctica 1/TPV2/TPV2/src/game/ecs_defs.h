@@ -23,8 +23,8 @@
 //
 #define _GRPS_LIST_ \
 	ASTEROIDS, \
-	MISSILES
-	//BLACKHOLES
+	MISSILES, \
+	BLACKHOLES
 
 // Handlers list - must have at least one element
 //
