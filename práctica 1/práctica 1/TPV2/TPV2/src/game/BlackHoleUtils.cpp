@@ -39,8 +39,10 @@ void BlackHoleUtils::create_blackHoles(int n)	//Crea el grupo
 	for (int i = 0; i < n; i++) {
 
 		//Pos definida por x e y - Se supone que se colocan en círculo con esta fórmula
-		double x = _radio * cos((d * i) * rad);
-		double y = _radio * sin((d * i) * rad);
+		/*double x = _radio * cos((d * i) * rad);
+		double y = _radio * sin((d * i) * rad);*/
+
+		int x = 20 * i, y =  20 * i;
 
 		Vector2D pos = Vector2D(x, y);
 		auto g = rand_.nextInt(1, 4);
