@@ -1,13 +1,18 @@
 #include "BlackHoleUtils.h"
 
 //Se pone el include de todos los componentes que se vayan a usar
+#include "../components/Image.h"
+#include "../components/ImageWithFrames.h"
+#include "../components/Transform.h"
 
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
 
 #include "Game.h"
 
-BlackHoleUtils::BlackHoleUtils()
+BlackHoleUtils::BlackHoleUtils() :
+	rand_(sdlutils().rand()), width_(sdlutils().width()), height_(
+		sdlutils().height()) 
 {
 	std::cout << "Constructora agujeros negros" << std::endl;
 	//Posición en círculo (r-> 100-300) caza en el centro
@@ -27,53 +32,43 @@ BlackHoleUtils::~BlackHoleUtils()
 
 void BlackHoleUtils::create_blackHoles(int n)	//Crea el grupo
 {
-	std::cout << "Creando agujeros negros" << std::endl;
-	//double d = 360 / n;
-	//double rad = 3.1416 / 180;
+	double d = 360 / n;
+	double rad = 3.1416 / 180;
 
-	////Se crean 6 normalmente
-	//for (int i = 0; i < n; i++) {
+	//Se crean 6 normalmente
+	for (int i = 0; i < n; i++) {
 
-	//	//Pos definida por x e y - Se supone que se colocan en círculo con esta fórmula
-	//	double x = _radio * cos((d * i) * rad);
-	//	double y = _radio * sin((d * i) * rad);
+		//Pos definida por x e y - Se supone que se colocan en círculo con esta fórmula
+		double x = _radio * cos((d * i) * rad);
+		double y = _radio * sin((d * i) * rad);
 
-	//	Vector2D pos = Vector2D(x, y);
+		Vector2D pos = Vector2D(x, y);
+		auto g = rand_.nextInt(1, 4);
+		generateBlackHole(pos,g);
 
-	//	generateBlackHole(pos);
-
-	//}
+	}
 }
 
 void BlackHoleUtils::remove_all_blackHoles()	//Elimina el grupo
 {
-
-	std::cout << "Quitando agujeros negros" << std::endl;
-	/*auto mngr = Game::instance()->getMngr();
+	auto mngr = Game::instance()->getMngr();
 	for (auto e : mngr->getEntities(ecs::grp::BLACKHOLES)) {
 		mngr->setAlive(e, false);
 	}
-	mngr->refresh();*/
+	mngr->refresh();
 }
 
-void BlackHoleUtils::generateBlackHole(const Vector2D& p)
+void BlackHoleUtils::generateBlackHole(const Vector2D& p, int g)
 {
-	std::cout << "Generando agujeros negros" << std::endl;
 	auto mngr = Game::instance()->getMngr();
 
 	auto a = mngr->addEntity(ecs::grp::BLACKHOLES);
 
-	//mngr->addComponent<Transform>(a, p, v, 10 + 5 * g, 10 + 5 * g, 0.0f);
+	mngr->addComponent<Transform>(a, p, Vector2D(0,0), 10 + 5 * g, 10 + 5 * g, 0.0f);
 	//mngr->addComponent<ShowAtOpossiteSide>(a);
 	//mngr->addComponent<Generations>(a, g);
 
-	//mngr->addComponent<ImageWithFrames>(a, //
-	//	&sdlutils().images().at("asteroid"), //
-	//	5, 6, //
-	//	0, 0, //
-	//	85, 95, //
-	//	0, 0, //
-	//	5, 6);
+	mngr->addComponent<Image>(a, &sdlutils().images().at("black-hole")); 
 
 	//int move_style = rand_.nextInt(0, 5);
 	//switch (move_style) {

@@ -2,6 +2,7 @@
 #include "BlackHoleFacade.h"
 
 class Vector2D;
+class RandomNumberGenerator;
 
 class BlackHoleUtils : public BlackHoleFacade {
 public:
@@ -13,8 +14,10 @@ public:
 	void remove_all_blackHoles() override;
 
 private:
-	void generateBlackHole(const Vector2D& p);
-	//No se si hay que poner aquí la posición
+	void generateBlackHole(const Vector2D& p, int g);
+	RandomNumberGenerator& rand_;
+	int width_;
+	int height_;
 	int _grados;	//Giro del agujero negro
 	double _radio;
 };

@@ -55,7 +55,7 @@ void RunningState::update() {
 	auto fighter = mngr->getHandler(ecs::hdlr::FIGHTER);
 	auto &asteroids = mngr->getEntities(ecs::grp::ASTEROIDS);
 	auto& missiles = mngr->getEntities(ecs::grp::MISSILES);
-	//auto& blackHoles = mngr->getEntities(ecs::grp::);
+	auto& blackHoles = mngr->getEntities(ecs::grp::BLACKHOLES);
 
 	// update
 	mngr->update(fighter);
@@ -79,8 +79,9 @@ void RunningState::update() {
 		}
 		mngr->update(m);
 	}
-
-	//Añadir el update de los agujeros negros
+	for (auto b : blackHoles) {
+		mngr->update(b);
+	}
 
 	// check collisions
 	checkCollisions();
@@ -93,7 +94,9 @@ void RunningState::update() {
 	for (auto m : missiles) {
 		mngr->render(m);
 	}
-	//Añadir agujeros negros
+	for (auto b : blackHoles) {
+		mngr->render(b);
+	}
 	mngr->render(fighter);
 	sdlutils().presentRenderer();
 
@@ -122,7 +125,7 @@ void RunningState::checkCollisions() {
 	auto fighterTR = mngr->getComponent<Transform>(fighter);
 	auto fighterGUN = mngr->getComponent<Gun>(fighter);
 	auto& missiles = mngr->getEntities(ecs::grp::MISSILES);
-	//Añadir agujeros negros 
+	auto& blackHoles = mngr->getEntities(ecs::grp::BLACKHOLES);
 
 	//asteroides
 	auto num_of_asteroids = asteroids.size();
@@ -213,6 +216,47 @@ void RunningState::checkCollisions() {
 	}
 
 	//BlackHoles
+	auto num_of_blackHoles = blackHoles.size();
+	for (auto i = 0u; i < num_of_blackHoles; i++) {
+		//Comprueba si está vivo (Aunque creo que estos no se pueden eliminar
+		auto b = blackHoles[i];
+		if (!mngr->isAlive(b))
+			continue;
+
+		//with fighter
+		auto aTR = mngr->getComponent<Transform>(b);
+		if (Collisions::collidesWithRotation( //
+			fighterTR->getPos(), //
+			fighterTR->getWidth(), //
+			fighterTR->getHeight(), //
+			fighterTR->getRot(), //
+			aTR->getPos(), //
+			aTR->getWidth(), //
+			aTR->getHeight(), //
+			aTR->getRot())) {
+			onFigherDeath();
+			return;
+		}
+
+		//with Asteroids
+		for (auto k = 0u; k < num_of_asteroids; k++) {
+			auto as = asteroids[k];
+			auto bTR = mngr->getComponent<Transform>(as);
+				if (Collisions::collidesWithRotation( //
+					bTR->getPos(), //
+					bTR->getWidth(), //
+					bTR->getHeight(), //
+					bTR->getRot(),
+					aTR->getPos(), //
+					aTR->getWidth(), //
+					aTR->getHeight(), //
+					aTR->getRot())) {
+					//Accion al chocar contra el asteroide
+					//sdlutils().soundEffects().at("explosion").play();
+					continue;
+				}
+		}
+	}
 
 }
 
