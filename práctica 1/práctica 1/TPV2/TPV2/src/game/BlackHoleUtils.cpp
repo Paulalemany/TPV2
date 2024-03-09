@@ -45,7 +45,7 @@ void BlackHoleUtils::create_blackHoles(int n)
 	for (int i = 0; i < n; i++) {
 
 		//Radio random para el agujero
-		 
+		auto rot = rand_.nextInt(5, 10);
 		
 		//Los coloca al rededor del fight respetando el radio 
 		int x = pos.getX() + r * cos(d * i);
@@ -74,7 +74,7 @@ void BlackHoleUtils::generateBlackHole(const Vector2D& p, int g)
 	auto a = mngr->addEntity(ecs::grp::BLACKHOLES);
 
 	mngr->addComponent<Transform>(a, p, Vector2D(0,0), 40 + 5 * g, 40 + 5 * g, 0.0f);
-
 	mngr->addComponent<Image>(a, &sdlutils().images().at("black-hole")); 
+	//Añadir un componenete de rotación
 
 }
