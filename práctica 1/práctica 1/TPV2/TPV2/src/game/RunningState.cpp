@@ -23,9 +23,9 @@ RunningState::RunningState(AsteroidsFacade *ast_mngr,
 		FighterFacade *fighter_mngr, MissileFacade* missile_mngr, BlackHoleFacade* blackHole_mngr) :
 		ihdlr(ih()), //
 		ast_mngr_(ast_mngr), //
-		fighter_mngr_(fighter_mngr),
+		fighter_mngr_(fighter_mngr), //
 		missile_mngr_(missile_mngr),//
-		blackHole_mngr_(blackHole_mngr),
+		blackHole_mrgr_(blackHole_mngr),
 		lastTimeGeneratedAsteroids_(),
 		lastTimeGeneratedMissiles_() {
 }

@@ -9,7 +9,7 @@ class InputHandler;
 class AsteroidsFacade;
 class FighterFacade;
 class MissileFacade;
-class BlacKHoleFacade;
+class BlackHoleFacade;
 
 class RunningState: public GameState {
 public:
@@ -18,14 +18,18 @@ public:
 	void leave() override;
 	void update() override;
 	void enter() override;
+
 private:
 	void checkCollisions();
 	void onFigherDeath();
+
 	InputHandler &ihdlr;
+
 	AsteroidsFacade *ast_mngr_;
 	FighterFacade *fighter_mngr_;
 	MissileFacade *missile_mngr_;
-	BlackHoleFacade *blackHole_mngr_;
+	BlackHoleFacade	*blackHole_mrgr_;
+
 	Uint32 lastTimeGeneratedAsteroids_;
 	Uint32 lastTimeGeneratedMissiles_;
 

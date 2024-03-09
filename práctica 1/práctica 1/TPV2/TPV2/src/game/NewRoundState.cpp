@@ -37,9 +37,9 @@ void NewRoundState::update() {
 		fighter_mngr_->reset_fighter();
 		ast_mngr_->remove_all_asteroids();
 		missile_mngr_->remove_all_missiles();
-		//Quitar todos los agujeros negros anteriores
+		blackHole_mngr_->remove_all_blackHoles();
 		ast_mngr_->create_asteroids(10);
-		//Crear los agujeros negros nuevos
+		blackHole_mngr_->create_blackHoles(6);
 		Game::instance()->setState(Game::RUNNING);
 	}
 	sdlutils().clearRenderer();

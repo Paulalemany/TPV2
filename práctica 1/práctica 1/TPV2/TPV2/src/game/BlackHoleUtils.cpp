@@ -9,6 +9,7 @@
 
 BlackHoleUtils::BlackHoleUtils()
 {
+	std::cout << "Constructora agujeros negros" << std::endl;
 	//Posición en círculo (r-> 100-300) caza en el centro
 	//ó posición aleatoria a distancia min 100
 	//Quitar los agujeros anteriores antes de crear lo siguientes
@@ -26,34 +27,38 @@ BlackHoleUtils::~BlackHoleUtils()
 
 void BlackHoleUtils::create_blackHoles(int n)	//Crea el grupo
 {
-	double d = 360 / n;
-	double rad = 3.1416 / 180;
+	std::cout << "Creando agujeros negros" << std::endl;
+	//double d = 360 / n;
+	//double rad = 3.1416 / 180;
 
-	//Se crean 6 normalmente
-	for (int i = 0; i < n; i++) {
+	////Se crean 6 normalmente
+	//for (int i = 0; i < n; i++) {
 
-		//Pos definida por x e y - Se supone que se colocan en círculo con esta fórmula
-		double x = _radio * cos((d * i) * rad);
-		double y = _radio * sin((d * i) * rad);
+	//	//Pos definida por x e y - Se supone que se colocan en círculo con esta fórmula
+	//	double x = _radio * cos((d * i) * rad);
+	//	double y = _radio * sin((d * i) * rad);
 
-		Vector2D pos = Vector2D(x, y);
+	//	Vector2D pos = Vector2D(x, y);
 
-		generateBlackHole(pos);
+	//	generateBlackHole(pos);
 
-	}
+	//}
 }
 
 void BlackHoleUtils::remove_all_blackHoles()	//Elimina el grupo
 {
-	auto mngr = Game::instance()->getMngr();
+
+	std::cout << "Quitando agujeros negros" << std::endl;
+	/*auto mngr = Game::instance()->getMngr();
 	for (auto e : mngr->getEntities(ecs::grp::BLACKHOLES)) {
 		mngr->setAlive(e, false);
 	}
-	mngr->refresh();
+	mngr->refresh();*/
 }
 
 void BlackHoleUtils::generateBlackHole(const Vector2D& p)
 {
+	std::cout << "Generando agujeros negros" << std::endl;
 	auto mngr = Game::instance()->getMngr();
 
 	auto a = mngr->addEntity(ecs::grp::BLACKHOLES);

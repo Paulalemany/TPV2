@@ -2,8 +2,8 @@
 #include "BlackHoleFacade.h"
 
 class Vector2D;
-class BlackHoleUtils : public BlackHoleFacade
-{
+
+class BlackHoleUtils : public BlackHoleFacade {
 public:
 	BlackHoleUtils();	//Construcora 
 	virtual ~BlackHoleUtils();	//Destructora
