@@ -4,8 +4,10 @@
 #include "../components/Follow.h"
 #include "../components/Image.h"
 #include "../components/Transform.h"
+
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
+
 #include "Game.h"
 
 MissileUtils::MissileUtils() :

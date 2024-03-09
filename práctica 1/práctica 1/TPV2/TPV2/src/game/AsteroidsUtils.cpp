@@ -9,8 +9,10 @@
 #include "../components/ShowAtOpossiteSide.h"
 #include "../components/TowardsDestination.h"
 #include "../components/Transform.h"
+
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
+
 #include "Game.h"
 
 

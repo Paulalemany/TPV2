@@ -14,5 +14,7 @@ public:
 
 private:
 	void generateBlackHole(const Vector2D& p, const Vector2D& v, int g);
+	//No se si hay que poner aquí la posición
+	int _grados;	//Giro del agujero negro
 };
 

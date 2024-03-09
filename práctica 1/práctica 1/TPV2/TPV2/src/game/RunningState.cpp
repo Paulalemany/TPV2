@@ -4,22 +4,28 @@
 
 #include "../components/Gun.h"
 #include "../components/Transform.h"
+
 #include "../ecs/Manager.h"
+
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
+
 #include "../utils/Collisions.h"
+
 #include "AsteroidsFacade.h"
 #include "FighterFacade.h"
 #include "MissileFacade.h"
+#include "BlackHoleFacade.h"
 
 #include "Game.h"
 
 RunningState::RunningState(AsteroidsFacade *ast_mngr,
-		FighterFacade *fighter_mngr, MissileFacade* missile_mngr) :
+		FighterFacade *fighter_mngr, MissileFacade* missile_mngr, BlackHoleFacade* blackHole_mngr) :
 		ihdlr(ih()), //
 		ast_mngr_(ast_mngr), //
 		fighter_mngr_(fighter_mngr),
 		missile_mngr_(missile_mngr),//
+		blackHole_mngr_(blackHole_mngr),
 		lastTimeGeneratedAsteroids_(),
 		lastTimeGeneratedMissiles_() {
 }
@@ -49,6 +55,7 @@ void RunningState::update() {
 	auto fighter = mngr->getHandler(ecs::hdlr::FIGHTER);
 	auto &asteroids = mngr->getEntities(ecs::grp::ASTEROIDS);
 	auto& missiles = mngr->getEntities(ecs::grp::MISSILES);
+	//auto& blackHoles = mngr->getEntities(ecs::grp::);
 
 	// update
 	mngr->update(fighter);
@@ -73,6 +80,8 @@ void RunningState::update() {
 		mngr->update(m);
 	}
 
+	//Añadir el update de los agujeros negros
+
 	// check collisions
 	checkCollisions();
 
@@ -84,6 +93,7 @@ void RunningState::update() {
 	for (auto m : missiles) {
 		mngr->render(m);
 	}
+	//Añadir agujeros negros
 	mngr->render(fighter);
 	sdlutils().presentRenderer();
 
@@ -112,6 +122,7 @@ void RunningState::checkCollisions() {
 	auto fighterTR = mngr->getComponent<Transform>(fighter);
 	auto fighterGUN = mngr->getComponent<Gun>(fighter);
 	auto& missiles = mngr->getEntities(ecs::grp::MISSILES);
+	//Añadir agujeros negros 
 
 	//asteroides
 	auto num_of_asteroids = asteroids.size();
@@ -200,6 +211,8 @@ void RunningState::checkCollisions() {
 			}
 		}
 	}
+
+	//BlackHoles
 
 }
 

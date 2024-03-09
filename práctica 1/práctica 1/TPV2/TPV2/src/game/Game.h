@@ -16,6 +16,7 @@ class Game: public Singleton<Game> {
 	friend Singleton<Game> ;
 	Game();
 public:
+	//Estados de juego
 	enum State {
 		RUNNING, PAUSED, NEWGAME, NEWROUND, GAMEOVER
 	};
