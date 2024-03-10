@@ -14,11 +14,10 @@ public:
 	void remove_all_blackHoles() override;
 
 private:
-	void generateBlackHole(const Vector2D& p, int g);
+	void generateBlackHole(const Vector2D& p, int g, int rot);
 	RandomNumberGenerator& rand_;
 	int width_;
 	int height_;
-	int _grados;	//Giro del agujero negro
-	double _radio;
+	int _grados;	//Giro inicial del agujero negro
 };
 

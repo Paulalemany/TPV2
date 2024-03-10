@@ -3,6 +3,7 @@
 //Se pone el include de todos los componentes que se vayan a usar
 #include "../components/Image.h"
 #include "../components/Transform.h"
+#include "../components/Spin.h"
 
 #include "../ecs/Manager.h"
 #include "../sdlutils/SDLUtils.h"
@@ -53,7 +54,7 @@ void BlackHoleUtils::create_blackHoles(int n)
 
 		Vector2D pos = Vector2D(x, y);
 		auto g = rand_.nextInt(1, 4);
-		generateBlackHole(pos,g);
+		generateBlackHole(pos,g, rot);
 
 	}
 }
@@ -67,7 +68,7 @@ void BlackHoleUtils::remove_all_blackHoles()	//Elimina el grupo
 	mngr->refresh();
 }
 
-void BlackHoleUtils::generateBlackHole(const Vector2D& p, int g)
+void BlackHoleUtils::generateBlackHole(const Vector2D& p, int g, int rot)
 {
 	auto mngr = Game::instance()->getMngr();
 
@@ -76,5 +77,6 @@ void BlackHoleUtils::generateBlackHole(const Vector2D& p, int g)
 	mngr->addComponent<Transform>(a, p, Vector2D(0,0), 40 + 5 * g, 40 + 5 * g, 0.0f);
 	mngr->addComponent<Image>(a, &sdlutils().images().at("black-hole")); 
 	//Añadir un componenete de rotación
+	mngr->addComponent<Spin>(a, rot);
 
 }
