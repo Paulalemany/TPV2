@@ -71,11 +71,11 @@ void RunningState::update() {
 		float mRot = Vector2D(0, -1).angle(mVel);
 		mTransform->setRot(mRot);
 
-		//check si han salido de la pantalla
+		//comprobar si han salido de la pantalla
 		int mPosX = mTransform->getPos().getX();
 		int mPosY = mTransform->getPos().getY();
 		if (mPosX + mTransform->getWidth() < 0  || mPosX > sdlutils().width() || mPosY  + mTransform->getHeight() < 0 || mPosY > sdlutils().height()) {
-			mngr->setAlive(m, false);
+			mngr->setAlive(m, false); //si es asi, se activa ese misil como alive = false
 		}
 		mngr->update(m);
 	}
@@ -106,7 +106,7 @@ void RunningState::update() {
 		ast_mngr_->create_asteroids(1);
 		lastTimeGeneratedAsteroids_ = sdlutils().virtualTimer().currTime();
 	}
-	if (sdlutils().virtualTimer().currTime() > lastTimeGeneratedMissiles_ + 15000) {
+	if (sdlutils().virtualTimer().currTime() > lastTimeGeneratedMissiles_ + 15000) { //cada 15 segundos se genera un nuevo misil
 		missile_mngr_->create_missile();
 		lastTimeGeneratedMissiles_ = sdlutils().virtualTimer().currTime();
 	}

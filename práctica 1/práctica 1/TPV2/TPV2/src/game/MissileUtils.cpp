@@ -18,7 +18,7 @@ MissileUtils::MissileUtils() :
 MissileUtils::~MissileUtils() {
 
 }
-void MissileUtils::remove_all_missiles() {
+void MissileUtils::remove_all_missiles() { //eliminar todo el grupo de misiles
 	auto mngr = Game::instance()->getMngr();
 	for (auto m : mngr->getEntities(ecs::grp::MISSILES)) {
 		mngr->setAlive(m, false);
@@ -28,6 +28,7 @@ void MissileUtils::remove_all_missiles() {
 void MissileUtils::create_missile() {
 	
 	int x = 0, y = 0;
+	//elegir de forma aleatoria una de las cuatro esquinas para si asignar la posicion
 	int corner = rand_.nextInt(0, 4);
 	switch (corner) {
 	case 0:
@@ -59,6 +60,7 @@ void MissileUtils::create_missile() {
 	int speedLength = rand_.nextInt(1, 4); //longitud entre 1 y 3
 	int w = 0, h = 0;
 	Vector2D vel = direction * speedLength;
+	//elegir una velocidad aleatoria al misil y de esta dependera su tamaño
 	switch (speedLength) {
 	case 1:
 		w = 60;
@@ -80,11 +82,13 @@ void MissileUtils::create_missile() {
 void MissileUtils::generateMissile(const Vector2D& pos, const Vector2D& vel, int w, int h) {
 
 	auto mngr = Game::instance()->getMngr();
-	auto m = mngr->addEntity(ecs::grp::MISSILES);
+	auto m = mngr->addEntity(ecs::grp::MISSILES); //agregarlo al grupo de misiles
 
+	//rotacion = girar la imagen continuamente para que siempre apunte en la direccion de su vector de velocidad
 	mngr->addComponent<Transform>(m, pos, vel, w, h, Vector2D(0,-1).angle(vel)); 
 	mngr->addComponent<Image>(m, &sdlutils().images().at("missile"));
 
+	//el misil tiene que seguir al caza siempre
 	auto fighter = mngr->getHandler(ecs::hdlr::FIGHTER);
 	auto fighterTR = mngr->getComponent<Transform>(fighter);
 	mngr->addComponent<Follow>(m, fighterTR->getPos());
