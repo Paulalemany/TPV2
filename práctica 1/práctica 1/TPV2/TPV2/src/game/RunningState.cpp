@@ -119,6 +119,7 @@ void RunningState::enter() {
 }
 
 void RunningState::checkCollisions() {
+
 	auto mngr = Game::instance()->getMngr();
 	auto fighter = mngr->getHandler(ecs::hdlr::FIGHTER);
 	auto &asteroids = mngr->getEntities(ecs::grp::ASTEROIDS);
@@ -251,8 +252,7 @@ void RunningState::checkCollisions() {
 					aTR->getWidth(), //
 					aTR->getHeight(), //
 					aTR->getRot())) {
-					//Accion al chocar contra el asteroide
-					//sdlutils().soundEffects().at("explosion").play();
+					ast_mngr_->teleport_asteroid(as);
 					continue;
 				}
 		}

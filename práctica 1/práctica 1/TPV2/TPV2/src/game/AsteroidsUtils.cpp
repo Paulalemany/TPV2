@@ -128,3 +128,15 @@ void AsteroidsUtils::split_astroid(ecs::entity_t a) {
 		}
 	}
 }
+
+void AsteroidsUtils::teleport_asteroid(entity_t a)
+{
+	auto mngr = Game::instance()->getMngr();
+	auto tr = mngr->getComponent<Transform>(a);
+
+	//Elegimos una nueva posición random
+	int x = rand_.nextInt(0, width_);
+	int y = rand_.nextInt(0, height_);
+
+	tr->setPos(x, y);
+}

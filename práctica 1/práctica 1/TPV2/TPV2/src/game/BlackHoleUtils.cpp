@@ -76,7 +76,6 @@ void BlackHoleUtils::generateBlackHole(const Vector2D& p, int g, int rot)
 
 	mngr->addComponent<Transform>(a, p, Vector2D(0,0), 40 + 5 * g, 40 + 5 * g, 0.0f);
 	mngr->addComponent<Image>(a, &sdlutils().images().at("black-hole")); 
-	//Añadir un componenete de rotación
 	mngr->addComponent<Spin>(a, rot);
 
 }

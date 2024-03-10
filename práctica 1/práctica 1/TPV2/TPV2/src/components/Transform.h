@@ -36,6 +36,10 @@ public:
 	Vector2D& getPos() {
 		return pos_;
 	}
+	void setPos(int x, int y) {
+		pos_.setX(x);
+		pos_.setY(y);
+	}
 	Vector2D& getVel() {
 		return vel_;
 	}
