@@ -52,6 +52,9 @@
     <Filter Include="Header Files\systems">
       <UniqueIdentifier>{24649eae-b00d-4098-8a14-54cac8ed7cf7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\components">
+      <UniqueIdentifier>{e116f4ac-84a9-4d87-b6c2-47bcb9b99739}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\json\JSONValue.h">
@@ -174,6 +177,9 @@
     <ClInclude Include="src\systems\RenderSystem.h">
       <Filter>Header Files\systems</Filter>
     </ClInclude>
+    <ClInclude Include="src\components\ImageWithFrames.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\json\JSONValue.cpp">
@@ -209,9 +215,6 @@
     <ClCompile Include="src\game\Game.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
     <ClCompile Include="src\systems\StarsSystem.cpp">
       <Filter>Source Files\systems</Filter>
     </ClCompile>
@@ -226,6 +229,12 @@
     </ClCompile>
     <ClCompile Include="src\systems\RenderSystem.cpp">
       <Filter>Source Files\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ImageWithFrames.cpp">
+      <Filter>Source Files\components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -44,12 +44,12 @@
       "file": "resources/sound/pacman_eat.wav"
     },
     {
-      "id": "explosion",
-      "file": "resources/sound/explosion.wav"
+      "id": "intro",
+      "file": "resources/sound/pacman_intro.wav"
     },
     {
-      "id": "explosion",
-      "file": "resources/sound/explosion.wav"
+      "id": "won",
+      "file": "resources/sound/pacman_won.wav"
     }
 
   ],
