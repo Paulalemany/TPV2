@@ -51,8 +51,8 @@ void ImageWithFrames::render() {
 	auto src = build_sdlrect(c * frameWidth_ + x_, r * frameHeight_ + y_, w_,
 			h_);
 
-	auto dest = build_sdlrect(tr_->getPos(), tr_->getWidth(), tr_->getHeight());
+	auto dest = build_sdlrect(tr_->pos_, tr_->width_, tr_->height_);
 
-	tex_->render(src, dest, tr_->getRot());
+	tex_->render(src, dest, tr_->rot_);
 
 }
