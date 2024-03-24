@@ -3,6 +3,7 @@
 
 class RunningState : public GameState
 {
+public:
 	RunningState();
 	virtual ~RunningState();
 	void leave() override;

@@ -3,6 +3,7 @@
 
 class NewRoundState : public GameState
 {
+public:
 	NewRoundState();
 	virtual ~NewRoundState();
 	void leave() override;

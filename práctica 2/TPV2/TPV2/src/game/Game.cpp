@@ -13,6 +13,13 @@
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
 
+//Estados de juego
+#include "PauseState.h"
+#include "NewGameState.h"
+#include "NewRoundState.h"
+#include "RunningState.h"
+#include "GameOverState.h"
+
 using ecs::Manager;
 
 Game::Game() :
@@ -48,6 +55,11 @@ void Game::init() {
 	collisionSys_ = mngr_->addSystem<CollisionsSystem>();
 
 	//Creación de los estados
+	paused_state_ = new PauseState();
+	runing_state_ = new RunningState();
+	newgame_state_ = new NewGameState();
+	newround_state_ = new NewRoundState();
+	gameover_state_ = new GameOverState();
 }
 
 void Game::start() {

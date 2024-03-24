@@ -3,6 +3,7 @@
 
 class PauseState : public GameState
 {
+public:
 	PauseState();
 	virtual ~PauseState();
 	void leave() override;
