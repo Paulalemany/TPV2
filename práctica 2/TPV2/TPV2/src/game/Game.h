@@ -3,8 +3,8 @@
 #pragma once
 
 #include <vector>
-
 #include "../ecs/ecs.h"
+#include "GameState.h"
 
 class Game {
 public:
@@ -12,6 +12,11 @@ public:
 	virtual ~Game();
 	void init();
 	void start();
+
+	//Estados de juego
+	enum State {
+		GAMEOVER, NEWGAME, NEWROUND, PAUSE, RUNNING
+	};
 private:
 	ecs::Manager *mngr_;
 	ecs::System *pacmanSys_;
