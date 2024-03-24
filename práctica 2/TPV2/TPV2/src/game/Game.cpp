@@ -28,7 +28,13 @@ Game::Game() :
 		gameCtrlSys_(), //
 		startsSys_(), //
 		renderSys_(), //
-		collisionSys_() {
+		collisionSys_(), //
+		current_state_(nullptr), //
+		paused_state_(nullptr), //
+		runing_state_(nullptr), //
+		newgame_state_(nullptr), //
+		newround_state_(nullptr), //
+		gameover_state_(nullptr) {
 
 }
 
@@ -60,6 +66,8 @@ void Game::init() {
 	newgame_state_ = new NewGameState();
 	newround_state_ = new NewRoundState();
 	gameover_state_ = new GameOverState();
+
+	current_state_ = newgame_state_;
 }
 
 void Game::start() {
@@ -83,6 +91,8 @@ void Game::start() {
 
 		//Llamada al update del estado de juego actual
 		//Flush del manager ->Envia mensajes
+
+		current_state_->update();
 
 		pacmanSys_->update();
 		startsSys_->update();
