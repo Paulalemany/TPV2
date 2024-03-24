@@ -186,16 +186,16 @@
     <ClInclude Include="src\game\RunningState.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="PauseState.h">
+    <ClInclude Include="src\game\NewGameState.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverState.h">
+    <ClInclude Include="src\game\PauseState.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="NewGameState.h">
+    <ClInclude Include="src\game\NewRoundState.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="NewRoundState.h">
+    <ClInclude Include="src\game\GameOverState.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
@@ -257,16 +257,16 @@
     <ClCompile Include="src\game\RunningState.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="PauseState.cpp">
+    <ClCompile Include="src\game\NewRoundState.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverState.cpp">
+    <ClCompile Include="src\game\PauseState.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="NewGameState.cpp">
+    <ClCompile Include="src\game\NewGameState.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="NewRoundState.cpp">
+    <ClCompile Include="src\game\GameOverState.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
