@@ -27,6 +27,8 @@ Game::Game() :
 
 Game::~Game() {
 	delete mngr_;
+
+	//Libera memoria referente a los estados
 }
 
 void Game::init() {
@@ -44,6 +46,8 @@ void Game::init() {
 	gameCtrlSys_ = mngr_->addSystem<GameCtrlSystem>();
 	renderSys_ = mngr_->addSystem<RenderSystem>();
 	collisionSys_ = mngr_->addSystem<CollisionsSystem>();
+
+	//Creación de los estados
 }
 
 void Game::start() {
@@ -64,6 +68,9 @@ void Game::start() {
 			continue;
 		}
 
+
+		//Llamada al update del estado de juego actual
+		//Flush del manager ->Envia mensajes
 
 		pacmanSys_->update();
 		startsSys_->update();
