@@ -83,6 +83,7 @@ void Game::start() {
 		// refresh the input handler
 		ihdlr.refresh();
 
+		//Para salir del juego
 		if (ihdlr.isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			exit = true;
 			continue;
@@ -91,20 +92,24 @@ void Game::start() {
 
 		//Llamada al update del estado de juego actual
 		//Flush del manager ->Envia mensajes
+		//mngr_->flushMessages();
 
 		current_state_->update();
 
-		pacmanSys_->update();
+		/*pacmanSys_->update();
 		startsSys_->update();
 		gameCtrlSys_->update();
-		collisionSys_->update();
+		collisionSys_->update();*/
 
-		mngr_->refresh();
+		//A lo mejor esto debe ir en cada estado en vez de aquí
+		//mngr_->refresh();
 
+		//Referente al render ¿Debe ir aquí?
 		sdlutils().clearRenderer();
 		renderSys_->update();
 		sdlutils().presentRenderer();
 
+		//Control del tiempo
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
 		if (frameTime < 10)
