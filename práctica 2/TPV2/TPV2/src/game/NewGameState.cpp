@@ -1,6 +1,7 @@
 #include "NewGameState.h"
 
 #include "../sdlutils/InputHandler.h"
+#include "../ecs/messages.h"
 #include "Game.h"
 
 #include "iostream"
@@ -27,9 +28,12 @@ void NewGameState::update()
 		//Enviamos mensaje de "Ha empezado nueva partida"
 		//Cambia al estado NewRoundState
 		//Game::setState(2);
-		game.setState(2);
+		//game.setState(2);
 
-
+		Message m;
+		m.id = _m_ROUND_START;
+		//Si le queremos pasar un parámetro se haría aquí
+		//mngr_->send(m);
 	}
 
 	//Respectivo al render??
