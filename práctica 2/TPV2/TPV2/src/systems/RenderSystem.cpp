@@ -1,15 +1,13 @@
-// This file is part of the course TPV2@UCM - Samir Genaim
-
 #include "RenderSystem.h"
 
-#include "../components/Image.h"
+
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/macros.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
 #include "GameCtrlSystem.h"
-
+#include "../components/ImageWithFrames.h"
 RenderSystem::RenderSystem() {
 
 }
@@ -21,54 +19,32 @@ void RenderSystem::initSystem() {
 }
 
 void RenderSystem::update() {
-	drawMsgs();
-	drawStars();
 	drawPacMan();
-}
-
-void RenderSystem::drawStars() {
-	// draw stars
-	for (auto e : mngr_->getEntities(ecs::grp::STARS)) {
-
-		auto tr = mngr_->getComponent<Transform>(e);
-		auto tex = mngr_->getComponent<Image>(e)->tex_;
-		draw(tr, tex);
-	}
 }
 
 void RenderSystem::drawPacMan() {
 	auto e = mngr_->getHandler(ecs::hdlr::PACMAN);
-	auto tr = mngr_->getComponent<Transform>(e);
-	auto tex = mngr_->getComponent<Image>(e)->tex_;
-	draw(tr, tex);
+	auto tr = mngr_->getComponent<Transform>(e);																																																																																									
+	auto img = mngr_->getComponent<ImageWithFrames>(e);
 
+	if (tr != nullptr && img != nullptr) {
+		if (sdlutils().virtualTimer().currTime() > img->lastFrameChange_ + 100) {
+			img->lastFrameChange_ = sdlutils().virtualTimer().currTime();
+			img->currFrameC_ = (img->currFrameC_ + 1) % img->ncol_;
+			if (img->currFrameC_ == 0)
+				img->currFrameR_ = (img->currFrameR_ + 1) % img->nrow_;
+		}
+
+		int r = (img->currFrameR_ + img->srow_);
+		int c = (img->currFrameC_ + img->scol_);
+		SDL_Rect src = build_sdlrect(c * img->frameWidth_ + img->x_, r * img->frameHeight_ + img->y_, img->w_,
+			img->h_);
+		draw(tr, img->tex_, src);
+	}
 }
-
-
-void RenderSystem::drawMsgs() {
-	// draw the score
-	//
-	auto score = mngr_->getSystem<GameCtrlSystem>()->getScore();
-
-	Texture scoreTex(sdlutils().renderer(), std::to_string(score),
-			sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0x444444ff));
-
-	SDL_Rect dest = build_sdlrect( //
-			(sdlutils().width() - scoreTex.width()) / 2.0f, //
-			10.0f, //
-			scoreTex.width(), //
-			scoreTex.height());
-
-	scoreTex.render(dest);
-
-	// draw add stars message
-	sdlutils().msgs().at("HelloSDL").render(10, 10);
-
-}
-
-void RenderSystem::draw(Transform *tr, Texture *tex) {
+void RenderSystem::draw(Transform* tr, Texture* tex, SDL_Rect& src) {
 	SDL_Rect dest = build_sdlrect(tr->pos_, tr->width_, tr->height_);
 
 	assert(tex != nullptr);
-	tex->render(dest, tr->rot_);
+	tex->render(src, dest, tr->rot_);
 }

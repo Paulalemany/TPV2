@@ -18,7 +18,7 @@ void NewGameState::leave()
 
 void NewGameState::update()
 {
-	std::cout << "Update NewGameState" << std::endl;
+	//std::cout << "Update NewGameState" << std::endl;
 }
 
 void NewGameState::enter()

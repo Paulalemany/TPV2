@@ -22,7 +22,7 @@ void GameCtrlSystem::initSystem() {
 void GameCtrlSystem::update() {
 	auto &ihldr = ih();
 
-	if (ihldr.keyDownEvent()) {
+	/*if (ihldr.keyDownEvent()) {
 		if (ihldr.isKeyDown(SDL_SCANCODE_SPACE)) {
 
 			Message m;
@@ -30,14 +30,14 @@ void GameCtrlSystem::update() {
 			m.create_stars_data.n = 5;
 			mngr_->send(m);
 		}
-	}
+	}*/
 }
 
 void GameCtrlSystem::recieve(const Message &m) {
 	switch (m.id) {
-	case _m_STAR_EATEN:
+	/*case _m_STAR_EATEN:
 		score_ += mngr_->getComponent<Points>(m.star_eaten_data.e)->points_;
-		break;
+		break;*/
 	default:
 		break;
 	}

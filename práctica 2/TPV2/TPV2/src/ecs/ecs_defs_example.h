@@ -14,13 +14,14 @@
 //
 #define _CMPS_LIST_ \
 	TRANSFORM, \
-	IMAGE
+	IMAGE,
+
 
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	STAR, \
-	ASTEROID
+	/*STAR, \
+	ASTEROID*/
 
 // Handlers list - must have at least one element
 //

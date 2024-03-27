@@ -47,7 +47,7 @@ private:
 	ecs::Manager *mngr_;
 	ecs::System *pacmanSys_;
 	ecs::System *gameCtrlSys_;
-	ecs::System *startsSys_;
+	//ecs::System *startsSys_;
 	ecs::System *renderSys_;
 	ecs::System *collisionSys_;
 

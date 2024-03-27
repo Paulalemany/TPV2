@@ -26,7 +26,7 @@ Game::Game() :
 		mngr_(), //
 		pacmanSys_(), //
 		gameCtrlSys_(), //
-		startsSys_(), //
+		//startsSys_(), //
 		renderSys_(), //
 		collisionSys_(), //
 		current_state_(nullptr), //
@@ -55,7 +55,7 @@ void Game::init() {
 
 	// add the systems
 	pacmanSys_ = mngr_->addSystem<PacManSystem>();
-	startsSys_ = mngr_->addSystem<StarsSystem>();
+	//startsSys_ = mngr_->addSystem<StarsSystem>();
 	gameCtrlSys_ = mngr_->addSystem<GameCtrlSystem>();
 	renderSys_ = mngr_->addSystem<RenderSystem>();
 	collisionSys_ = mngr_->addSystem<CollisionsSystem>();
@@ -95,7 +95,7 @@ void Game::start() {
 		current_state_->update();
 
 		pacmanSys_->update();
-		startsSys_->update();
+		//startsSys_->update();
 		gameCtrlSys_->update();
 		collisionSys_->update();
 
