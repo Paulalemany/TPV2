@@ -7,7 +7,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../components/ImageWithFrames.h"
 #include "../components/Immunity.h"
-#include "../components/Life.h"
+#include "../components/Health.h"
 
 PacManSystem::PacManSystem() :
 		pmTR_(nullptr) {
@@ -15,18 +15,26 @@ PacManSystem::PacManSystem() :
 
 PacManSystem::~PacManSystem() {
 }
-
+void PacManSystem::reset_pacman() {
+	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
+	auto pacmanTR_ = mngr_->getComponent<Transform>(pacman);
+	auto tam = 64.0f;
+	//comienza en el centro
+	auto x = (sdlutils().width() - tam) / 2.0f;
+	auto y = (sdlutils().height() - tam) / 2.0f;
+	pmTR_->init(Vector2D(x, y), Vector2D(0.f, 0.f), tam, tam, 0.0f); //vector velocidad 0,0
+}
 void PacManSystem::initSystem() {
 	auto pacman = mngr_->addEntity();
 
 	mngr_->setHandler(ecs::hdlr::PACMAN, pacman);
 
 	pmTR_ = mngr_->addComponent<Transform>(pacman);
-	auto s = 64.0f;
-	//comienza en el centro
-	auto x = (sdlutils().width() - s) / 2.0f;
-	auto y = (sdlutils().height() - s) / 2.0f;
-	pmTR_->init(Vector2D(x, y), Vector2D(0.f,0.f), s, s, 0.0f); //vector velocidad 0,0
+	//auto s = 64.0f;
+	////comienza en el centro
+	//auto x = (sdlutils().width() - s) / 2.0f;
+	//auto y = (sdlutils().height() - s) / 2.0f;
+	//pmTR_->init(Vector2D(x, y), Vector2D(0.f,0.f), s, s, 0.0f); //vector velocidad 0,0
 	mngr_->addComponent<ImageWithFrames>(pacman,
 		&sdlutils().images().at("SpriteSheet"),
 		8, 8,
@@ -36,7 +44,9 @@ void PacManSystem::initSystem() {
 		1, 2
 		);
 	mngr_->addComponent<Immunity>(pacman);
-	mngr_->addComponent<Life>(pacman);
+	mngr_->addComponent<Health>(pacman, 3, &sdlutils().images().at("Heart"));
+	reset_pacman();
+	//reset_lives();
 }
 
 void PacManSystem::update() {
@@ -79,4 +89,15 @@ void PacManSystem::update() {
 		pmTR_->vel_.set(0.0f, 0.0f);
 	}
 
+}
+void PacManSystem::reset_lives() {
+	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
+	auto pacmanHealth = mngr_->getComponent<Health>(pacman);
+	pacmanHealth->set_lives(3);
+}
+int PacManSystem::update_lives(int l) {
+	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
+	auto pacmanHealth = mngr_->getComponent<Health>(pacman);
+	return pacmanHealth->update_lives(l);
+	return 0;
 }

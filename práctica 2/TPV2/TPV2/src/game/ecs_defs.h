@@ -8,7 +8,7 @@
 	TRANSFORM, \
 	IMAGE, \
 	IMAGEWITHFRAMES, \
-	LIFE,\
+	HEALTH,\
 	IMMUNITY
 
 // Groups list - must have at least one element

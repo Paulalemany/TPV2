@@ -15,6 +15,6 @@ public:
 	void update() override;
 private:
 	void drawPacMan();
-	void draw(Transform* tr, Texture* tex, SDL_Rect& src);
+	//void draw(Transform* tr, Texture* tex, SDL_Rect& src);
 };
 

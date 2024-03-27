@@ -1,5 +1,3 @@
-// This file is part of the course TPV2@UCM - Samir Genaim
-
 #pragma once
 
 #include "../ecs/System.h"
@@ -15,6 +13,9 @@ public:
 	virtual ~PacManSystem();
 	void initSystem() override;
 	void update() override;
+	void reset_pacman();
+	void reset_lives();
+	int update_lives(int l);
 private:
 	Transform *pmTR_;
 };
