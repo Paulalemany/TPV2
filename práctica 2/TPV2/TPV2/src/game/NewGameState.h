@@ -2,10 +2,11 @@
 #include "GameState.h"
 
 class InputHandler;
+class Game;
 class NewGameState : public GameState
 {
 public:
-	NewGameState();
+	NewGameState(Game& g);
 	virtual ~NewGameState();
 	void leave() override;
 	void update() override;
@@ -13,5 +14,6 @@ public:
 
 private:
 	InputHandler& ihdlr;	//Referencia al input
+	Game& game;		//Referencia al game
 };
 

@@ -5,10 +5,9 @@
 
 #include "iostream"
 
-NewGameState::NewGameState() : ihdlr(ih())
+NewGameState::NewGameState(Game& g) : ihdlr(ih()), game(g)
 {
 	std::cout << "Create NewGameState" << std::endl;
-	
 }
 
 NewGameState::~NewGameState()
@@ -28,6 +27,7 @@ void NewGameState::update()
 		//Enviamos mensaje de "Ha empezado nueva partida"
 		//Cambia al estado NewRoundState
 		//Game::setState(2);
+		game.setState(2);
 	}
 
 	//Respectivo al render??

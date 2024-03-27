@@ -63,7 +63,7 @@ void Game::init() {
 	//Creación de los estados
 	paused_state_ = new PauseState();
 	runing_state_ = new RunningState();
-	newgame_state_ = new NewGameState();
+	newgame_state_ = new NewGameState(game);
 	newround_state_ = new NewRoundState();
 	gameover_state_ = new GameOverState();
 

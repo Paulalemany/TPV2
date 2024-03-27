@@ -18,9 +18,9 @@ public:
 		GAMEOVER, NEWGAME, NEWROUND, PAUSE, RUNNING
 	};
 
-	inline void setState(State s) {
+	inline void setState(int i) {
 		GameState* new_state = nullptr;
-		switch (s) {
+		switch (i) {
 		case GAMEOVER:
 			new_state = gameover_state_;
 			break;
@@ -57,6 +57,8 @@ private:
 	GameState* newgame_state_;
 	GameState* newround_state_;
 	GameState* gameover_state_;
+
+	Game& game = *this;
 
 };
 
