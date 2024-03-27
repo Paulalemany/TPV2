@@ -19,6 +19,8 @@ void RunningState::leave()
 void RunningState::update()
 {
 	std::cout << "Update RunningState" << std::endl;
+	//Llama al update de los sistemas
+	//Si se pulsa la P cambia al PauseState
 }
 
 void RunningState::enter()

@@ -101,12 +101,12 @@ void Game::start() {
 		gameCtrlSys_->update();
 		collisionSys_->update();*/
 
-		//A lo mejor esto debe ir en cada estado en vez de aquí
-		//mngr_->refresh();
+		//Control de las entidades (Eliminación)
+		mngr_->refresh();
 
 		//Referente al render ¿Debe ir aquí?
 		sdlutils().clearRenderer();
-		renderSys_->update();
+		/*renderSys_->update();*/
 		sdlutils().presentRenderer();
 
 		//Control del tiempo

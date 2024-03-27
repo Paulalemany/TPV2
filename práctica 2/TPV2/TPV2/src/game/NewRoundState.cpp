@@ -19,6 +19,8 @@ void NewRoundState::leave()
 void NewRoundState::update()
 {
 	std::cout << "Update NewRoundState" << std::endl;
+	//Al pulsar ENTER envia mensaje "Ha empezado nueva ronda"
+	//Pasa a RunningState
 }
 
 void NewRoundState::enter()

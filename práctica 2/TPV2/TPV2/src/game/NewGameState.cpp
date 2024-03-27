@@ -1,9 +1,14 @@
 #include "NewGameState.h"
+
+#include "../sdlutils/InputHandler.h"
+#include "Game.h"
+
 #include "iostream"
 
-NewGameState::NewGameState()
+NewGameState::NewGameState() : ihdlr(ih())
 {
 	std::cout << "Create NewGameState" << std::endl;
+	
 }
 
 NewGameState::~NewGameState()
@@ -18,7 +23,14 @@ void NewGameState::leave()
 
 void NewGameState::update()
 {
-	std::cout << "Update NewGameState" << std::endl;
+	//Evento de tecla pulsada
+	if (ihdlr.keyDownEvent()) {
+		//Enviamos mensaje de "Ha empezado nueva partida"
+		//Cambia al estado NewRoundState
+		//Game::setState(2);
+	}
+
+	//Respectivo al render??
 }
 
 void NewGameState::enter()

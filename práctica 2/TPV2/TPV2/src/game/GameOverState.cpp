@@ -19,6 +19,7 @@ void GameOverState::leave()
 void GameOverState::update()
 {
 	std::cout << "Update GameOverState" << std::endl;
+	//Al pulsar cualquier tecla pasa a NewGameState
 }
 
 void GameOverState::enter()

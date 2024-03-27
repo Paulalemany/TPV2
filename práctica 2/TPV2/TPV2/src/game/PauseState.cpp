@@ -19,6 +19,7 @@ void PauseState::leave()
 void PauseState::update()
 {
 	std::cout << "Update PauseState" << std::endl;
+	//Al pausar cualquier tecla entra al running state
 }
 
 void PauseState::enter()
