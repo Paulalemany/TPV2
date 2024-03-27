@@ -28,6 +28,8 @@ void NewGameState::update()
 		//Cambia al estado NewRoundState
 		//Game::setState(2);
 		game.setState(2);
+
+
 	}
 
 	//Respectivo al render??

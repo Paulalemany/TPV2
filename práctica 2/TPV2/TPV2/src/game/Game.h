@@ -18,6 +18,7 @@ public:
 		GAMEOVER, NEWGAME, NEWROUND, PAUSE, RUNNING
 	};
 
+	//Version anterior con State s
 	inline void setState(int i) {
 		GameState* new_state = nullptr;
 		switch (i) {
