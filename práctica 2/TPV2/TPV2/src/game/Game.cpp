@@ -9,7 +9,7 @@
 #include "../systems/GameCtrlSystem.h"
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
-#include "../systems/StarsSystem.h"
+#include "../systems/GhostSystem.h"
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
 
@@ -26,9 +26,9 @@ Game::Game() :
 		mngr_(), //
 		pacmanSys_(), //
 		gameCtrlSys_(), //
-		//startsSys_(), //
 		renderSys_(), //
 		collisionSys_(), //
+		ghostSys_(),//
 		current_state_(nullptr), //
 		paused_state_(nullptr), //
 		runing_state_(nullptr), //
@@ -55,12 +55,12 @@ void Game::init() {
 
 	// add the systems
 	pacmanSys_ = mngr_->addSystem<PacManSystem>();
-	//startsSys_ = mngr_->addSystem<StarsSystem>();
 	gameCtrlSys_ = mngr_->addSystem<GameCtrlSystem>();
 	renderSys_ = mngr_->addSystem<RenderSystem>();
 	collisionSys_ = mngr_->addSystem<CollisionsSystem>();
+	ghostSys_ = mngr_->addSystem<GhostSystem>();
 
-	//Creación de los estados
+	//Creaciï¿½n de los estados
 	paused_state_ = new PauseState();
 	runing_state_ = new RunningState();
 	newgame_state_ = new NewGameState();
@@ -88,16 +88,15 @@ void Game::start() {
 			continue;
 		}
 
-
 		//Llamada al update del estado de juego actual
 		//Flush del manager ->Envia mensajes
 
 		current_state_->update();
 
 		pacmanSys_->update();
-		//startsSys_->update();
 		gameCtrlSys_->update();
 		collisionSys_->update();
+		ghostSys_->update();
 
 		mngr_->refresh();
 
@@ -109,6 +108,7 @@ void Game::start() {
 
 		if (frameTime < 10)
 			SDL_Delay(10 - frameTime);
+
 	}
 
 }

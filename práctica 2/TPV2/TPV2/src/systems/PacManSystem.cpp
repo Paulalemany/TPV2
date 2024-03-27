@@ -11,14 +11,12 @@
 
 PacManSystem::PacManSystem() :
 		pmTR_(nullptr) {
+	tam = 64.0f;
 }
 
 PacManSystem::~PacManSystem() {
 }
 void PacManSystem::reset_pacman() {
-	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
-	auto pacmanTR_ = mngr_->getComponent<Transform>(pacman);
-	auto tam = 64.0f;
 	//comienza en el centro
 	auto x = (sdlutils().width() - tam) / 2.0f;
 	auto y = (sdlutils().height() - tam) / 2.0f;
@@ -30,11 +28,6 @@ void PacManSystem::initSystem() {
 	mngr_->setHandler(ecs::hdlr::PACMAN, pacman);
 
 	pmTR_ = mngr_->addComponent<Transform>(pacman);
-	//auto s = 64.0f;
-	////comienza en el centro
-	//auto x = (sdlutils().width() - s) / 2.0f;
-	//auto y = (sdlutils().height() - s) / 2.0f;
-	//pmTR_->init(Vector2D(x, y), Vector2D(0.f,0.f), s, s, 0.0f); //vector velocidad 0,0
 	mngr_->addComponent<ImageWithFrames>(pacman,
 		&sdlutils().images().at("SpriteSheet"),
 		8, 8,
@@ -50,7 +43,6 @@ void PacManSystem::initSystem() {
 }
 
 void PacManSystem::update() {
-
 	auto &ihldr = ih();
 
 	if (ihldr.keyDownEvent()) {
@@ -69,7 +61,7 @@ void PacManSystem::update() {
 		}
 	}
 	// move the pacman
-	pmTR_->pos_ = pmTR_->pos_ + pmTR_->vel_;
+	pmTR_->update();
 
 	// check left/right borders
 	if (pmTR_->pos_.getX() < 0) {
@@ -88,7 +80,6 @@ void PacManSystem::update() {
 		pmTR_->pos_.setY(sdlutils().height() - pmTR_->height_);
 		pmTR_->vel_.set(0.0f, 0.0f);
 	}
-
 }
 void PacManSystem::reset_lives() {
 	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);

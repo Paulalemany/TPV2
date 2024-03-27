@@ -50,6 +50,7 @@ private:
 	//ecs::System *startsSys_;
 	ecs::System *renderSys_;
 	ecs::System *collisionSys_;
+	ecs::System *ghostSys_;
 
 	GameState* current_state_;
 	GameState* paused_state_;
@@ -57,6 +58,5 @@ private:
 	GameState* newgame_state_;
 	GameState* newround_state_;
 	GameState* gameover_state_;
-
 };
 

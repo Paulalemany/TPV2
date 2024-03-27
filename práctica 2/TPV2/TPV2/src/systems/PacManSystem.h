@@ -18,5 +18,6 @@ public:
 	int update_lives(int l);
 private:
 	Transform *pmTR_;
+	float tam;
 };
 
