@@ -5,7 +5,8 @@
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../utils/Collisions.h"
-#include "StarsSystem.h"
+#include "../components/Immunity.h"
+
 
 CollisionsSystem::CollisionsSystem() {
 	// TODO Auto-generated constructor stub
@@ -21,6 +22,7 @@ void CollisionsSystem::initSystem() {
 
 void CollisionsSystem::update() {
 	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
+	auto pacImmunity = mngr_->getComponent<Immunity>(pacman);
 	auto pacTR = mngr_->getComponent<Transform>(pacman);
 
 	//auto& ghosts = mngr_->getEntities(ecs::grp::GHOSTS);
@@ -31,9 +33,18 @@ void CollisionsSystem::update() {
 			if (Collisions::collides(
 				pacTR->pos_, pacTR->width_, pacTR->height_,
 				ghotsTR->pos_, ghotsTR->width_, ghotsTR->height_)) {
-				Message m;
-				m.id = _m_PACMAN_GHOST_COLLISION;
-				mngr_->send(m);
+				if (pacImmunity->isImmunity()) {
+					Message m;
+					m.id = _m_PACMAN_EAT_GHOST;
+					m.ghost_eaten_data.e = ghost;
+					mngr_->send(m);
+				}
+				else {
+					Message m;
+					m.id = _m_PACMAN_GHOST_COLLISION;
+					mngr_->send(m);
+				}
+				
 			}
 		}
 		

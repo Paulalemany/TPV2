@@ -96,6 +96,7 @@ void PacManSystem::recieve(const Message& m) {
 	case _m_PACMAN_GHOST_COLLISION: {
 		update_lives(1);
 	}
+	break;
 	case _m_IMMUNITY_START: {
 		auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
 		auto pacmanImmunity = mngr_->getComponent<Immunity>(pacman);

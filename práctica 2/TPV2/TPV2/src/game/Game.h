@@ -51,6 +51,7 @@ private:
 	ecs::System *renderSys_;
 	ecs::System *collisionSys_;
 	ecs::System *ghostSys_;
+	ecs::System* immunitySys_;
 
 	GameState* current_state_;
 	GameState* paused_state_;

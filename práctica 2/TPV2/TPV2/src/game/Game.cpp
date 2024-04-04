@@ -10,6 +10,7 @@
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
 #include "../systems/GhostSystem.h"
+#include "../systems/ImmunitySystem.h"
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
 
@@ -59,6 +60,7 @@ void Game::init() {
 	renderSys_ = mngr_->addSystem<RenderSystem>();
 	collisionSys_ = mngr_->addSystem<CollisionsSystem>();
 	ghostSys_ = mngr_->addSystem<GhostSystem>();
+	immunitySys_ = mngr_->addSystem<ImmunitySystem>();
 
 	//Creaci�n de los estados
 	paused_state_ = new PauseState();
@@ -97,6 +99,7 @@ void Game::start() {
 		gameCtrlSys_->update();
 		collisionSys_->update();
 		ghostSys_->update();
+		immunitySys_->update();
 
 		mngr_->refresh();
 
