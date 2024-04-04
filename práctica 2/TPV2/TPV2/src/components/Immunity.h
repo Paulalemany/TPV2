@@ -12,6 +12,7 @@ struct Immunity : public ecs::Component {
 
 	}
 	bool isImmunity() { return immunity_; }
+	void setImmunity(bool i) { immunity_ = i; }
 	bool immunity_;
 };
 

@@ -13,6 +13,7 @@ public:
 	virtual ~RenderSystem();
 	void initSystem() override;
 	void update() override;
+	void recieve(const Message& m) override;
 private:
 	void drawPacMan();
 	void drawGhosts();

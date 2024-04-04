@@ -14,6 +14,7 @@ struct ImageWithFrames: public ecs::Component {
 			int x, int y, int w, int h, 
 			int scol, int srow, int ncol, int nrow);
 	virtual ~ImageWithFrames();
+	void setSCol(int newScol);
 	Texture* tex_;
 	
 	int currFrameR_;

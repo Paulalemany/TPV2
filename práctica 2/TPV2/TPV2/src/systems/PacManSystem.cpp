@@ -90,5 +90,25 @@ int PacManSystem::update_lives(int l) {
 	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
 	auto pacmanHealth = mngr_->getComponent<Health>(pacman);
 	return pacmanHealth->update_lives(l);
-	return 0;
+}
+void PacManSystem::recieve(const Message& m) {
+	switch (m.id) {
+	case _m_PACMAN_GHOST_COLLISION: {
+		update_lives(1);
+	}
+	case _m_IMMUNITY_START: {
+		auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
+		auto pacmanImmunity = mngr_->getComponent<Immunity>(pacman);
+		pacmanImmunity->setImmunity(true);
+	}
+	break;
+	case _m_IMMUNITY_END: {
+		auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
+		auto pacmanImmunity = mngr_->getComponent<Immunity>(pacman);
+		pacmanImmunity->setImmunity(false);
+	}
+	break;
+	default:
+		break;
+	}
 }

@@ -20,16 +20,25 @@ void CollisionsSystem::initSystem() {
 }
 
 void CollisionsSystem::update() {
+	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
+	auto pacTR = mngr_->getComponent<Transform>(pacman);
 
-	// the PacMan's Transform
-	//
-	auto pm = mngr_->getHandler(ecs::hdlr::PACMAN);
-	auto pTR = mngr_->getComponent<Transform>(pm);
+	//auto& ghosts = mngr_->getEntities(ecs::grp::GHOSTS);
+	for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
+		if (mngr_->isAlive(ghost)) {
+			auto ghotsTR = mngr_->getComponent<Transform>(ghost);
 
-	//// For safety, we traverse with a normal loop until the current size. In this
-	//// particular case we could use a for-each loop since the list stars is not
-	//// modified.
-	////
+			if (Collisions::collides(
+				pacTR->pos_, pacTR->width_, pacTR->height_,
+				ghotsTR->pos_, ghotsTR->width_, ghotsTR->height_)) {
+				Message m;
+				m.id = _m_PACMAN_GHOST_COLLISION;
+				mngr_->send(m);
+			}
+		}
+		
+	}
+
 	//auto &stars = mngr_->getEntities(ecs::grp::STARS);
 	//auto n = stars.size();
 	//for (auto i = 0u; i < n; i++) {

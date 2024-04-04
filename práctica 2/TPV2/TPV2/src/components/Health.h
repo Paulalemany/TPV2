@@ -23,7 +23,7 @@ struct Health : public ecs::Component {
 		assert(lives_ >= 0);
 	}
 	int update_lives(int l) {
-		lives_ += l;
+		lives_ -= l;
 		assert(lives_ >= 0);
 		return lives_;
 	}

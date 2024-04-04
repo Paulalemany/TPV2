@@ -14,11 +14,10 @@ public:
 	virtual ~GhostSystem();
 	void initSystem() override;
 	void update() override;
-	void create_ghosts();
 	void remove_all_ghosts();
-	void generate_ghost(const Vector2D& pos, const Vector2D& vel);
-	int getNumGhosts() { return currNumOfGhosts_; }
-	int getLimitGhosts() { return ghostsLimit_; }
+	void addGhost();
+	void onGhostEaten(ecs::entity_t e);
+	void recieve(const Message& m) override;
 private:
 	//Transform* ghTR_;
 	RandomNumberGenerator& rand_;

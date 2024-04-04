@@ -16,6 +16,7 @@ public:
 	void reset_pacman();
 	void reset_lives();
 	int update_lives(int l);
+	void recieve(const Message& m) override;
 private:
 	Transform *pmTR_;
 	float tam;
