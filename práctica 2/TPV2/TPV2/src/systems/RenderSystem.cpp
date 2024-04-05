@@ -71,12 +71,6 @@ void RenderSystem::drawGhosts() {
 
 			int r =(imgGhost->currFrameR_ + imgGhost->srow_);
 			int c = (imgGhost->currFrameC_ + imgGhost->scol_);
-			/*if (pacImmunity != nullptr && pacImmunity->isImmunity()) {
-				r = imgGhost->srow_ + 2 + imgGhost->currFrameR_;
-			}
-			else {
-				r = imgGhost->currFrameR_ + imgGhost->srow_;
-			}*/
 			SDL_Rect src = build_sdlrect(c * imgGhost->frameWidth_ + imgGhost->x_, r * imgGhost->frameHeight_ + imgGhost->y_,
 				imgGhost->w_, imgGhost->h_);
 			SDL_Rect dest = build_sdlrect(ghotsTR->pos_, ghotsTR->width_, ghotsTR->height_);

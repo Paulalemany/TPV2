@@ -19,7 +19,6 @@ public:
 	void onGhostEaten(ecs::entity_t e);
 	void recieve(const Message& m) override;
 private:
-	//Transform* ghTR_;
 	RandomNumberGenerator& rand_;
 	unsigned int ghostsLimit_;
 	unsigned int currNumOfGhosts_;

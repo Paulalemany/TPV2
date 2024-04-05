@@ -57,9 +57,9 @@ void GhostSystem::addGhost() {
 
 		auto tam = 64.0f;
 
-		//mngr_->addComponent<Transform>(ghost, pos, vel, tam, tam, 0.0f);
-		auto ghostTR = mngr_->addComponent<Transform>(ghost);
-		ghostTR->init(pos, vel, tam, tam, 0.0f);
+		mngr_->addComponent<Transform>(ghost, pos, vel, tam, tam, 0.0f);
+		/*auto ghostTR = mngr_->addComponent<Transform>(ghost);
+		ghostTR->init(pos, vel, tam, tam, 0.0f);*/
 		mngr_->addComponent<ImageWithFrames>(ghost,
 			&sdlutils().images().at("SpriteSheet"),
 			8, 8,
@@ -123,7 +123,35 @@ void GhostSystem::recieve(const Message& m) {
 	case _m_CREATE_GHOST: {
 		addGhost();
 	}
+
 	break;
+	case _m_IMMUNITY_START: {
+		for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
+			auto imageCmp = mngr_->getComponent<ImageWithFrames>(ghost);
+			imageCmp->init(&sdlutils().images().at("SpriteSheet"),
+				8, 8,
+				0, 0,
+				128, 128,
+				6, 0,
+				1, 8
+			);
+		}
+
+	}
+	break;
+	case _m_IMMUNITY_END: {
+		for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
+			auto imageCmp = mngr_->getComponent<ImageWithFrames>(ghost);
+			imageCmp->init(&sdlutils().images().at("SpriteSheet"),
+				8, 8,
+				0, 0,
+				128, 128,
+				4, 0,
+				1, 8
+			);
+		}
+
+	}
 	default:
 		break;
 	}

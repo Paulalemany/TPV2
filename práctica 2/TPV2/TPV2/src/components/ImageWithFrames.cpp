@@ -31,6 +31,24 @@ ImageWithFrames::ImageWithFrames(Texture *tex, int rows, int cols, int x, int y,
 
 ImageWithFrames::~ImageWithFrames() {
 }
-void ImageWithFrames::setSCol(int newScol) {
-	scol_ = newScol;
+
+void ImageWithFrames::init(Texture* tex,
+	int cols, int rows,
+	int x, int y, int w, int h,
+	int srow, int scol, int nrow, int ncol) {
+
+	tex_ = tex;
+	x_ = x;
+	y_ = y;
+	w_ = w;
+	h_ = h;
+	srow_ = srow;
+	scol_ = scol;
+	nrow_ = nrow;
+	ncol_ = ncol;
+
+	currFrameR_ = 0;
+	currFrameC_ = 0;
+
+	lastFrameChange_ = 0;
 }

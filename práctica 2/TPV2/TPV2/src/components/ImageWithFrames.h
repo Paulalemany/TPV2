@@ -12,11 +12,15 @@ struct ImageWithFrames: public ecs::Component {
 	ImageWithFrames(Texture *tex,
 			int cols, int rows, 
 			int x, int y, int w, int h, 
-			int scol, int srow, int ncol, int nrow);
+			int srow, int scol, int nrow , int ncol);
 	virtual ~ImageWithFrames();
-	void setSCol(int newScol);
+
+	void init(Texture* tex,
+		int cols, int rows,
+		int x, int y, int w, int h,
+		int srow, int scol, int nrow, int ncol);
+
 	Texture* tex_;
-	
 	int currFrameR_;
 	int currFrameC_;
 	int x_;
