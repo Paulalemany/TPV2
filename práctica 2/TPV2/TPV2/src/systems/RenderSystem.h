@@ -3,6 +3,7 @@
 #include "../sdlutils/SDLUtils.h"
 class Texture;
 struct Transform;
+struct ImageWithFrames;
 
 class RenderSystem: public ecs::System {
 public:
@@ -13,10 +14,10 @@ public:
 	virtual ~RenderSystem();
 	void initSystem() override;
 	void update() override;
-	void recieve(const Message& m) override;
 private:
 	void drawPacMan();
 	void drawGhosts();
+	void drawWithFrames(Transform* tr, ImageWithFrames* img);
 	//void draw(Transform* tr, Texture* tex, SDL_Rect& src);
 };
 

@@ -76,16 +76,16 @@ void GhostSystem::update() {
 	for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
 		auto ghotsTR = mngr_->getComponent<Transform>(ghost);
 
-		//if (rand_.nextInt(0, 1000) < 5) {
-		//	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
-		//	auto pacmanTR = mngr_->addComponent<Transform>(pacman);
+		/*if (rand_.nextInt(0, 1000) < 5) {
+			auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
+			auto pacmanTR = mngr_->addComponent<Transform>(pacman);
 
-		//	Vector2D direction = (pacmanTR->getPos() - ghotsTR->getPos()).normalize();
-		//	float speedMultiplier = 1.1f;
-		//	Vector2D vel = direction * speedMultiplier;
+			Vector2D direction = (pacmanTR->getPos() - ghotsTR->getPos()).normalize();
+			float speedMultiplier = 1.1f;
+			Vector2D vel = direction * speedMultiplier;
 
-		//	ghotsTR->setVel(vel);
-		//}
+			ghotsTR->setVel(vel);
+		}*/
 		ghotsTR->update();
 		// check left/right borders
 		if (ghotsTR->pos_.getX() < 0) {
@@ -123,7 +123,6 @@ void GhostSystem::recieve(const Message& m) {
 	case _m_CREATE_GHOST: {
 		addGhost();
 	}
-
 	break;
 	case _m_IMMUNITY_START: {
 		for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
@@ -136,7 +135,6 @@ void GhostSystem::recieve(const Message& m) {
 				1, 8
 			);
 		}
-
 	}
 	break;
 	case _m_IMMUNITY_END: {
@@ -150,7 +148,6 @@ void GhostSystem::recieve(const Message& m) {
 				1, 8
 			);
 		}
-
 	}
 	default:
 		break;
