@@ -6,7 +6,7 @@
 
 #include "iostream"
 
-NewGameState::NewGameState(Game& g) : ihdlr(ih()), game(g)
+NewGameState::NewGameState() : ihdlr(ih())
 {
 	std::cout << "Create NewGameState" << std::endl;
 }
@@ -26,14 +26,13 @@ void NewGameState::update()
 	//Evento de tecla pulsada
 	if (ihdlr.keyDownEvent()) {
 		//Enviamos mensaje de "Ha empezado nueva partida"
-		//Cambia al estado NewRoundState
-		//Game::setState(2);
-		//game.setState(2);
-
 		Message m;
 		m.id = _m_ROUND_START;
 		//Si le queremos pasar un parámetro se haría aquí
-		//mngr_->send(m);
+		mngr_->send(m);
+
+		//Cambiamos de estado a NewRoundState
+		game->setState(2);
 	}
 
 	//Respectivo al render??

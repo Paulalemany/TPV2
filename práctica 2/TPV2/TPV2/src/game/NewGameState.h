@@ -6,7 +6,7 @@ class Game;
 class NewGameState : public GameState
 {
 public:
-	NewGameState(Game& g);
+	NewGameState();
 	virtual ~NewGameState();
 	void leave() override;
 	void update() override;
@@ -14,6 +14,6 @@ public:
 
 private:
 	InputHandler& ihdlr;	//Referencia al input
-	Game& game;		//Referencia al game
+	
 };
 

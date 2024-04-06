@@ -63,11 +63,20 @@ void Game::init() {
 	//Creación de los estados
 	paused_state_ = new PauseState();
 	runing_state_ = new RunningState();
-	newgame_state_ = new NewGameState(game);
+	newgame_state_ = new NewGameState();
 	newround_state_ = new NewRoundState();
 	gameover_state_ = new GameOverState();
 
+	//Pasamos el mngr a todos los estados
+	paused_state_->setContext(mngr_, game);
+	runing_state_->setContext(mngr_, game);
+	newgame_state_->setContext(mngr_, game);
+	newround_state_->setContext(mngr_, game);
+	gameover_state_->setContext(mngr_, game);
+
 	current_state_ = newgame_state_;
+
+	
 }
 
 void Game::start() {

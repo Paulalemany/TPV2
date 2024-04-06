@@ -269,5 +269,8 @@
     <ClCompile Include="src\game\GameOverState.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\GameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -59,7 +59,7 @@ private:
 	GameState* newround_state_;
 	GameState* gameover_state_;
 
-	Game& game = *this;
+	Game* game = this;
 
 };
 
