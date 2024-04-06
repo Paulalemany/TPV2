@@ -2,10 +2,11 @@
 #include "../ecs/Manager.h"
 
 class Game;
+class InputHandler;
 class GameState {
 public:
 
-	GameState() { }
+	GameState() : ihdlr(ih()) { }
 
 	virtual ~GameState() { }
 
@@ -13,10 +14,11 @@ public:
 	virtual void leave() = 0;
 	virtual void update() = 0;
 
-	void setContext(ecs::Manager* manager, Game* g);
+	void setContext(ecs::Manager* manager, Game* g, InputHandler& i);
 
 protected:
-	ecs::Manager* mngr_;
-	Game* game;
+	ecs::Manager* mngr_;	//Referencia al mngr
+	Game* game;				//Referencia a la máquina
+	InputHandler& ihdlr;	//Referencia al input
 };
 

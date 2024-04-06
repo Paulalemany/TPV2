@@ -18,8 +18,17 @@ void NewRoundState::leave()
 
 void NewRoundState::update()
 {
-	std::cout << "Update NewRoundState" << std::endl;
 	//Al pulsar ENTER envia mensaje "Ha empezado nueva ronda"
+	//if (ihdlr.keyDownEvent()) {
+	//	//Enviamos mensaje de "Ha empezado nueva partida"
+	//	Message m;
+	//	m.id = _m_ROUND_START;
+	//	//Si le queremos pasar un parámetro se haría aquí
+	//	mngr_->send(m);
+
+	//	//Cambiamos de estado a NewRoundState
+	//	game->setState(2);
+	//}
 	//Pasa a RunningState
 }
 
