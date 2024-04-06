@@ -6,9 +6,17 @@
 
 #include "iostream"
 
-NewGameState::NewGameState() : ihdlr(ih())
+NewGameState::NewGameState()
 {
 	std::cout << "Create NewGameState" << std::endl;
+
+	//Cogemos el mensaje del mapa
+	textTexture = &sdlutils().msgs().at("NewGame");
+
+	//Ponemos donde se debe colocar (En el centro idealmente)
+	textRect = build_sdlrect((sdlutils().width()/ 2) - textTexture->width() / 3,
+		((sdlutils().height() / 2) - textTexture->height() / 3),
+		textTexture->width()/1.5, textTexture->height()/1.5);
 }
 
 NewGameState::~NewGameState()
@@ -23,6 +31,9 @@ void NewGameState::leave()
 
 void NewGameState::update()
 {
+	//Renderizamos el texto
+	textTexture->render(textRect);
+
 	//Evento de tecla pulsada
 	if (ihdlr.keyDownEvent()) {
 		//Enviamos mensaje de "Ha empezado nueva partida"
@@ -35,7 +46,8 @@ void NewGameState::update()
 		game->setState(2);
 	}
 
-	//Respectivo al render??
+	
+
 }
 
 void NewGameState::enter()

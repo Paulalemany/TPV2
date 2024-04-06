@@ -1,8 +1,9 @@
 #pragma once
+#include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
+#include "../sdlutils/InputHandler.h"
 
 class Game;
-class InputHandler;
 class GameState {
 public:
 
@@ -14,7 +15,7 @@ public:
 	virtual void leave() = 0;
 	virtual void update() = 0;
 
-	void setContext(ecs::Manager* manager, Game* g, InputHandler& i);
+	void setContext(ecs::Manager* manager, Game* g);
 
 protected:
 	ecs::Manager* mngr_;	//Referencia al mngr

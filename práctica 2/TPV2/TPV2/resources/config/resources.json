@@ -19,7 +19,8 @@
   
   "messages" : [
     { "id" : "PressAnyKey", "text" : "Press Any Key", "font" : "ARIAL24", "color" : "0x112233ff", "bg" : "0xffffffff" },
-    { "id" : "HelloSDL", "text" : "Hello SDL!", "font" : "ARIAL48", "color" : "0x0000ffff" }
+    { "id" : "HelloSDL", "text" : "Hello SDL!", "font" : "ARIAL48", "color" : "0x0000ffff" },
+    { "id" : "NewGame", "text" : "Pulsa cualquier tecla para iniciar el juego :)", "font" :"ARIAL48", "color": "0xff73fa" }
   ],
 
   "sounds": [

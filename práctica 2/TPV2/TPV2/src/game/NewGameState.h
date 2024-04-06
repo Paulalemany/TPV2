@@ -1,8 +1,6 @@
 #pragma once
 #include "GameState.h"
 
-class InputHandler;
-class Game;
 class NewGameState : public GameState
 {
 public:
@@ -13,7 +11,11 @@ public:
 	void enter() override;
 
 private:
-	InputHandler& ihdlr;	//Referencia al input
 	
+	//Textura para el mensaje de texto
+	Texture* textTexture;
+
+	//Posición del mensaje de texto
+	SDL_Rect textRect;
 };
 

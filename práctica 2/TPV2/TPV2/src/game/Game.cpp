@@ -87,6 +87,9 @@ void Game::start() {
 	auto &ihdlr = ih();
 
 	while (!exit) {
+		//Referente al render ¿Debe ir aquí?
+		sdlutils().clearRenderer();
+
 		Uint32 startTime = sdlutils().currRealTime();
 
 		// refresh the input handler
@@ -97,7 +100,6 @@ void Game::start() {
 			exit = true;
 			continue;
 		}
-
 
 		//Llamada al update del estado de juego actual
 		//Flush del manager ->Envia mensajes
@@ -113,8 +115,7 @@ void Game::start() {
 		//Control de las entidades (Eliminación)
 		mngr_->refresh();
 
-		//Referente al render ¿Debe ir aquí?
-		sdlutils().clearRenderer();
+		
 		/*renderSys_->update();*/
 		sdlutils().presentRenderer();
 
