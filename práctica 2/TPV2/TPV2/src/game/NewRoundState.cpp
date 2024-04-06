@@ -4,6 +4,17 @@
 NewRoundState::NewRoundState()
 {
 	std::cout << "Create NewRoundState" << std::endl;
+
+	//Cogemos el texto del mapa
+	textTexture = &sdlutils().msgs().at("NewRound");
+
+	//Posición  y tamaño del texto
+	textRect = build_sdlrect(
+		(sdlutils().width() - textTexture->width()) /2,
+		sdlutils().height() / 2,
+		textTexture->width(),
+		textTexture->height()
+	);
 }
 
 NewRoundState::~NewRoundState()
@@ -18,6 +29,9 @@ void NewRoundState::leave()
 
 void NewRoundState::update()
 {
+	//Renderizamos el texto
+	textTexture->render(textRect);
+
 	//Al pulsar ENTER envia mensaje "Ha empezado nueva ronda"
 	//if (ihdlr.keyDownEvent()) {
 	//	//Enviamos mensaje de "Ha empezado nueva partida"
