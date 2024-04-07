@@ -66,8 +66,8 @@ void CollisionsSystem::update() {
 
 				auto milagro = mngr_->getComponent<Miraculous>(f);
 				Message m1;
-				//Diferenciamos entre si es milagrosa o no
-				if (milagro != nullptr && !pacImmunity->isImmunity()) {
+				//Diferenciamos entre si es milagrosa o no (Además de si está activada y de si el pacman ya está con la inmunidad)
+				if (milagro != nullptr && milagro->Milagro() && !pacImmunity->isImmunity()) {
 					//Si es una fruta milagrosa y el pacman no est� ya con inmunidad mandamos el mensaje
 					Message m;
 					m.id = _m_IMMUNITY_START;
