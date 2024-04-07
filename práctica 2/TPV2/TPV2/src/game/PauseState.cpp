@@ -8,7 +8,7 @@ PauseState::PauseState()
 
 	//Cogemos los textos correspondientes
 	pauseText = &sdlutils().msgs().at("Pause");
-	continueText = &sdlutils().msgs().at("Continue");
+	continueText = &sdlutils().msgs().at("Continuar");
 
 	//Colocamos los textos en su sitio
 	pauseRect = build_sdlrect(

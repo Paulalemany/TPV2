@@ -21,7 +21,7 @@
     { "id" : "NewGame", "text" : "Pulsa cualquier tecla para iniciar el juego :)", "font" :"ARIAL48", "color": "0xff73fa" },
     { "id" : "NewRound", "text" : "Pulsa 'enter' para inciar nueva ronda", "font" : "ARIAL24", "color": "0xff73fa"},
     { "id" : "Pause", "text" : "Menu de pausa", "font" : "ARIAL24", "color" : "0xff73fa"},
-    { "id" : "Continuar", "text" : "Pulsa cualquier botón para continuar", "font" :"ARIAL24", "color":"0xff73fa"}
+    { "id" : "Continuar", "text" : "Pulsa cualquier boton para continuar", "font" :"ARIAL24", "color":"0xff73fa"}
   ],
 
   "sounds": [
