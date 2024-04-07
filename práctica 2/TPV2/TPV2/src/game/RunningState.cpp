@@ -21,6 +21,15 @@ void RunningState::update()
 {
 	
 	//Llama al update de los sistemas
+	
+	game->pacmanSys_->update();
+	game->gameCtrlSys_->update();
+	game->collisionSys_->update();
+	game->ghostSys_->update();
+	game->immunitySys_->update();
+
+	game->renderSys_->update();
+
 	//Si se pulsa la P cambia al PauseState
 	if (ih().isKeyDown(SDL_SCANCODE_P)) {
 		game->setState(Game::PAUSE);

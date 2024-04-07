@@ -44,15 +44,17 @@ public:
 		current_state_ = new_state;
 		current_state_->enter();
 	}
+
+	ecs::System* pacmanSys_;
+	ecs::System* gameCtrlSys_;
+	//ecs::System *startsSys_;
+	ecs::System* renderSys_;
+	ecs::System* collisionSys_;
+	ecs::System* ghostSys_;
+	ecs::System* immunitySys_;
 private:
 	ecs::Manager *mngr_;
-	ecs::System *pacmanSys_;
-	ecs::System *gameCtrlSys_;
-	//ecs::System *startsSys_;
-	ecs::System *renderSys_;
-	ecs::System *collisionSys_;
-	ecs::System *ghostSys_;
-	ecs::System* immunitySys_;
+	
 
 	GameState* current_state_;
 	GameState* paused_state_;

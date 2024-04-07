@@ -109,17 +109,17 @@ void Game::start() {
 
 		current_state_->update();
 
-		pacmanSys_->update();
+		/*pacmanSys_->update();
 		gameCtrlSys_->update();
 		collisionSys_->update();
 		ghostSys_->update();
-		immunitySys_->update();
+		immunitySys_->update();*/
 
 		//Control de las entidades (Eliminaci�n)
 		mngr_->refresh();
 
 		
-		/*renderSys_->update();*/
+		//renderSys_->update();
 		sdlutils().presentRenderer();
 
 		//Control del tiempo
