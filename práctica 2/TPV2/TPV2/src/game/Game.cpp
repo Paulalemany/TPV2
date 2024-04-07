@@ -75,7 +75,6 @@ void Game::init() {
 
 	current_state_ = newgame_state_;
 
-	
 }
 
 void Game::start() {

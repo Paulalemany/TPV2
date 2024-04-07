@@ -17,6 +17,7 @@ NewGameState::NewGameState()
 	textRect = build_sdlrect((sdlutils().width()/ 2) - textTexture->width() / 3,
 		((sdlutils().height() / 2) - textTexture->height() / 3),
 		textTexture->width()/1.5, textTexture->height()/1.5);
+	sdlutils().soundEffects().at("intro").play(0, 1);
 }
 
 NewGameState::~NewGameState()
@@ -33,7 +34,7 @@ void NewGameState::update()
 {
 	//Renderizamos el texto
 	textTexture->render(textRect);
-
+	
 	//Evento de tecla pulsada
 	if (ih().keyDownEvent()) {
 		//Enviamos mensaje de "Ha empezado nueva partida"
@@ -45,12 +46,10 @@ void NewGameState::update()
 		//Cambiamos de estado a NewRoundState
 		game->setState(Game::NEWROUND);
 	}
-
-	
-
 }
 
 void NewGameState::enter()
 {
+	sdlutils().soundEffects().at("intro").play(0, 1);
 	std::cout << "Enter on NewGameState" << std::endl;
 }

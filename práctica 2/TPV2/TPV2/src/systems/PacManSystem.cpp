@@ -93,6 +93,7 @@ void PacManSystem::recieve(const Message& m) {
 	switch (m.id) {
 	case _m_PACMAN_GHOST_COLLISION: {
 		update_lives(1);
+		sdlutils().soundEffects().at("death").play(0, 1);
 	}
 	break;
 	case _m_IMMUNITY_START: {

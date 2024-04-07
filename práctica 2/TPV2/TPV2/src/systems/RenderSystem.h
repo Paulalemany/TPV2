@@ -18,6 +18,5 @@ private:
 	void drawPacMan();
 	void drawGhosts();
 	void drawWithFrames(Transform* tr, ImageWithFrames* img);
-	//void draw(Transform* tr, Texture* tex, SDL_Rect& src);
 };
 

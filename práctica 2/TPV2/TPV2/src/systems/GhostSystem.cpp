@@ -58,8 +58,6 @@ void GhostSystem::addGhost() {
 		auto tam = 64.0f;
 
 		mngr_->addComponent<Transform>(ghost, pos, vel, tam, tam, 0.0f);
-		/*auto ghostTR = mngr_->addComponent<Transform>(ghost);
-		ghostTR->init(pos, vel, tam, tam, 0.0f);*/
 		mngr_->addComponent<ImageWithFrames>(ghost,
 			&sdlutils().images().at("SpriteSheet"),
 			8, 8,
@@ -70,41 +68,41 @@ void GhostSystem::addGhost() {
 			);
 		currNumOfGhosts_++;		
 	}
-
 }
 void GhostSystem::update() {
 	for (auto& ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
-		auto ghotsTR = mngr_->getComponent<Transform>(ghost);
+		auto ghostTR = mngr_->getComponent<Transform>(ghost);
 
-		/*if (rand_.nextInt(0, 1000) < 5) {
+		ghostTR->update();
+
+		//probabilidad actualizar el vector de velocidad
+		if (rand_.nextInt(0, 1000) < 5) {
 			auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
-			auto pacmanTR = mngr_->addComponent<Transform>(pacman);
+			auto pacmanTR = mngr_->getComponent<Transform>(pacman);
 
-			Vector2D direction = (pacmanTR->getPos() - ghotsTR->getPos()).normalize();
-			float speedMultiplier = 1.1f;
+			Vector2D direction = (pacmanTR->getPos() - ghostTR->getPos()).normalize();
+			float speedMultiplier = 0.8f;
 			Vector2D vel = direction * speedMultiplier;
-
-			ghotsTR->setVel(vel);
-		}*/
-		ghotsTR->update();
-		// check left/right borders
-		if (ghotsTR->pos_.getX() < 0) {
-			ghotsTR->pos_.setX(0.0f);
-			ghotsTR->getVel().invertX();
+			ghostTR->setVel(vel);
 		}
-		else if (ghotsTR->pos_.getX() + ghotsTR->width_ > sdlutils().width()) {
-			ghotsTR->pos_.setX(sdlutils().width() - ghotsTR->width_);
-			ghotsTR->getVel().invertX();
+		// check left/right borders
+		if (ghostTR->pos_.getX() < 0) {
+			ghostTR->pos_.setX(0.0f);
+			ghostTR->getVel().invertX();
+		}
+		else if (ghostTR->pos_.getX() + ghostTR->width_ > sdlutils().width()) {
+			ghostTR->pos_.setX(sdlutils().width() - ghostTR->width_);
+			ghostTR->getVel().invertX();
 		}
 
 		// check upper/lower borders
-		if (ghotsTR->pos_.getY() < 0) {
-			ghotsTR->pos_.setY(0.0f);
-			ghotsTR->getVel().invertY();
+		if (ghostTR->pos_.getY() < 0) {
+			ghostTR->pos_.setY(0.0f);
+			ghostTR->getVel().invertY();
 		}
-		else if (ghotsTR->pos_.getY() + ghotsTR->height_ > sdlutils().height()) {
-			ghotsTR->pos_.setY(sdlutils().height() - ghotsTR->height_);
-			ghotsTR->getVel().invertY();
+		else if (ghostTR->pos_.getY() + ghostTR->height_ > sdlutils().height()) {
+			ghostTR->pos_.setY(sdlutils().height() - ghostTR->height_);
+			ghostTR->getVel().invertY();
 		}
 	}  
 }
@@ -113,6 +111,7 @@ void GhostSystem::onGhostEaten(ecs::entity_t e) {
 	currNumOfGhosts_--;
 
 	//sonido
+	sdlutils().soundEffects().at("chomp").play(0, 1);
 }
 void GhostSystem::recieve(const Message& m) {
 	switch (m.id) {
