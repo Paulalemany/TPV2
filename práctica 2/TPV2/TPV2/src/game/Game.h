@@ -52,6 +52,8 @@ public:
 	ecs::System* collisionSys_;
 	ecs::System* ghostSys_;
 	ecs::System* immunitySys_;
+	ecs::System* foodSys_;
+
 private:
 	ecs::Manager *mngr_;
 	

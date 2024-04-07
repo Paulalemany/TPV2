@@ -81,16 +81,19 @@ void PacManSystem::update() {
 		pmTR_->vel_.set(0.0f, 0.0f);
 	}
 }
+
 void PacManSystem::reset_lives() {
 	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
 	auto pacmanHealth = mngr_->getComponent<Health>(pacman);
 	pacmanHealth->set_lives(3);
 }
+
 int PacManSystem::update_lives(int l) {
 	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
 	auto pacmanHealth = mngr_->getComponent<Health>(pacman);
 	return pacmanHealth->update_lives(l);
 }
+
 void PacManSystem::recieve(const Message& m) {
 	switch (m.id) {
 	case _m_PACMAN_GHOST_COLLISION: {

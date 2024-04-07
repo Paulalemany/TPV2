@@ -3,6 +3,15 @@
 
 class FoodSystem : public ecs::System
 {
+public:
+	__SYSID_DECL__(ecs::sys::FRUITS)
+
+	FoodSystem();			//Constructora
+	virtual ~FoodSystem();	//Destructora
+
+	void initSystem() override;
+	void update() override;
+
 	//2 Estados: normal y milagroso
 
 	/*//NORMAL
@@ -17,20 +26,20 @@ class FoodSystem : public ecs::System
 			Matamos fantasmas al tocar
 			No se obtiene más inmunidad
 	*/
+	
+private:
 
-	/*//PRINCIPIO DEL JUEGO
-		Se colocan las frutas en forma de grid
-		prob 0.1 de ser milagrosa
-		prob 0.9 de ser normal
-		frecuencia N (Entre 10-20s)
-	*/
+	//Datos para hacer la grid
+	const int numColums = 8;
+	const int offsetX = 30;
 
-	/*//DURANTE LA RONDA (update)
-		fruta normal -> milagrosa cada N segundos
-		queda en milagrosa por M segundos (entre 1-5s)
-		Al chocar pacman/fruta desaparece la fruta
-		Si no hay frutas se gana la partida ->
-		cambia de estado a GameOver State (mandando un mensaje)
-	*/
+	const int numFils = 6;
+	const int offsetY = 30;
+
+	//Total de frutas
+	int maxFruits = numColums * numFils;
+
+	//Frutas comidas y frutas por comer
+	int fruits, restFruits;
 };
 

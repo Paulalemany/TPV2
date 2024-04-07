@@ -26,6 +26,7 @@ void RunningState::update()
 	game->collisionSys_->update();
 	game->ghostSys_->update();
 	game->immunitySys_->update();
+	game->foodSys_->update();
 
 	game->renderSys_->update();
 

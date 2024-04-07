@@ -11,6 +11,7 @@
 #include "../systems/RenderSystem.h"
 #include "../systems/GhostSystem.h"
 #include "../systems/ImmunitySystem.h"
+#include "../systems/FoodSystem.h"
 #include "../utils/Vector2D.h"
 #include "../utils/Collisions.h"
 
@@ -63,6 +64,7 @@ void Game::init() {
 	collisionSys_ = mngr_->addSystem<CollisionsSystem>();
 	ghostSys_ = mngr_->addSystem<GhostSystem>();
 	immunitySys_ = mngr_->addSystem<ImmunitySystem>();
+	foodSys_ = mngr_->addSystem<FoodSystem>();
 
 	//Creacion de los estados
 	paused_state_ = new PauseState();
