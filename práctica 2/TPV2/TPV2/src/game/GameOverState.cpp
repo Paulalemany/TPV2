@@ -61,6 +61,8 @@ void GameOverState::update()
 
 void GameOverState::enter()
 {
-	sdlutils().soundEffects().at("won").play(0, 1);
+	if (playerWin) {
+		sdlutils().soundEffects().at("won").play(0, 1);
+	}
 	std::cout << "Enter on GameOverState" << std::endl;
 }

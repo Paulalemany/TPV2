@@ -72,6 +72,7 @@ void FoodSystem::update()
 
 void FoodSystem::fruitEaten(ecs::entity_t e)
 {
+	sdlutils().soundEffects().at("chomp").play(0, 1);
 	mngr_->setAlive(e, false);
 	fruits++;
 

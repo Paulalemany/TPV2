@@ -111,7 +111,7 @@ void GhostSystem::onGhostEaten(ecs::entity_t e) {
 	currNumOfGhosts_--;
 
 	//sonido
-	sdlutils().soundEffects().at("chomp").play(0, 1);
+	sdlutils().soundEffects().at("eat").play(0, 1);
 }
 void GhostSystem::recieve(const Message& m) {
 	switch (m.id) {
