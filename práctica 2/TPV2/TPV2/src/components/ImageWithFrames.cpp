@@ -12,47 +12,43 @@
 
 ImageWithFrames::ImageWithFrames(Texture *tex, int rows, int cols, int x, int y,
 		int w, int h, int srow, int scol, int nrow, int ncol) :
-		tex_(tex), //
-		tr_(nullptr), //
-		currFrameR_(0), //
-		currFrameC_(0), //
-		x_(x), //
-		y_(y), //
-		w_(w), //
-		h_(h), //
-		srow_(srow), //
-		scol_(scol), //
-		nrow_(nrow), //
-		ncol_(ncol), //
+		tex_(tex), 
+		currFrameR_(0), 
+		currFrameC_(0), 
+		x_(x), 
+		y_(y), 
+		w_(w), 
+		h_(h), 
+		srow_(srow), 
+		scol_(scol), 
+		nrow_(nrow),
+		ncol_(ncol),
 		lastFrameChange_(0)
 {
-	frameWidth_ = tex_->width() / cols;
-	frameHeight_ = tex->height() / rows;
+	frameWidth_ = w;
+	frameHeight_ = h;
 }
 
 ImageWithFrames::~ImageWithFrames() {
 }
 
-void ImageWithFrames::initComponent() {
-	tr_ = mngr_->getComponent<Transform>(ent_);
-	assert(tr_ != nullptr);
-}
+void ImageWithFrames::init(Texture* tex,
+	int cols, int rows,
+	int x, int y, int w, int h,
+	int srow, int scol, int nrow, int ncol) {
 
-void ImageWithFrames::render() {
-	if (sdlutils().virtualTimer().currTime() > lastFrameChange_ + 50) {
-		lastFrameChange_ = sdlutils().virtualTimer().currTime();
-		currFrameC_ = (currFrameC_ + 1) % ncol_;
-		if (currFrameC_ == 0)
-			currFrameR_ = (currFrameR_ + 1) % nrow_;
-	}
+	tex_ = tex;
+	x_ = x;
+	y_ = y;
+	w_ = w;
+	h_ = h;
+	srow_ = srow;
+	scol_ = scol;
+	nrow_ = nrow;
+	ncol_ = ncol;
 
-	int r = (currFrameR_ + srow_);
-	int c = (currFrameC_ + scol_);
-	auto src = build_sdlrect(c * frameWidth_ + x_, r * frameHeight_ + y_, w_,
-			h_);
+	currFrameR_ = 0;
+	currFrameC_ = 0;
 
-	auto dest = build_sdlrect(tr_->pos_, tr_->width_, tr_->height_);
-
-	tex_->render(src, dest, tr_->rot_);
-
+	lastFrameChange_ = 0;
 }

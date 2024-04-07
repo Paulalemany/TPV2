@@ -7,14 +7,16 @@
 #define _CMPS_LIST_ \
 	TRANSFORM, \
 	IMAGE, \
-	STARMOTION, \
-	POINTS, \
-	IMAGEWITHFRAMES
+	IMAGEWITHFRAMES, \
+	HEALTH,\
+	IMMUNITY
 
 // Groups list - must have at least one element
 //
 #define _GRPS_LIST_ \
-	STARS
+	FRUITS,\
+	GHOSTS
+
 
 // Handlers list - must have at least one element
 //
@@ -24,9 +26,11 @@
 // Systems list - must have at least one element
 //
 #define _SYS_LIST_ \
-    STARS, \
+    FRUITS, \
 	PACMAN, \
 	RENDER, \
 	GAMECTRL, \
-	COLLISIONS
+	COLLISIONS, \
+	GHOSTS, \
+	IMMUNITY
 

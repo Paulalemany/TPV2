@@ -1,10 +1,9 @@
-// This file is part of the course TPV2@UCM - Samir Genaim
-
 #pragma once
 #include "../ecs/System.h"
-
+#include "../sdlutils/SDLUtils.h"
 class Texture;
 struct Transform;
+struct ImageWithFrames;
 
 class RenderSystem: public ecs::System {
 public:
@@ -16,9 +15,9 @@ public:
 	void initSystem() override;
 	void update() override;
 private:
-	void drawStars();
 	void drawPacMan();
-	void drawMsgs();
-	void draw(Transform *tr, Texture *tex);
+	void drawGhosts();
+	void drawWithFrames(Transform* tr, ImageWithFrames* img);
+	//void draw(Transform* tr, Texture* tex, SDL_Rect& src);
 };
 

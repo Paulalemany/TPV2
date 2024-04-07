@@ -1,15 +1,15 @@
-// This file is part of the course TPV2@UCM - Samir Genaim
-
 #include "RenderSystem.h"
 
-#include "../components/Image.h"
+
 #include "../components/Transform.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/macros.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
 #include "GameCtrlSystem.h"
-
+#include "../components/ImageWithFrames.h"
+#include "../components/Health.h"
+#include "../components/Immunity.h"
 RenderSystem::RenderSystem() {
 
 }
@@ -21,54 +21,55 @@ void RenderSystem::initSystem() {
 }
 
 void RenderSystem::update() {
-	drawMsgs();
-	drawStars();
 	drawPacMan();
+	drawGhosts();
 }
+void RenderSystem::drawWithFrames(Transform* tr, ImageWithFrames* img) {
+	if (sdlutils().virtualTimer().currTime() > img->lastFrameChange_ + 100) {
+		img->lastFrameChange_ = sdlutils().virtualTimer().currTime();
+		img->currFrameC_ = (img->currFrameC_ + 1) % img->ncol_;
+		if (img->currFrameC_ == 0)
+			img->currFrameR_ = (img->currFrameR_ + 1) % img->nrow_;
+	}
 
-void RenderSystem::drawStars() {
-	// draw stars
-	for (auto e : mngr_->getEntities(ecs::grp::STARS)) {
+	int r = (img->currFrameR_ + img->srow_);
+	int c = (img->currFrameC_ + img->scol_);
+	SDL_Rect src = build_sdlrect(c * img->frameWidth_ + img->x_, r * img->frameHeight_ + img->y_,
+		img->w_, img->h_);
+	SDL_Rect dest = build_sdlrect(tr->pos_, tr->width_, tr->height_);
+	img->tex_->render(src, dest, tr->rot_);
+}
+void RenderSystem::drawPacMan() {
+	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
+	auto pacmanTR = mngr_->getComponent<Transform>(pacman);																																																																																									
+	auto imgPacman = mngr_->getComponent<ImageWithFrames>(pacman);
 
-		auto tr = mngr_->getComponent<Transform>(e);
-		auto tex = mngr_->getComponent<Image>(e)->tex_;
-		draw(tr, tex);
+	if (pacmanTR != nullptr && imgPacman != nullptr) {
+		drawWithFrames(pacmanTR, imgPacman);
+	}
+	//dibujar las vidas del pacman arriba a la izquierda
+	auto imgHealth = mngr_->getComponent<Health>(pacman);
+	if (imgHealth != nullptr) {
+		SDL_Rect dest = build_sdlrect(0.0f, 5.0f, 30.0f,30.0f);
+		for (int i = 0; i < imgHealth->get_num_lives(); i++) {
+			dest.x = 2 + i * 30;
+			imgHealth->tex_->render(dest);
+		}
 	}
 }
-
-void RenderSystem::drawPacMan() {
-	auto e = mngr_->getHandler(ecs::hdlr::PACMAN);
-	auto tr = mngr_->getComponent<Transform>(e);
-	auto tex = mngr_->getComponent<Image>(e)->tex_;
-	draw(tr, tex);
-
+void RenderSystem::drawGhosts() {
+	for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
+		auto ghotsTR = mngr_->getComponent<Transform>(ghost);
+		auto imgGhost = mngr_->getComponent<ImageWithFrames>(ghost);
+		if (ghotsTR != nullptr && imgGhost != nullptr) {
+			drawWithFrames(ghotsTR, imgGhost);
+		}
+	}
 }
+//void RenderSystem::draw(Transform* tr, Texture* tex, SDL_Rect& src) {
+//	SDL_Rect dest = build_sdlrect(tr->pos_, tr->width_, tr->height_);
+//
+//	assert(tex != nullptr);
+//	tex->render(src, dest, tr->rot_);
+//}
 
-
-void RenderSystem::drawMsgs() {
-	// draw the score
-	//
-	auto score = mngr_->getSystem<GameCtrlSystem>()->getScore();
-
-	Texture scoreTex(sdlutils().renderer(), std::to_string(score),
-			sdlutils().fonts().at("ARIAL24"), build_sdlcolor(0x444444ff));
-
-	SDL_Rect dest = build_sdlrect( //
-			(sdlutils().width() - scoreTex.width()) / 2.0f, //
-			10.0f, //
-			scoreTex.width(), //
-			scoreTex.height());
-
-	scoreTex.render(dest);
-
-	// draw add stars message
-	sdlutils().msgs().at("HelloSDL").render(10, 10);
-
-}
-
-void RenderSystem::draw(Transform *tr, Texture *tex) {
-	SDL_Rect dest = build_sdlrect(tr->pos_, tr->width_, tr->height_);
-
-	assert(tex != nullptr);
-	tex->render(dest, tr->rot_);
-}

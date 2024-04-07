@@ -39,7 +39,7 @@ void NewGameState::update()
 		//Enviamos mensaje de "Ha empezado nueva partida"
 		Message m;
 		m.id = _m_ROUND_START;
-		//Si le queremos pasar un parámetro se haría aquí
+		//Si le queremos pasar un parï¿½metro se harï¿½a aquï¿½
 		mngr_->send(m);
 
 		//Cambiamos de estado a NewRoundState

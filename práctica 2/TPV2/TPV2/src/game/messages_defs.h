@@ -12,10 +12,12 @@ enum msgId : msgId_type {
 	_m_GAME_OVER, 
 	_m_PACMAN_FOOD_COLLISION, 
 	_m_PACMAN_GHOST_COLLISION,
+	_m_PACMAN_EAT_GHOST,
+	_m_CREATE_GHOST,
 	_m_IMMUNITY_START, 
 	_m_IMMUNITY_END,
 
-	//Las pongo para que no haya errores pero luego habrá que limpiar la solución
+	//Las pongo para que no haya errores pero luego habrï¿½ que limpiar la soluciï¿½n
 	_m_STAR_EATEN,
 	_m_CREATE_STARS
 };
@@ -29,6 +31,8 @@ struct Message {
 	// every where.
 
 	union {
+
+		// Aï¿½adir sub-structs para los mensajes que llevan mï¿½s informaciï¿½n
 
 		// _m_NEW_GAME
 		struct {
@@ -70,12 +74,16 @@ struct Message {
 			//unsigned int n;
 		} immunity_end_data;
 
-
-
 		//_m_STAR_EATEN
 		struct {
 			ecs::entity_t e;
 		} star_eaten_data;
+
+		//_m_PACMAN_GHOST_COLLISION
+		struct 
+		{
+			ecs::entity_t e;
+		}ghost_eaten_data;
 
 		//_m_CREATE_STARS
 		struct {

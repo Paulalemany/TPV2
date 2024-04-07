@@ -31,7 +31,13 @@ struct Transform: public ecs::Component {
 	void update() override {
 		pos_ = pos_ + vel_;
 	}
-
+	Vector2D& getPos() {
+		return pos_;
+	}
+	Vector2D& getVel() {
+		return vel_;
+	}
+	void setVel(Vector2D& vel) { vel_ = vel; }
 	Vector2D pos_;
 	Vector2D vel_;
 	float width_;

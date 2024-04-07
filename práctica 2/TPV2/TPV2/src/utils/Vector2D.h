@@ -138,6 +138,13 @@ public:
 	inline bool inRange(float x0, float x2, float y0, float y1) {
 		return x_ >= x0 && x_ <= x2 && y_ >= y0 && y_ <= y1;
 	}
+	
+	inline void invertX() {
+		x_ = -x_;
+	}
+	inline void invertY() {
+		y_ = -y_;
+	}
 private:
 	float x_;  // first coordinate
 	float y_;  // second coordinate
