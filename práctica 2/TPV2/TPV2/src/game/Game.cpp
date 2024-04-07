@@ -6,7 +6,6 @@
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../systems/CollisionsSystem.h"
-#include "../systems/GameCtrlSystem.h"
 #include "../systems/PacManSystem.h"
 #include "../systems/RenderSystem.h"
 #include "../systems/GhostSystem.h"
@@ -26,7 +25,6 @@ using ecs::Manager;
 Game::Game() :
 		mngr_(), //
 		pacmanSys_(), //
-		gameCtrlSys_(), //
 		renderSys_(), //
 		collisionSys_(), //
 		ghostSys_(),//
@@ -56,7 +54,6 @@ void Game::init() {
 
 	// add the systems
 	pacmanSys_ = mngr_->addSystem<PacManSystem>();
-	gameCtrlSys_ = mngr_->addSystem<GameCtrlSystem>();
 	renderSys_ = mngr_->addSystem<RenderSystem>();
 	collisionSys_ = mngr_->addSystem<CollisionsSystem>();
 	ghostSys_ = mngr_->addSystem<GhostSystem>();

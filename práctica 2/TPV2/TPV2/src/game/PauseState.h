@@ -9,7 +9,6 @@ public:
 	void leave() override;
 	void update() override;
 	void enter() override;
-
 private:
 	Texture* pauseText;
 	Texture* continueText;

@@ -6,7 +6,6 @@
 #include "../sdlutils/macros.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
-#include "GameCtrlSystem.h"
 #include "../components/ImageWithFrames.h"
 #include "../components/Health.h"
 #include "../components/Immunity.h"
@@ -58,7 +57,7 @@ void RenderSystem::drawPacMan() {
 	}
 }
 void RenderSystem::drawGhosts() {
-	for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
+	for (auto& ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
 		auto ghotsTR = mngr_->getComponent<Transform>(ghost);
 		auto imgGhost = mngr_->getComponent<ImageWithFrames>(ghost);
 		if (ghotsTR != nullptr && imgGhost != nullptr) {

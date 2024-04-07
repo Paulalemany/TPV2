@@ -38,7 +38,7 @@ void NewGameState::update()
 	if (ih().keyDownEvent()) {
 		//Enviamos mensaje de "Ha empezado nueva partida"
 		Message m;
-		m.id = _m_ROUND_START;
+		m.id = _m_NEW_GAME;
 		//Si le queremos pasar un par�metro se har�a aqu�
 		mngr_->send(m);
 

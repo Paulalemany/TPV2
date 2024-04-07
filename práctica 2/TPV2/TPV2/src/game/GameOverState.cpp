@@ -22,6 +22,9 @@ void GameOverState::update()
 	
 	//Al pulsar cualquier tecla pasa a NewGameState
 	if (ih().keyDownEvent()) {
+		Message m;
+		m.id = _m_GAME_OVER;
+		mngr_->send(m);
 		game->setState(Game::NEWGAME);
 	}
 }
@@ -30,4 +33,3 @@ void GameOverState::enter()
 {
 	std::cout << "Enter on GameOverState" << std::endl;
 }
-

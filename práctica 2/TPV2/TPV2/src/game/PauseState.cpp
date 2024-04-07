@@ -33,6 +33,7 @@ PauseState::~PauseState()
 
 void PauseState::leave()
 {
+	sdlutils().virtualTimer().resume();
 	std::cout << "Leave PauseState" << std::endl;
 }
 
@@ -50,5 +51,6 @@ void PauseState::update()
 
 void PauseState::enter()
 {
+	sdlutils().virtualTimer().pause();
 	std::cout << "Enter on PauseState" << std::endl;
 }

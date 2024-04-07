@@ -9,7 +9,6 @@ public:
 	void leave() override;
 	void update() override;
 	void enter() override;
-
 private:
 	//Textura para el mensaje de texto
 	Texture* textTexture;

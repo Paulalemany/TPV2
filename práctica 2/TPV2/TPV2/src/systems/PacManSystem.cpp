@@ -38,8 +38,6 @@ void PacManSystem::initSystem() {
 		);
 	mngr_->addComponent<Immunity>(pacman);
 	mngr_->addComponent<Health>(pacman, 3, &sdlutils().images().at("Heart"));
-	reset_pacman();
-	//reset_lives();
 }
 
 void PacManSystem::update() {
@@ -107,6 +105,14 @@ void PacManSystem::recieve(const Message& m) {
 		auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
 		auto pacmanImmunity = mngr_->getComponent<Immunity>(pacman);
 		pacmanImmunity->setImmunity(false);
+	}
+	break;
+	case _m_ROUND_START: {
+		reset_pacman();
+	}
+	break;
+	case _m_GAME_OVER: {
+		reset_lives();
 	}
 	break;
 	default:
