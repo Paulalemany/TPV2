@@ -275,14 +275,14 @@
     <ClCompile Include="src\game\GameOverState.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="src\game\GameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\systems\GhostSystem.cpp">
       <Filter>Source Files\systems</Filter>
     </ClCompile>
     <ClCompile Include="src\systems\ImmunitySystem.cpp">
       <Filter>Source Files\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\GameState.cpp">
+      <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

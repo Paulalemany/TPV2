@@ -21,7 +21,6 @@ void RunningState::update()
 {
 	
 	//Llama al update de los sistemas
-	
 	game->pacmanSys_->update();
 	game->gameCtrlSys_->update();
 	game->collisionSys_->update();
