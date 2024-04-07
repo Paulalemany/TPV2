@@ -1,5 +1,6 @@
 #pragma once
 #include "../ecs/System.h"
+#include "../sdlutils/RandomNumberGenerator.h"
 
 class FoodSystem : public ecs::System
 {
@@ -18,14 +19,6 @@ public:
 		Sprite -> cerezas
 	*/
 
-	/*//MILAGROSO
-		Sprite -> pera
-		Al comer inmunidad por 10s
-			Fantasmas azules
-			No hay fantasmas nuevos
-			Matamos fantasmas al tocar
-			No se obtiene más inmunidad
-	*/
 	
 private:
 
@@ -39,7 +32,9 @@ private:
 	//Total de frutas
 	int maxFruits = numColums * numFils;
 
-	//Frutas comidas y frutas por comer
-	int fruits, restFruits;
+	//Frutas comidas
+	int fruits;
+
+	RandomNumberGenerator& rand_;	//Para la prob de que la fruta sea milagrosas
 };
 

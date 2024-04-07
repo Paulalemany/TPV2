@@ -9,7 +9,8 @@
 	IMAGE, \
 	IMAGEWITHFRAMES, \
 	HEALTH,\
-	IMMUNITY
+	IMMUNITY, \
+	MIRACULOUS
 
 // Groups list - must have at least one element
 //

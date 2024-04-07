@@ -3,8 +3,9 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../components/Transform.h"
 #include "../components/ImageWithFrames.h"
+#include "../components/Miraculous.h"
 
-FoodSystem::FoodSystem()
+FoodSystem::FoodSystem() : rand_(sdlutils().rand())
 {
 }
 
@@ -14,18 +15,11 @@ FoodSystem::~FoodSystem()
 
 void FoodSystem::initSystem()
 {
-	/*//PRINCIPIO DEL JUEGO
-		Se colocan las frutas en forma de grid
-		prob 0.1 de ser milagrosa
-		prob 0.9 de ser normal
-		frecuencia N (Entre 10-20s)
-	*/
-	restFruits = maxFruits; //Si no me equivoco esto es para la primera vez que se colocan no tiene que ver con el menú de pausa así que lo dejo así)
 
 	int x, y;
 	x = y = 0;
 
-	for (int i = 0; i < restFruits; i++) {
+	for (int i = 0; i < maxFruits; i++) {
 
 		//Añadimos la entidad (una fruta)
 		auto f = mngr_->addEntity(ecs::grp::FRUITS);
@@ -42,6 +36,13 @@ void FoodSystem::initSystem()
 			1, 4,		//Primer frame
 			1, 1		//Frame para hacer la animación (El primero es en el que empieza y a partir de ahí cuenta para la derecha)
 		);
+
+		int prob = rand_.nextInt(0, 10);
+		if (prob == 0) {
+			int n = rand_.nextInt(10, 21);
+			int m = rand_.nextInt(1, 6);
+			mngr_->addComponent<Miraculous>(f, n, m);
+		}
 
 		//Tamaño del transform
 		t->width_ = img->frameWidth_ /4;
