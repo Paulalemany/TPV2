@@ -72,16 +72,8 @@ void FoodSystem::update()
 
 void FoodSystem::fruitEaten(ecs::entity_t e)
 {
-	sdlutils().soundEffects().at("chomp").play(0, 1);
 	mngr_->setAlive(e, false);
-	fruits++;
-
-	//termina la partida
-	if (fruits == maxFruits) {
-		Message m;
-		m.id = _m_PLAYERWIN;
-		mngr_->send(m);
-	}
+	sdlutils().soundEffects().at("chomp").play(0, 1);
 }
 
 void FoodSystem::generateFruits()

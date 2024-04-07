@@ -6,7 +6,7 @@
 #include "../components/ImageWithFrames.h"
 
 GhostSystem::GhostSystem() :
-	/*ghTR_(nullptr),*/ rand_(sdlutils().rand()), ghostsLimit_(10), currNumOfGhosts_(0) {
+	rand_(sdlutils().rand()), ghostsLimit_(10), currNumOfGhosts_(0) {
 }
 
 GhostSystem::~GhostSystem() {

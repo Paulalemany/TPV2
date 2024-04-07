@@ -76,17 +76,5 @@ struct Message {
 		struct {
 
 		} player_win_data;
-
-
-
-		//_m_STAR_EATEN
-		struct {
-			ecs::entity_t e;
-		} star_eaten_data;
-
-		//_m_CREATE_STARS
-		struct {
-			unsigned int n;
-		}create_stars_data;
 	};
 };

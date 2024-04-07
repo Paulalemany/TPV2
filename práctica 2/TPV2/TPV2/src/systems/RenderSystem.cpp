@@ -87,10 +87,4 @@ void RenderSystem::drawFruits()
 		}
 	}
 }
-//void RenderSystem::draw(Transform* tr, Texture* tex, SDL_Rect& src) {
-//	SDL_Rect dest = build_sdlrect(tr->pos_, tr->width_, tr->height_);
-//
-//	assert(tex != nullptr);
-//	tex->render(src, dest, tr->rot_);
-//}
 

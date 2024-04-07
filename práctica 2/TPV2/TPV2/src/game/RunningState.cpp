@@ -21,6 +21,13 @@ void RunningState::leave()
 
 void RunningState::update()
 {
+	//ver si el pacman ha ganado
+	if (mngr_->getEntities(ecs::grp::FRUITS).size() == 0) {
+		Message m;
+		m.id = _m_PLAYERWIN;
+		mngr_->send(m);
+		game->setState(Game::GAMEOVER);
+	}
 	
 	//Llama al update de los sistemas
 	game->pacmanSys_->update();

@@ -129,4 +129,3 @@ void Game::setWinner()
 {
 	gameover_state_->SetWinner();
 }
-

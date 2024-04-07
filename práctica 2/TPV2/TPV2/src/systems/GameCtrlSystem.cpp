@@ -1,8 +1,6 @@
 // This file is part of the course TPV2@UCM - Samir Genaim
 
 #include "GameCtrlSystem.h"
-
-#include "../components/Points.h"
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 GameCtrlSystem::GameCtrlSystem(Game* g) : game(g) {

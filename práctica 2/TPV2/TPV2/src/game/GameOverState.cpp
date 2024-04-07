@@ -40,6 +40,7 @@ GameOverState::~GameOverState()
 void GameOverState::leave()
 {
 	std::cout << "Leave GameOverState" << std::endl;
+	playerWin = false;
 }
 
 void GameOverState::update()
@@ -47,8 +48,10 @@ void GameOverState::update()
 	//Renderizamos el texto
 	inicioText->render(inicioRect);
 
-	if (playerWin) winText->render(winRect);
-	else failText->render(failRect);
+	if (playerWin) 
+		winText->render(winRect);
+	else 
+		failText->render(failRect);
 	
 	//Al pulsar cualquier tecla pasa a NewGameState
 	if (ih().keyDownEvent()) {
