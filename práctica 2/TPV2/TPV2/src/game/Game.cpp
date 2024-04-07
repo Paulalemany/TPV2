@@ -7,6 +7,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../systems/CollisionsSystem.h"
 #include "../systems/PacManSystem.h"
+#include "../systems/GameCtrlSystem.h"
 #include "../systems/RenderSystem.h"
 #include "../systems/GhostSystem.h"
 #include "../systems/ImmunitySystem.h"
