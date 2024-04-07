@@ -14,7 +14,8 @@ public:
 	}
 
 	//tal vez hay que hacer un setter y un getter
-	uint32_t GetStart() { return tiempo; }
+	uint32_t GetCooldown() { return tiempo + N; }
+	uint32_t GetMagic() { return tiempo + M; }
 
 
 	bool Milagro() { return magicOn; }

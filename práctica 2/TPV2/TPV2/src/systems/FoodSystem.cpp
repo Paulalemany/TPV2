@@ -88,7 +88,7 @@ void FoodSystem::update()
 			if (mil->Milagro()) {
 
 				//Medimos hasta que termine el tiempo que tiene que estar así
-				if (mil->tiempo + mil->M < sdlutils().virtualTimer().currTime()) {
+				if (mil->GetMagic() < sdlutils().virtualTimer().currTime()) {
 
 					//Si se supera el tiempo devolvemos la fruta a la normalidad
 					img->init(&sdlutils().images().at("SpriteSheet"),
@@ -99,13 +99,13 @@ void FoodSystem::update()
 						1, 1
 					);
 
-					
+					mil->outMilagro();
 				}
 			}
 			else {
 				//Si no está activada vamos midiendo el cooldown hasta activarla
 				//Tiempo a superar = tiempo en el que inició el tem + cooldown (N)
-				if (mil->tiempo + mil->N < sdlutils().virtualTimer().currTime()) {
+				if (mil->GetCooldown() < sdlutils().virtualTimer().currTime()) {
 
 					//Si se supera el tiempo hay que transformar la fruta en milagrosa
 					img->init(&sdlutils().images().at("SpriteSheet"),
