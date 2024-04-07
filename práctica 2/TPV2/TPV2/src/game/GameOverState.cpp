@@ -40,7 +40,7 @@ GameOverState::~GameOverState()
 void GameOverState::leave()
 {
 	std::cout << "Leave GameOverState" << std::endl;
-	playerWin = false;
+	
 }
 
 void GameOverState::update()
@@ -55,6 +55,7 @@ void GameOverState::update()
 	
 	//Al pulsar cualquier tecla pasa a NewGameState
 	if (ih().keyDownEvent()) {
+		playerWin = false;
 		Message m;
 		m.id = _m_GAME_OVER;
 		mngr_->send(m);

@@ -24,8 +24,8 @@ void GameCtrlSystem::recieve(const Message& m)
 	switch (m.id)
 	{
 	case _m_PLAYERWIN: {
-		game->setState(Game::GAMEOVER);
 		game->setWinner();
+		game->setState(Game::GAMEOVER);
 		break;
 	}
 	default:
