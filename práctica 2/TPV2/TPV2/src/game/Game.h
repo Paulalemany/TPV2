@@ -12,6 +12,7 @@ public:
 	virtual ~Game();
 	void init();
 	void start();
+	void setWinner();
 
 	//Estados de juego
 	enum State {
@@ -46,14 +47,16 @@ public:
 	}
 
 	ecs::System* pacmanSys_;
+	ecs::System* gameCtrlSys_;
 	ecs::System* renderSys_;
 	ecs::System* collisionSys_;
 	ecs::System* ghostSys_;
 	ecs::System* immunitySys_;
+	ecs::System* foodSys_;
+
 private:
 	ecs::Manager *mngr_;
 	
-
 	GameState* current_state_;
 	GameState* paused_state_;
 	GameState* runing_state_;

@@ -23,6 +23,7 @@
     <ClInclude Include="src\components\Image.h" />
     <ClInclude Include="src\components\ImageWithFrames.h" />
     <ClInclude Include="src\components\Immunity.h" />
+    <ClInclude Include="src\components\Miraculous.h" />
     <ClInclude Include="src\components\Points.h" />
     <ClInclude Include="src\components\StarMotion.h" />
     <ClInclude Include="src\components\Transform.h" />
@@ -56,6 +57,8 @@
     <ClInclude Include="src\sdlutils\Texture.h" />
     <ClInclude Include="src\sdlutils\VirtualTimer.h" />
     <ClInclude Include="src\systems\CollisionsSystem.h" />
+    <ClInclude Include="src\systems\FoodSystem.h" />
+    <ClInclude Include="src\systems\GameCtrlSystem.h" />
     <ClInclude Include="src\systems\GhostSystem.h" />
     <ClInclude Include="src\systems\ImmunitySystem.h" />
     <ClInclude Include="src\systems\PacManSystem.h" />
@@ -69,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\components\ImageWithFrames.cpp" />
+    <ClCompile Include="src\components\Miraculous.cpp" />
     <ClCompile Include="src\ecs\Manager.cpp" />
     <ClCompile Include="src\game\Game.cpp" />
     <ClCompile Include="src\game\GameOverState.cpp" />
@@ -86,6 +90,8 @@
     <ClCompile Include="src\sdlutils\SoundEffect.cpp" />
     <ClCompile Include="src\sdlutils\Texture.cpp" />
     <ClCompile Include="src\systems\CollisionsSystem.cpp" />
+    <ClCompile Include="src\systems\FoodSystem.cpp" />
+    <ClCompile Include="src\systems\GameCtrlSystem.cpp" />
     <ClCompile Include="src\systems\GhostSystem.cpp" />
     <ClCompile Include="src\systems\ImmunitySystem.cpp" />
     <ClCompile Include="src\systems\PacManSystem.cpp" />

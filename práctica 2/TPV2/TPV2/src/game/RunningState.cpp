@@ -21,22 +21,21 @@ void RunningState::leave()
 
 void RunningState::update()
 {
-	//ver si el pacman ha ganado(ha comido todas las frutas)
-	/*if (mngr_->getEntities(ecs::grp::FRUITS).size() == 0) {
-		game->setState(Game::GAMEOVER);
-		return;
-	}*/
+	
+	//Llama al update de los sistemas
+	game->pacmanSys_->update();
+	game->gameCtrlSys_->update();
+	game->collisionSys_->update();
+	game->ghostSys_->update();
+	game->immunitySys_->update();
+	game->foodSys_->update();
+
+	game->renderSys_->update();
+
 	//Si se pulsa la P cambia al PauseState
 	if (ih().isKeyDown(SDL_SCANCODE_P)) {
 		game->setState(Game::PAUSE);
 	}
-	//Llama al update de los sistemas
-	
-	game->pacmanSys_->update();
-	game->ghostSys_->update();
-	game->immunitySys_->update();
-	game->collisionSys_->update();
-	game->renderSys_->update();
 
 	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
 	auto pacHealth = mngr_->getComponent<Health>(pacman);

@@ -15,6 +15,7 @@ enum msgId : msgId_type {
 	_m_CREATE_GHOST,
 	_m_IMMUNITY_START, 
 	_m_IMMUNITY_END,
+	_m_PLAYERWIN,
 
 };
 
@@ -47,7 +48,7 @@ struct Message {
 
 		// _m_PACMAN_FOOD_COLLISION
 		struct {
-
+			ecs::entity_t e;
 		} pacman_food_collision_data;
 
 		// _m_PACMAN_GHOST_COLLISION
@@ -57,7 +58,6 @@ struct Message {
 
 		// _m_IMMUNITY_START
 		struct {
-
 		} immunity_start_data;
 
 		// _m_IMMUNITY_END
@@ -70,5 +70,23 @@ struct Message {
 		{
 			ecs::entity_t e;
 		}ghost_eaten_data;
+
+
+		//_m_PLAYERWIN
+		struct {
+
+		} player_win_data;
+
+
+
+		//_m_STAR_EATEN
+		struct {
+			ecs::entity_t e;
+		} star_eaten_data;
+
+		//_m_CREATE_STARS
+		struct {
+			unsigned int n;
+		}create_stars_data;
 	};
 };

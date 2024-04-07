@@ -17,6 +17,7 @@ public:
 private:
 	void drawPacMan();
 	void drawGhosts();
+	void drawFruits();
 	void drawWithFrames(Transform* tr, ImageWithFrames* img);
 };
 
