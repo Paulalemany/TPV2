@@ -22,6 +22,7 @@ void PacManSystem::reset_pacman() {
 	auto y = (sdlutils().height() - tam) / 2.0f;
 	pmTR_->init(Vector2D(x, y), Vector2D(0.f, 0.f), tam, tam, 0.0f); //vector velocidad 0,0
 }
+
 void PacManSystem::initSystem() {
 	auto pacman = mngr_->addEntity();
 
@@ -39,7 +40,6 @@ void PacManSystem::initSystem() {
 	mngr_->addComponent<Immunity>(pacman);
 	mngr_->addComponent<Health>(pacman, 3, &sdlutils().images().at("Heart"));
 	reset_pacman();
-	//reset_lives();
 }
 
 void PacManSystem::update() {
@@ -110,6 +110,14 @@ void PacManSystem::recieve(const Message& m) {
 		auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
 		auto pacmanImmunity = mngr_->getComponent<Immunity>(pacman);
 		pacmanImmunity->setImmunity(false);
+	}
+	break;
+	case _m_ROUND_START: {
+		reset_pacman();
+	}
+	break;
+	case _m_GAME_OVER: {
+		reset_lives();
 	}
 	break;
 	default:

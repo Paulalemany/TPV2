@@ -73,7 +73,7 @@ void GhostSystem::addGhost() {
 
 }
 void GhostSystem::update() {
-	for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
+	for (auto& ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
 		auto ghotsTR = mngr_->getComponent<Transform>(ghost);
 
 		/*if (rand_.nextInt(0, 1000) < 5) {
@@ -126,7 +126,7 @@ void GhostSystem::recieve(const Message& m) {
 	}
 	break;
 	case _m_IMMUNITY_START: {
-		for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
+		for (auto& ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
 			auto imageCmp = mngr_->getComponent<ImageWithFrames>(ghost);
 			imageCmp->init(&sdlutils().images().at("SpriteSheet"),
 				8, 8,
@@ -139,7 +139,7 @@ void GhostSystem::recieve(const Message& m) {
 	}
 	break;
 	case _m_IMMUNITY_END: {
-		for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
+		for (auto& ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
 			auto imageCmp = mngr_->getComponent<ImageWithFrames>(ghost);
 			imageCmp->init(&sdlutils().images().at("SpriteSheet"),
 				8, 8,
@@ -150,6 +150,10 @@ void GhostSystem::recieve(const Message& m) {
 			);
 		}
 	}
+	case _m_ROUND_START: {
+		remove_all_ghosts();
+	}
+	break;
 	default:
 		break;
 	}

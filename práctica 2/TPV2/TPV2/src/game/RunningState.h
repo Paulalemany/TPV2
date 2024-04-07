@@ -9,5 +9,8 @@ public:
 	void leave() override;
 	void update() override;
 	void enter() override;
+
+private:
+	Uint32 lastTimeGeneratedGhosts_;
 };
 

@@ -66,8 +66,7 @@ void RenderSystem::drawPacMan() {
 }
 
 void RenderSystem::drawGhosts() {
-
-	for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
+	for (auto& ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
 		auto ghotsTR = mngr_->getComponent<Transform>(ghost);
 		auto imgGhost = mngr_->getComponent<ImageWithFrames>(ghost);
 		if (ghotsTR != nullptr && imgGhost != nullptr) {

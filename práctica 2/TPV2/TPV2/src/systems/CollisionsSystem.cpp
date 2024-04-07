@@ -28,7 +28,7 @@ void CollisionsSystem::update() {
 
 	//Colisiones con fantasmas
 	//auto& ghosts = mngr_->getEntities(ecs::grp::GHOSTS);
-	for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
+	for (auto& ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
 		if (mngr_->isAlive(ghost)) {
 			auto ghotsTR = mngr_->getComponent<Transform>(ghost);
 
@@ -68,7 +68,7 @@ void CollisionsSystem::update() {
 				Message m1;
 				//Diferenciamos entre si es milagrosa o no
 				if (milagro != nullptr && !pacImmunity->isImmunity()) {
-					//Si es una fruta milagrosa y el pacman no está ya con inmunidad mandamos el mensaje
+					//Si es una fruta milagrosa y el pacman no estï¿½ ya con inmunidad mandamos el mensaje
 					Message m;
 					m.id = _m_IMMUNITY_START;
 					mngr_->send(m);
