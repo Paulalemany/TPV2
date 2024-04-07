@@ -12,14 +12,14 @@ PauseState::PauseState()
 
 	//Colocamos los textos en su sitio
 	pauseRect = build_sdlrect(
-		0,
-		0 + pauseText->height(),
+		pauseText->width()/4,
+		pauseText->height(),
 		pauseText->width(),
 		pauseText->height()
 	);
 
 	continueRect = build_sdlrect(
-		sdlutils().width() / 2,
+		sdlutils().width() / 4,
 		sdlutils().height() / 2,
 		continueText->width(),
 		continueText->height()
