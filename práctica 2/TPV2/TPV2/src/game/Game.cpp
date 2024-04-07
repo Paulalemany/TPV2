@@ -89,7 +89,7 @@ void Game::start() {
 	auto &ihdlr = ih();
 
 	while (!exit) {
-		//Referente al render �Debe ir aqu�?
+		//Referente al render Debe ir aqui?
 		sdlutils().clearRenderer();
 
 		Uint32 startTime = sdlutils().currRealTime();
@@ -105,21 +105,13 @@ void Game::start() {
 
 		//Llamada al update del estado de juego actual
 		//Flush del manager ->Envia mensajes
-		//mngr_->flushMessages();
+		mngr_->flushMessages();
 
 		current_state_->update();
-
-		/*pacmanSys_->update();
-		gameCtrlSys_->update();
-		collisionSys_->update();
-		ghostSys_->update();
-		immunitySys_->update();*/
 
 		//Control de las entidades (Eliminaci�n)
 		mngr_->refresh();
 
-		
-		//renderSys_->update();
 		sdlutils().presentRenderer();
 
 		//Control del tiempo
