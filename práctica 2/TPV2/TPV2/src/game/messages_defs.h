@@ -66,7 +66,7 @@ struct Message {
 
 		// _m_IMMUNITY_START
 		struct {
-			ecs::entity_t e;
+			
 		} immunity_start_data;
 
 		// _m_IMMUNITY_END

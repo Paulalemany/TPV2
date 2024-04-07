@@ -66,7 +66,9 @@ void FoodSystem::initSystem()
 
 void FoodSystem::update()
 {
-
+	if (fruits == maxFruits) {
+		//Ganas la partida
+	}
 	//Diferenciamos entre una fruta normal y una fruta milagrosa
 	for (auto f : mngr_->getEntities(ecs::grp::FRUITS)) {
 
@@ -114,8 +116,24 @@ void FoodSystem::update()
 			}
 			
 		}
-		else {
+	}
+}
 
-		}
+void FoodSystem::fruitEaten(ecs::entity_t e)
+{
+	mngr_->setAlive(e, false);
+	fruits++;
+}
+
+void FoodSystem::recieve(const Message& m)
+{
+	switch (m.id)
+	{
+	case _m_PACMAN_FOOD_COLLISION: {
+		fruitEaten(m.pacman_food_collision_data.e);
+		break;
+	}
+	default:
+		break;
 	}
 }

@@ -65,19 +65,18 @@ void CollisionsSystem::update() {
 				fTR->pos_, fTR->width_, fTR->height_)) {
 
 				auto milagro = mngr_->getComponent<Miraculous>(f);
-				Message m;
+				Message m1;
 				//Diferenciamos entre si es milagrosa o no
 				if (milagro != nullptr && !pacImmunity->isImmunity()) {
 					//Si es una fruta milagrosa y el pacman no está ya con inmunidad mandamos el mensaje
+					Message m;
 					m.id = _m_IMMUNITY_START;
-					m.immunity_start_data.e = f;
+					mngr_->send(m);
 				}
-				else {
-					m.id = _m_PACMAN_FOOD_COLLISION;
-					m.pacman_food_collision_data.e = f;
-				}
+				m1.id = _m_PACMAN_FOOD_COLLISION;
+				m1.pacman_food_collision_data.e = f;
 
-				mngr_->send(m);
+				mngr_->send(m1);
 
 			}
 		}

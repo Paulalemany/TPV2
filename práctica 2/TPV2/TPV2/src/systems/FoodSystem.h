@@ -12,13 +12,9 @@ public:
 
 	void initSystem() override;
 	void update() override;
+	void fruitEaten(ecs::entity_t e);
 
-	//2 Estados: normal y milagroso
-
-	/*//NORMAL
-		Sprite -> cerezas
-	*/
-
+	void recieve(const Message& m) override;
 	
 private:
 
