@@ -156,13 +156,7 @@
     <ClInclude Include="src\game\ecs_defs.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="src\systems\StarsSystem.h">
-      <Filter>Header Files\systems</Filter>
-    </ClInclude>
     <ClInclude Include="src\systems\CollisionsSystem.h">
-      <Filter>Header Files\systems</Filter>
-    </ClInclude>
-    <ClInclude Include="src\systems\GameCtrlSystem.h">
       <Filter>Header Files\systems</Filter>
     </ClInclude>
     <ClInclude Include="src\systems\PacManSystem.h">
@@ -245,13 +239,7 @@
     <ClCompile Include="src\game\Game.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="src\systems\StarsSystem.cpp">
-      <Filter>Source Files\systems</Filter>
-    </ClCompile>
     <ClCompile Include="src\systems\CollisionsSystem.cpp">
-      <Filter>Source Files\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="src\systems\GameCtrlSystem.cpp">
       <Filter>Source Files\systems</Filter>
     </ClCompile>
     <ClCompile Include="src\systems\PacManSystem.cpp">

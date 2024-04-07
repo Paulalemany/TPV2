@@ -39,7 +39,6 @@ void PacManSystem::initSystem() {
 		);
 	mngr_->addComponent<Immunity>(pacman);
 	mngr_->addComponent<Health>(pacman, 3, &sdlutils().images().at("Heart"));
-	reset_pacman();
 }
 
 void PacManSystem::update() {
