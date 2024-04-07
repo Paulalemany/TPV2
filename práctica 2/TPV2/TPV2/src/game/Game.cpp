@@ -25,11 +25,6 @@ using ecs::Manager;
 
 Game::Game() :
 		mngr_(), //
-		pacmanSys_(), //
-		gameCtrlSys_(), //
-		renderSys_(), //
-		collisionSys_(), //
-		ghostSys_(),//
 		current_state_(nullptr), //
 		paused_state_(nullptr), //
 		runing_state_(nullptr), //
@@ -41,8 +36,15 @@ Game::Game() :
 
 Game::~Game() {
 	delete mngr_;
+	delete game;
 
 	//Libera memoria referente a los estados
+	delete paused_state_;
+	delete runing_state_;
+	delete newgame_state_;
+	delete newround_state_;
+	delete gameover_state_;
+	delete current_state_;
 }
 
 void Game::init() {
@@ -62,14 +64,14 @@ void Game::init() {
 	ghostSys_ = mngr_->addSystem<GhostSystem>();
 	immunitySys_ = mngr_->addSystem<ImmunitySystem>();
 
-	//Creaci�n de los estados
+	//Creacion de los estados
 	paused_state_ = new PauseState();
 	runing_state_ = new RunningState();
 	newgame_state_ = new NewGameState();
 	newround_state_ = new NewRoundState();
 	gameover_state_ = new GameOverState();
 
-	//Pasamos el mngr a todos los estados
+	//Pasamos el contexto a todos los estados (Tal vez sería mejor hacer estas dos cosas singleton)
 	paused_state_->setContext(mngr_, game);
 	runing_state_->setContext(mngr_, game);
 	newgame_state_->setContext(mngr_, game);
@@ -77,10 +79,10 @@ void Game::init() {
 	gameover_state_->setContext(mngr_, game);
 
 	current_state_ = newgame_state_;
-
 	
 }
 
+//Bucle principal
 void Game::start() {
 
 	// a boolean to exit the loop
@@ -89,10 +91,10 @@ void Game::start() {
 	auto &ihdlr = ih();
 
 	while (!exit) {
-		//Referente al render Debe ir aqui?
+		//Limpiamos el render
 		sdlutils().clearRenderer();
 
-		Uint32 startTime = sdlutils().currRealTime();
+		Uint32 startTime = sdlutils().currRealTime();	//Controlamos el tiempo
 
 		// refresh the input handler
 		ihdlr.refresh();
@@ -104,10 +106,8 @@ void Game::start() {
 		}
 
 		//Llamada al update del estado de juego actual
-		//Flush del manager ->Envia mensajes
-		mngr_->flushMessages();
-
 		current_state_->update();
+		mngr_->flushMessages(); //Flush del manager ->Envia mensajes
 
 		//Control de las entidades (Eliminaci�n)
 		mngr_->refresh();
