@@ -87,6 +87,7 @@ void GhostSystem::update() {
 			ghotsTR->setVel(vel);
 		}*/
 		ghotsTR->update();
+
 		// check left/right borders
 		if (ghotsTR->pos_.getX() < 0) {
 			ghotsTR->pos_.setX(0.0f);

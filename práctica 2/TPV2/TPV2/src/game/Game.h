@@ -57,7 +57,6 @@ public:
 private:
 	ecs::Manager *mngr_;
 	
-
 	GameState* current_state_;
 	GameState* paused_state_;
 	GameState* runing_state_;

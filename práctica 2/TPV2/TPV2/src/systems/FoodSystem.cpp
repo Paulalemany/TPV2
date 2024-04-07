@@ -39,8 +39,8 @@ void FoodSystem::initSystem()
 
 		int prob = rand_.nextInt(0, 10);
 		if (prob == 0) {
-			int n = rand_.nextInt(10, 21);
-			int m = rand_.nextInt(1, 6);
+			int n = rand_.nextInt(10000, 21000);
+			int m = rand_.nextInt(1000, 6000);
 			mngr_->addComponent<Miraculous>(f, n, m);
 		}
 
@@ -73,4 +73,57 @@ void FoodSystem::update()
 		Si no hay frutas se gana la partida ->
 		cambia de estado a GameOver State (mandando un mensaje)
 	*/
+
+	//Diferenciamos entre una fruta normal y una fruta milagrosa
+	for (auto f : mngr_->getEntities(ecs::grp::FRUITS)) {
+
+		//Constrol del tiempo de las frutas milagrosas
+		auto mil = mngr_->getComponent<Miraculous>(f);
+		if (mil != nullptr) {
+
+			//Cogemos la img original y se lo cambiamos
+			auto img = mngr_->getComponent<ImageWithFrames>(f);
+
+			//Diferenciamos entre si la fruta está activada o desactivada
+			if (mil->Milagro()) {
+
+				//Medimos hasta que termine el tiempo que tiene que estar así
+				if (mil->tiempo + mil->M < sdlutils().virtualTimer().currTime()) {
+
+					//Si se supera el tiempo devolvemos la fruta a la normalidad
+					img->init(&sdlutils().images().at("SpriteSheet"),
+						8, 8,		
+						0, 0,
+						128, 128,	
+						1, 4,		
+						1, 1
+					);
+
+					
+				}
+			}
+			else {
+				//Si no está activada vamos midiendo el cooldown hasta activarla
+				//Tiempo a superar = tiempo en el que inició el tem + cooldown (N)
+				if (mil->tiempo + mil->N < sdlutils().virtualTimer().currTime()) {
+
+					//Si se supera el tiempo hay que transformar la fruta en milagrosa
+					img->init(&sdlutils().images().at("SpriteSheet"),
+						8, 8,		//Filas y columas de la img completa
+						0, 0,
+						128, 128,	//Ancho y alto de cada Sprite
+						1, 7,		//Primer frame
+						1, 1
+					);
+
+					mil->setMilagro();
+				}
+			}
+			//Hay que hacer un temporizador
+			
+		}
+		else {
+
+		}
+	}
 }
