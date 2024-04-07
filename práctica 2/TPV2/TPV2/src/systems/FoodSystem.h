@@ -13,6 +13,8 @@ public:
 	void initSystem() override;
 	void update() override;
 	void fruitEaten(ecs::entity_t e);
+	void generateFruits();
+	void eliminateFruits();
 
 	void recieve(const Message& m) override;
 	

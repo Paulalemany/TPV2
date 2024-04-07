@@ -47,9 +47,8 @@ void GameOverState::update()
 	//Renderizamos el texto
 	inicioText->render(inicioRect);
 
-	//Condición de haber ganado o perdido para elegir un texto u otro
-	//winText->render(winRect);
-	failText->render(failRect);
+	if (playerWin) winText->render(winRect);
+	else failText->render(failRect);
 	
 	//Al pulsar cualquier tecla pasa a NewGameState
 	if (ih().keyDownEvent()) {

@@ -16,6 +16,7 @@ enum msgId : msgId_type {
 	_m_CREATE_GHOST,
 	_m_IMMUNITY_START, 
 	_m_IMMUNITY_END,
+	_m_PLAYERWIN,
 
 	//Las pongo para que no haya errores pero luego habr� que limpiar la soluci�n
 	_m_STAR_EATEN,
@@ -74,16 +75,23 @@ struct Message {
 			//unsigned int n;
 		} immunity_end_data;
 
+		//_m_PACMAN_GHOST_COLLISION
+		struct
+		{
+			ecs::entity_t e;
+		}ghost_eaten_data;
+
+		//_m_PLAYERWIN
+		struct {
+
+		} player_win_data;
+
+
+
 		//_m_STAR_EATEN
 		struct {
 			ecs::entity_t e;
 		} star_eaten_data;
-
-		//_m_PACMAN_GHOST_COLLISION
-		struct 
-		{
-			ecs::entity_t e;
-		}ghost_eaten_data;
 
 		//_m_CREATE_STARS
 		struct {

@@ -59,7 +59,7 @@ void Game::init() {
 
 	// add the systems
 	pacmanSys_ = mngr_->addSystem<PacManSystem>();
-	gameCtrlSys_ = mngr_->addSystem<GameCtrlSystem>();
+	gameCtrlSys_ = mngr_->addSystem<GameCtrlSystem>(game);
 	renderSys_ = mngr_->addSystem<RenderSystem>();
 	collisionSys_ = mngr_->addSystem<CollisionsSystem>();
 	ghostSys_ = mngr_->addSystem<GhostSystem>();
@@ -124,5 +124,10 @@ void Game::start() {
 
 	}
 
+}
+
+void Game::setWinner()
+{
+	gameover_state_->SetWinner();
 }
 

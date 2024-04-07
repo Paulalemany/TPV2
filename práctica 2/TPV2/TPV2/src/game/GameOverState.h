@@ -10,7 +10,11 @@ public:
 	void update() override;
 	void enter() override;
 
+	void SetWinner() override { playerWin = true; }
+
 private:
+
+	bool playerWin = false;
 
 	Texture* inicioText;
 	SDL_Rect inicioRect;

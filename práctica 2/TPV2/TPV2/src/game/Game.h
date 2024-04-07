@@ -12,6 +12,7 @@ public:
 	virtual ~Game();
 	void init();
 	void start();
+	void setWinner();
 
 	//Estados de juego
 	enum State {
