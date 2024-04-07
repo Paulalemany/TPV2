@@ -1,5 +1,6 @@
 #include "RunningState.h"
 #include "iostream"
+#include "Game.h"
 
 RunningState::RunningState()
 {
@@ -18,9 +19,12 @@ void RunningState::leave()
 
 void RunningState::update()
 {
-	std::cout << "Update RunningState" << std::endl;
+	
 	//Llama al update de los sistemas
 	//Si se pulsa la P cambia al PauseState
+	if (ih().isKeyDown(SDL_SCANCODE_P)) {
+		game->setState(Game::PAUSE);
+	}
 }
 
 void RunningState::enter()

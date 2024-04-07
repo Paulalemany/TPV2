@@ -1,5 +1,6 @@
 #include "NewRoundState.h"
 #include "iostream"
+#include "Game.h"
 
 NewRoundState::NewRoundState()
 {
@@ -33,17 +34,15 @@ void NewRoundState::update()
 	textTexture->render(textRect);
 
 	//Al pulsar ENTER envia mensaje "Ha empezado nueva ronda"
-	//if (ihdlr.keyDownEvent()) {
-	//	//Enviamos mensaje de "Ha empezado nueva partida"
-	//	Message m;
-	//	m.id = _m_ROUND_START;
-	//	//Si le queremos pasar un parámetro se haría aquí
-	//	mngr_->send(m);
+	if (ih().isKeyDown(SDL_SCANCODE_RETURN)) {
+		//Envíamos mensaje de ha empezado ronda
+		Message m;
+		m.id = _m_ROUND_START;
+		mngr_->send(m);
 
-	//	//Cambiamos de estado a NewRoundState
-	//	game->setState(2);
-	//}
-	//Pasa a RunningState
+		//Cambiamos de estado al running state
+		game->setState(Game::RUNNING);
+	}
 }
 
 void NewRoundState::enter()

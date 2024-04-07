@@ -1,5 +1,6 @@
 #include "GameOverState.h"
 #include "iostream"
+#include "Game.h"
 
 GameOverState::GameOverState()
 {
@@ -18,8 +19,11 @@ void GameOverState::leave()
 
 void GameOverState::update()
 {
-	std::cout << "Update GameOverState" << std::endl;
+	
 	//Al pulsar cualquier tecla pasa a NewGameState
+	if (ih().keyDownEvent()) {
+		game->setState(Game::NEWGAME);
+	}
 }
 
 void GameOverState::enter()

@@ -7,7 +7,7 @@ class Game;
 class GameState {
 public:
 
-	GameState() : ihdlr(ih()) { }
+	GameState() { }
 
 	virtual ~GameState() { }
 
@@ -20,6 +20,5 @@ public:
 protected:
 	ecs::Manager* mngr_;	//Referencia al mngr
 	Game* game;				//Referencia a la máquina
-	InputHandler& ihdlr;	//Referencia al input
 };
 

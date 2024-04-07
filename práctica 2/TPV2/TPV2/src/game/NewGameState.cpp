@@ -35,7 +35,7 @@ void NewGameState::update()
 	textTexture->render(textRect);
 
 	//Evento de tecla pulsada
-	if (ihdlr.keyDownEvent()) {
+	if (ih().keyDownEvent()) {
 		//Enviamos mensaje de "Ha empezado nueva partida"
 		Message m;
 		m.id = _m_ROUND_START;
@@ -43,7 +43,7 @@ void NewGameState::update()
 		mngr_->send(m);
 
 		//Cambiamos de estado a NewRoundState
-		game->setState(2);
+		game->setState(Game::NEWROUND);
 	}
 
 	

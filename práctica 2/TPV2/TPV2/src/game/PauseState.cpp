@@ -1,5 +1,6 @@
 #include "PauseState.h"
 #include "iostream"
+#include "Game.h"
 
 PauseState::PauseState() 
 {
@@ -18,8 +19,10 @@ void PauseState::leave()
 
 void PauseState::update()
 {
-	std::cout << "Update PauseState" << std::endl;
 	//Al pausar cualquier tecla entra al running state
+	if (ih().keyDownEvent()) {
+		game->setState(Game::RUNNING);
+	}
 }
 
 void PauseState::enter()
