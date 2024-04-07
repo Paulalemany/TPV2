@@ -6,6 +6,7 @@
 #include "../ecs/Manager.h"
 #include "../utils/Collisions.h"
 #include "../components/Immunity.h"
+#include "../components/Miraculous.h"
 
 
 CollisionsSystem::CollisionsSystem() {
@@ -25,6 +26,7 @@ void CollisionsSystem::update() {
 	auto pacImmunity = mngr_->getComponent<Immunity>(pacman);
 	auto pacTR = mngr_->getComponent<Transform>(pacman);
 
+	//Colisiones con fantasmas
 	//auto& ghosts = mngr_->getEntities(ecs::grp::GHOSTS);
 	for (auto ghost : mngr_->getEntities(ecs::grp::GHOSTS)) {
 		if (mngr_->isAlive(ghost)) {
@@ -49,6 +51,38 @@ void CollisionsSystem::update() {
 		}
 		
 	}
+
+	//Colisiones con las frutas
+	for (auto f : mngr_->getEntities(ecs::grp::FRUITS)) {
+		if (mngr_->isAlive(f)) {
+
+			//Cogemos el transform de la entidad
+			auto fTR = mngr_->getComponent<Transform>(f);
+
+			//Comprobamos la colision con el pacman
+			if (Collisions::collides(
+				pacTR->pos_, pacTR->width_, pacTR->height_,
+				fTR->pos_, fTR->width_, fTR->height_)) {
+
+				auto milagro = mngr_->getComponent<Miraculous>(f);
+				Message m;
+				//Diferenciamos entre si es milagrosa o no
+				if (milagro != nullptr && !pacImmunity->isImmunity()) {
+					//Si es una fruta milagrosa y el pacman no está ya con inmunidad mandamos el mensaje
+					m.id = _m_IMMUNITY_START;
+					m.immunity_start_data.e = f;
+				}
+				else {
+					m.id = _m_PACMAN_FOOD_COLLISION;
+					m.pacman_food_collision_data.e = f;
+				}
+
+				mngr_->send(m);
+
+			}
+		}
+	}
+
 
 	//auto &stars = mngr_->getEntities(ecs::grp::STARS);
 	//auto n = stars.size();

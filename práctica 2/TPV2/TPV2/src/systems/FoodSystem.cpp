@@ -66,13 +66,6 @@ void FoodSystem::initSystem()
 
 void FoodSystem::update()
 {
-	/*//DURANTE LA RONDA (update)
-		fruta normal -> milagrosa cada N segundos
-		queda en milagrosa por M segundos (entre 1-5s)
-		Al chocar pacman/fruta desaparece la fruta
-		Si no hay frutas se gana la partida ->
-		cambia de estado a GameOver State (mandando un mensaje)
-	*/
 
 	//Diferenciamos entre una fruta normal y una fruta milagrosa
 	for (auto f : mngr_->getEntities(ecs::grp::FRUITS)) {
@@ -119,7 +112,6 @@ void FoodSystem::update()
 					mil->setMilagro();
 				}
 			}
-			//Hay que hacer un temporizador
 			
 		}
 		else {

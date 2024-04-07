@@ -56,7 +56,7 @@ struct Message {
 
 		// _m_PACMAN_FOOD_COLLISION
 		struct {
-			//unsigned int n;
+			ecs::entity_t e;
 		} pacman_food_collision_data;
 
 		// _m_PACMAN_GHOST_COLLISION
@@ -66,7 +66,7 @@ struct Message {
 
 		// _m_IMMUNITY_START
 		struct {
-			//unsigned int n;
+			ecs::entity_t e;
 		} immunity_start_data;
 
 		// _m_IMMUNITY_END
