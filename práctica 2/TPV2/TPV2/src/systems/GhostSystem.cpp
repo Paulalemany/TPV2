@@ -147,6 +147,7 @@ void GhostSystem::recieve(const Message& m) {
 				1, 8
 			);
 		}
+		break;
 	}
 	case _m_ROUND_START: {
 		remove_all_ghosts();
