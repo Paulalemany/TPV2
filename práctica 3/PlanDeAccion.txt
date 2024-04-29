@@ -1,0 +1,35 @@
+
+
+Hay que hacer que el juego sea jugable en red, el juego offline ya está implementado
+
+Características:
+		Si se desconecta pasa al jugador con el menor identificador
+
+	- El primer jugador que se conecta puede navegar mientras espera
+		El resto de jugadores entran al juego directamente
+
+	- Quedan dos jugadores -> Mensaje “The game will restart in X seconds”
+		Pasados 5s restart con los pj en pos aleatorias (master elige)
+		En tiempo de espera nadie puede navegar
+
+	- juego-> Vista normal// muerto-> cenital 
+		¿Permitir el cambio entre pantallas por input? máx 1-2s
+
+	- Abandonar juego -> esc
+		Cuando un jugador abandona se avisa con un mensaje (al salir del bucle ppal)
+		Si conecta un jug con menor ident cambia a él el master (Lo hace solo)
+		
+	- Después de cada mov el jug informa al resto del mov
+		El master comprueba que no haya conflictos (En el mapa del master es válido)
+		Si hay conflictos comunica al resto sus nuevas posiciones
+
+	- Al disparar se envia un mensaje de que se ha disparado
+		El master decide si el disparo choca o no
+		
+	- Sonidos
+		Disparos
+		Grito cuando alguien muere (En todos los clientes) volumen relativo
+		
+	- Eliminar
+		R para reiniciar
+		N para cambiar de jugador
