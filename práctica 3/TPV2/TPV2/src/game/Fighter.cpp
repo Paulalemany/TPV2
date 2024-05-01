@@ -49,12 +49,14 @@ void Fighter::initPlayer(std::uint8_t id) {
 
 void Fighter::update() {
 
+	//Cogemos al jugador que toque
 	Player &p = players_[player_id_];
 
 	// dead player don't move/spin/shoot
 	if (p.state != ALIVE)
 		return;
 
+	//Control de las acciones del pj
 	spin(p);  // handle spinning
 	move(p);  // handle moving
 	shoot(p); // handle shooting
@@ -81,6 +83,7 @@ void Fighter::update() {
 	}
 
 
+	//Enviamos el mensaje de lo que ha hecho el jugador
 	Game::instance()->get_networking().send_state(p.pos, p.width, p.height,
 			p.rot);
 
@@ -107,6 +110,7 @@ void Fighter::render() {
 
 }
 
+//Movimiento del personaje
 void Fighter::move(Player &p) {
 	if (ihdrl_.isKeyDown(SDL_SCANCODE_W)) {
 
@@ -116,6 +120,7 @@ void Fighter::move(Player &p) {
 	}
 }
 
+//Cambia la rotación del personaje
 void Fighter::spin(Player &p) {
 	if (ihdrl_.isKeyDown(SDL_SCANCODE_L)) {
 		p.rot += 5.0f;
@@ -125,26 +130,34 @@ void Fighter::spin(Player &p) {
 }
 
 void Fighter::shoot(Player &p) {
+	//Si se pulsa el espacio
 	if (ihdrl_.keyDownEvent() && ihdrl_.isKeyDown(SDL_SCANCODE_SPACE)) {
+		//Cooldown del disparo
 		if (sdlutils().virtualTimer().currTime() < lastShoot_ + 250)
 			return;
 
+		//Reinicia el cooldown
 		lastShoot_ = sdlutils().virtualTimer().currTime();
 
+		//El origen de la bala está en el medio del pj
 		auto c = p.pos + Vector2D(p.width / 2.0f, p.height / 2.0f);
 
+		//Tamaño de la bala
 		int bwidth = 5;
 		int bheight = 20;
 
+		//Posición de la bala
 		Vector2D bp = c
 				- Vector2D(0.0f, p.height / 2.0f + bheight / 2 + 10).rotate(
 						p.rot)
 				- Vector2D(bwidth / 2, bheight / 2);
 
+		//Vector velocidad
 		Vector2D bv = Vector2D(0, -1).rotate(p.rot)
 				* (p.vel.magnitude() + 5.0f);
 
 
+		//Enviamos el mensaje del disparo
 		Game::instance()->get_networking().send_shoot(bp, bv, bwidth, bheight,
 				Vector2D(0, -1).angle(bv));
 

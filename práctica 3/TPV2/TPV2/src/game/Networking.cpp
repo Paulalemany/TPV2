@@ -172,6 +172,7 @@ void Networking::handle_player_state(const PlayerStateMsg &m) {
 	}
 }
 
+//Manda el mensaje del disparo
 void Networking::send_shoot(Vector2D p, Vector2D v, int width, int height,
 		float r) {
 	ShootMsg m;
@@ -187,12 +188,17 @@ void Networking::send_shoot(Vector2D p, Vector2D v, int width, int height,
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 
+//Maneja el mensaje del disparo
 void Networking::handle_shoot(const ShootMsg &m) {
+	//Instancia la bala
 	Game::instance()->get_bullets().shoot(Vector2D(m.x, m.y),
 			Vector2D(m.vx, m.vy), m.w, m.h, m.rot);
 
+	//Puede que el sonido haya que meterlo aquí pero ni idea de como hacer que vaya según la distancia
+
 }
 
+//Envia el mensaje de la muerte
 void Networking::send_dead(Uint8 id) {
 	MsgWithId m;
 	m._type = _DEAD;
@@ -200,8 +206,10 @@ void Networking::send_dead(Uint8 id) {
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 
+//Maneja la muerte
 void Networking::handle_dead(const MsgWithId &m) {
 	Game::instance()->get_fighters().killPlayer(m._client_id);
+	//Sonido de muerte???
 }
 
 void Networking::send_my_info(const Vector2D &pos, float w, float h, float rot,
