@@ -62,10 +62,11 @@ void Game::start() {
 				continue;
 			}
 
+			//No se si simplemente hay que quitarlo del código o el online va aparte
 			// ESC exists the game
-			if (ihdlr.isKeyDown(SDL_SCANCODE_R)) {
+			/*if (ihdlr.isKeyDown(SDL_SCANCODE_R)) {
 				net_->send_restart();
-			}
+			}*/
 
 		}
 
