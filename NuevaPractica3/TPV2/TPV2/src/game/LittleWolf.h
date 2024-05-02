@@ -75,7 +75,19 @@ public:
 		float theta;         // rotation (in rad)
 		PlayerState state;   // the state
 	};
+	//
+	// // maximum number of player
+	static constexpr uint8_t max_player = 4;
 
+	typedef std::array<Player, max_player> players_array;
+	typedef players_array::iterator iterator;
+	iterator begin() {
+		return players_.begin();
+	}
+
+	iterator end() {
+		return players_.end();
+	}
 	// Representing a map, the user_walling is the walling provided by the user, and
 	// walling is a scaled up version
 	struct Map {
@@ -117,14 +129,31 @@ public:
 	// load a map from a file
 	void load(std::string filename);
 
-	// add a new player with identifier <id>, returns false if the id is already occupied
-	bool addPlayer(std::uint8_t id);
+	// add a new player with identifier <id>
+	void addPlayer(std::uint8_t id);
+
+	// add a new player with identifier <id>
+	void initPlayer(std::uint8_t id);
+
+	// remove player with identifier <id>
+	void removePlayer(std::uint8_t id);
 
 	// mark all (used) player alive
 	void bringAllToLife();
 
+	// remove player with identifier <id>
+	void killPlayer(std::uint8_t id);
+
+	void send_my_info();
+
+	void update_player_state(Uint8 id, float x, float y, /*float w, float h,*/
+		float rot);
+
+	void update_player_info(Uint8 id, float x, float y, /*float w, float h,*/
+		float rot, uint8_t state);
+
 	// switch to the view of the next player
-	void switchToNextPlayer();
+	//void switchToNextPlayer();
 
 	// render the walls, etc
 	void render();
@@ -343,8 +372,8 @@ private:
 
 	// Some fields defining all elements of the world, etc
 
-	// maximum number of player
-	static constexpr uint8_t max_player = 10;
+	//// maximum number of player
+	//static constexpr uint8_t max_player = 10;
 
 	// Relation between window size and walling size
 	static constexpr uint8_t walling_size_factor = 2;
@@ -360,7 +389,7 @@ private:
 	Map map_;
 
 	// array of players
-	Player players_[max_player];
+	std::array<Player, max_player> players_;
 
 	// id of the current player, used since we allows switching between players
 	uint8_t player_id_;

@@ -9,6 +9,8 @@
 
 #include "../sdlutils/SDLUtils.h"
 #include "../sdlutils/Texture.h"
+#include "Game.h"
+#include "Networking.h"
 
 LittleWolf::LittleWolf(uint16_t xres, uint16_t yres, SDL_Window *window,
 		SDL_Renderer *render) :
@@ -26,6 +28,10 @@ LittleWolf::LittleWolf(uint16_t xres, uint16_t yres, SDL_Window *window,
 
 	gpu_ = { window, render, texture, xres, yres };
 
+
+	//
+	for (auto i = 0u; i < players_.size(); i++)
+		players_[i].state = NOT_USED;
 }
 
 LittleWolf::~LittleWolf() {
@@ -43,6 +49,8 @@ void LittleWolf::update() {
 	spin(p);  // handle spinning
 	move(p);  // handle moving
 	shoot(p); // handle shooting
+
+	Game::instance()->get_networking().send_state(p.where, p.theta);
 }
 
 void LittleWolf::load(std::string filename) {
@@ -133,14 +141,15 @@ void LittleWolf::load(std::string filename) {
 				}
 
 }
+void LittleWolf::addPlayer(std::uint8_t id) {
+	initPlayer(id);
+	player_id_ = id;
+	send_my_info();
+}
+void LittleWolf::initPlayer(std::uint8_t id) {
+	assert(id < players_.size() && players_[id].state == NOT_USED);
 
-bool LittleWolf::addPlayer(std::uint8_t id) {
-	assert(id < max_player);
-
-	if (players_[id].state != NOT_USED)
-		return false;
-
-	auto &rand = sdlutils().rand();
+	auto& rand = sdlutils().rand();
 
 	// The search for an empty cell start at a random position (orow,ocol)
 	uint16_t orow = rand.nextInt(0, map_.walling_height);
@@ -155,10 +164,10 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 			row = (row + 1) % map_.walling_height;
 	}
 
-	// handle the case where the search is failed, which in principle should never
-	// happen unless we start with map with few empty cells
-	if (row >= map_.walling_height)
-		return false;
+	//// handle the case where the search is failed, which in principle should never
+	//// happen unless we start with map with few empty cells
+	//if (row >= map_.walling_height)
+	//	return false;
 
 	// initialize the player
 	Player p = { //
@@ -170,17 +179,13 @@ bool LittleWolf::addPlayer(std::uint8_t id) {
 					0.9f,		            	// Acceleration.
 					0.0f, 			            // Rotation angle in radians.
 					ALIVE                       // Player state
-			};
+	};
 
 	// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
-	map_.walling[(int) p.where.y][(int) p.where.x] = player_to_tile(id);
+	map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
 	players_[id] = p;
-
 	player_id_ = id;
-
-	return true;
 }
-
 void LittleWolf::render() {
 
 	// if the player is dead we only render upper view, otherwise the normal view
@@ -493,17 +498,17 @@ bool LittleWolf::shoot(Player &p) {
 	return false;
 }
 
-void LittleWolf::switchToNextPlayer() {
-
-	// search the next player in the palyer's array
-	int j = (player_id_ + 1) % max_player;
-	while (j != player_id_ && players_[j].state == NOT_USED)
-		j = (j + 1) % max_player;
-
-	// move to the next player view
-	player_id_ = j;
-
-}
+//void LittleWolf::switchToNextPlayer() {
+//
+//	// search the next player in the palyer's array
+//	int j = (player_id_ + 1) % max_player;
+//	while (j != player_id_ && players_[j].state == NOT_USED)
+//		j = (j + 1) % max_player;
+//
+//	// move to the next player view
+//	player_id_ = j;
+//
+//}
 
 void LittleWolf::bringAllToLife() {
 	// bring all dead players to life -- all stay in the same position
@@ -512,4 +517,42 @@ void LittleWolf::bringAllToLife() {
 			players_[i].state = ALIVE;
 		}
 	}
+}
+void LittleWolf::removePlayer(std::uint8_t id) {
+	players_[id].state = LittleWolf::NOT_USED;
+}
+void LittleWolf::update_player_state(Uint8 id, float x, float y, /*float w, float h,*/
+	float rot) {
+
+	Player& p = players_[id];
+
+	p.where.x = x;
+	p.where.y = y;
+	p.id = id;
+	//p.width = w;
+	//p.height = h;
+	p.theta = rot;
+
+}
+void LittleWolf::killPlayer(std::uint8_t id) {
+	players_[id].state = LittleWolf::DEAD;
+}
+void LittleWolf::update_player_info(Uint8 id, float x, float y, /*float w, float h,*/
+	float rot, uint8_t state) {
+	Player& p = players_[id];
+
+	p.where.x = x;
+	p.where.y = y;
+	p.id = id;
+	//p.width = w;
+	//p.height = h;
+	p.theta = rot;
+	p.state = static_cast<PlayerState>(state);
+}
+void LittleWolf::send_my_info() {
+	Player& p = players_[player_id_];
+
+	//
+	Game::instance()->get_networking().send_my_info(p.where,/*0,mag(sub(p.fov.b,p.fov.a)),*/ //calcula longitud linea vision
+		p.theta, p.state);
 }
