@@ -12,7 +12,6 @@ Game::Game() :
 		little_wolfs_(nullptr),
 		net_(nullptr)//
 {
-	upView = false;
 }
 
 Game::~Game() {
@@ -63,15 +62,13 @@ void Game::start() {
 				continue;
 			}
 			//el jugador cambia a la vista del mapa
-			if (ihdlr.isKeyDown(SDL_SCANCODE_M)) { 
+			if (!little_wolfs_->getUpView() && ihdlr.isKeyDown(SDL_SCANCODE_M)) {
 				little_wolfs_->setView();
 				viewChangeTime = sdlutils().virtualTimer().currTime();
-				upView = true;
 			}
 		}
 		//si el jugador ha cambiado de vista, pasados dos segundos vuelve a la vista normal
-		if (upView && sdlutils().virtualTimer().currTime() > viewChangeTime + 2000) {
-			upView = false;
+		if (little_wolfs_->getUpView() && sdlutils().virtualTimer().currTime() > viewChangeTime + 2000) {
 			little_wolfs_->setView();
 		}
 		little_wolfs_->update();

@@ -163,6 +163,7 @@ public:
 	
 	//cambia la vista del jugador (juego normal o ver el mapa)
 	void setView(){ upView = !upView; }
+	bool getUpView() { return upView; }
 private:
 	bool upView = false;
 	// Calculates wall size using the <corrected> ray to the wall.
