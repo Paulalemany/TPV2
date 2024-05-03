@@ -160,9 +160,11 @@ public:
 
 	// update the world, tec
 	void update();
-
+	
+	//cambia la vista del jugador (juego normal o ver el mapa)
+	void setView(){ upView = !upView; }
 private:
-
+	bool upView = false;
 	// Calculates wall size using the <corrected> ray to the wall.
 	Wall project(const int xres, const int yres, const float focal,
 			const Point corrected);

@@ -8,7 +8,7 @@
 #include "sdlutils/SDLNetUtils.h"
 
 void server(Uint16 port) {
-	UDPServer s(port, 10);
+	UDPServer s(port, 4);
 	s.listen();
 }
 void client(char* host, Uint16 port) {

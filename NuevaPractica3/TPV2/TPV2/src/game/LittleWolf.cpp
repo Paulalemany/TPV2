@@ -32,6 +32,9 @@ LittleWolf::LittleWolf(uint16_t xres, uint16_t yres, SDL_Window *window,
 	//
 	for (auto i = 0u; i < players_.size(); i++)
 		players_[i].state = NOT_USED;
+
+	
+	upView = false;
 }
 
 LittleWolf::~LittleWolf() {
@@ -148,7 +151,6 @@ void LittleWolf::addPlayer(std::uint8_t id) {
 }
 void LittleWolf::initPlayer(std::uint8_t id) {
 	assert(id < players_.size() && players_[id].state == NOT_USED);
-
 	auto& rand = sdlutils().rand();
 
 	// The search for an empty cell start at a random position (orow,ocol)
@@ -187,10 +189,11 @@ void LittleWolf::initPlayer(std::uint8_t id) {
 	player_id_ = id;
 }
 void LittleWolf::render() {
-
 	// if the player is dead we only render upper view, otherwise the normal view
-	if (players_[player_id_].state == DEAD)
+	if (players_[player_id_].state == DEAD || upView) {
 		render_upper_view();
+	}
+		//render_upper_view();
 	else
 		render_map(players_[player_id_]);
 
