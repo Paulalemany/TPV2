@@ -12,6 +12,7 @@ Game::Game() :
 		little_wolfs_(nullptr),
 		net_(nullptr)//
 {
+	upView = false;
 }
 
 Game::~Game() {
@@ -38,10 +39,6 @@ bool Game::init(char* host, Uint16 port) {
 
 	// add some players
 	little_wolfs_->addPlayer(net_->client_id());
-	/*little_wolf_->addPlayer(0);
-	little_wolf_->addPlayer(1);
-	little_wolf_->addPlayer(2);
-	little_wolf_->addPlayer(3);*/
 	return true;
 }
 
@@ -65,18 +62,18 @@ void Game::start() {
 				exit = true;
 				continue;
 			}
-			//// N switches to the next player view
-			//if (ihdlr.isKeyDown(SDL_SCANCODE_N)) {
-			//	little_wolf_->switchToNextPlayer();
-			//}
-
-			//// R brings deads to life
-			//if (ihdlr.isKeyDown(SDL_SCANCODE_R)) {
-			//	little_wolf_->bringAllToLife();
-			//}
-
+			//el jugador cambia a la vista del mapa
+			if (ihdlr.isKeyDown(SDL_SCANCODE_M)) { 
+				little_wolfs_->setView();
+				viewChangeTime = sdlutils().virtualTimer().currTime();
+				upView = true;
+			}
 		}
-
+		//si el jugador ha cambiado de vista, pasados dos segundos vuelve a la vista normal
+		if (upView && sdlutils().virtualTimer().currTime() > viewChangeTime + 2000) {
+			upView = false;
+			little_wolfs_->setView();
+		}
 		little_wolfs_->update();
 		net_->update();
 
@@ -85,7 +82,6 @@ void Game::start() {
 		// sdlutils().clearRenderer();
 
 		little_wolfs_->render();
-
 		sdlutils().presentRenderer();
 
 

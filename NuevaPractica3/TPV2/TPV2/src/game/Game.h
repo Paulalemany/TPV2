@@ -26,5 +26,8 @@ private:
 	//void check_collisions();
 	LittleWolf *little_wolfs_;
 	Networking* net_;
+	//el jugador puede cambiar de vista pero solo durante 2 segundos
+	Uint32 viewChangeTime;
+	bool upView;
 };
 
