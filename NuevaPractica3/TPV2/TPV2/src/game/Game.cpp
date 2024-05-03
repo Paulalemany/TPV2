@@ -59,6 +59,7 @@ void Game::start() {
 		ihdlr.refresh();
 		if (ihdlr.keyDownEvent()) {
 
+			//No se si simplemente hay que quitarlo del codigo o el online va aparte
 			// ESC exists the game
 			if (ihdlr.isKeyDown(SDL_SCANCODE_ESCAPE)) {
 				exit = true;

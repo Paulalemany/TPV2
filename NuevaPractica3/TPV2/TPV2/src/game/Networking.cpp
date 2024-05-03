@@ -171,6 +171,8 @@ void Networking::handle_player_state(const PlayerStateMsg &m) {
 				m.y, /*m.w, m.h,*/ m.rot);
 	}
 }
+
+//Relativo a los disparos
 //
 //void Networking::send_shoot(Vector2D p, Vector2D v, int width, int height,
 //		float r) {
@@ -193,6 +195,7 @@ void Networking::handle_player_state(const PlayerStateMsg &m) {
 //
 //}
 
+//Envia el mensaje de la muerte
 void Networking::send_dead(Uint8 id) {
 	MsgWithId m;
 	m._type = _DEAD;
@@ -200,8 +203,10 @@ void Networking::send_dead(Uint8 id) {
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 
+//Maneja la muerte
 void Networking::handle_dead(const MsgWithId &m) {
 	Game::instance()->get_littleWolfs().killPlayer(m._client_id);
+	//Sonido de muerte???
 }
 
 void Networking::send_my_info(const LittleWolf::Point& where,/* float w, float h,*/ float rot,
