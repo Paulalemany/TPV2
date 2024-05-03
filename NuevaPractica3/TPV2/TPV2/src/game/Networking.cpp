@@ -152,14 +152,12 @@ void Networking::handle_disconnet(Uint8 id) {
 	Game::instance()->get_littleWolfs().removePlayer(id);
 }
 
-void Networking::send_state(const LittleWolf::Point& where,/* float w, float h,*/ float rot) {
+void Networking::send_state(const LittleWolf::Point& where, float rot) {
 	PlayerStateMsg m;
 	m._type = _PLAYER_STATE;
 	m._client_id = clientId_;
 	m.x = where.x;
 	m.y = where.y;
-	/*m.w = w;
-	m.h = h;*/
 	m.rot = rot;
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
@@ -168,7 +166,7 @@ void Networking::handle_player_state(const PlayerStateMsg &m) {
 
 	if (m._client_id != clientId_) {
 		Game::instance()->get_littleWolfs().update_player_state(m._client_id, m.x,
-				m.y, /*m.w, m.h,*/ m.rot);
+				m.y, m.rot);
 	}
 }
 
@@ -209,15 +207,12 @@ void Networking::handle_dead(const MsgWithId &m) {
 	//Sonido de muerte???
 }
 
-void Networking::send_my_info(const LittleWolf::Point& where,/* float w, float h,*/ float rot,
-		Uint8 state) {
+void Networking::send_my_info(const LittleWolf::Point& where,float rot,Uint8 state) {
 	PlayerInfoMsg m;
 	m._type = _PLAYER_INFO;
 	m._client_id = clientId_;
 	m.x = where.x;
 	m.y = where.y;
-	/*m.w = w;
-	m.h = h;*/
 	m.rot = rot;
 	m.state = state;
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
@@ -226,7 +221,7 @@ void Networking::send_my_info(const LittleWolf::Point& where,/* float w, float h
 void Networking::handle_player_info(const PlayerInfoMsg &m) {
 	if (m._client_id != clientId_) {
 		Game::instance()->get_littleWolfs().update_player_info(m._client_id, m.x,
-				m.y, /*m.w, m.h,*/ m.rot, m.state);
+				m.y, m.rot, m.state);
 	}
 }
 

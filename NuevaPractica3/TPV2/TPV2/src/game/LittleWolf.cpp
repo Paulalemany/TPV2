@@ -524,38 +524,33 @@ void LittleWolf::bringAllToLife() {
 void LittleWolf::removePlayer(std::uint8_t id) {
 	players_[id].state = LittleWolf::NOT_USED;
 }
-void LittleWolf::update_player_state(Uint8 id, float x, float y, /*float w, float h,*/
-	float rot) {
+void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot) {
 
 	Player& p = players_[id];
-
+	//borra la posicion anterior del jugador
+	map_.walling[(int)p.where.y][(int)p.where.x] = 0;
 	p.where.x = x;
 	p.where.y = y;
 	p.id = id;
-	//p.width = w;
-	//p.height = h;
+	map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
 	p.theta = rot;
 
 }
 void LittleWolf::killPlayer(std::uint8_t id) {
 	players_[id].state = LittleWolf::DEAD;
 }
-void LittleWolf::update_player_info(Uint8 id, float x, float y, /*float w, float h,*/
-	float rot, uint8_t state) {
+void LittleWolf::update_player_info(Uint8 id, float x, float y, float rot, uint8_t state) {
 	Player& p = players_[id];
 
 	p.where.x = x;
 	p.where.y = y;
 	p.id = id;
-	//p.width = w;
-	//p.height = h;
+	map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
 	p.theta = rot;
 	p.state = static_cast<PlayerState>(state);
 }
 void LittleWolf::send_my_info() {
 	Player& p = players_[player_id_];
 
-	//
-	Game::instance()->get_networking().send_my_info(p.where,/*0,mag(sub(p.fov.b,p.fov.a)),*/ //calcula longitud linea vision
-		p.theta, p.state);
+	Game::instance()->get_networking().send_my_info(p.where,p.theta, p.state);
 }
