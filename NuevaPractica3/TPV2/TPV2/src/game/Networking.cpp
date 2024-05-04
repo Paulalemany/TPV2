@@ -94,7 +94,7 @@ void Networking::update() {
 	Msg m0;
 	MsgWithMasterId m1;
 	PlayerStateMsg m2;
-	//ShootMsg m3;
+	ShootMsg m3;
 	MsgWithId m4;
 	PlayerInfoMsg m5;
 
@@ -123,10 +123,10 @@ void Networking::update() {
 			handle_player_info(m5);
 			break;
 
-		//case _SHOOT:
-		//	m3.deserialize(p_->data);
-		//	handle_shoot(m3);
-		//	break;
+		case _SHOOT:
+			m3.deserialize(p_->data);
+			handle_shoot(m3);
+			break;
 
 		case _DEAD:
 			m4.deserialize(p_->data);
@@ -177,21 +177,24 @@ void Networking::handle_player_state(const PlayerStateMsg &m) {
 //	ShootMsg m;
 //	m._type = _SHOOT;
 //	m._client_id = clientId_;
-//	m.x = p.getX();
-//	m.y = p.getY();
-//	m.vx = v.getX();
-//	m.vy = v.getY();
-//	m.w = width;
-//	m.h = height;
-//	m.rot = r;
 //	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 //}
 
-//void Networking::handle_shoot(const ShootMsg &m) {
-//	Game::instance()->get_bullets().shoot(Vector2D(m.x, m.y),
-//			Vector2D(m.vx, m.vy), m.w, m.h, m.rot);
-//
-//}
+void Networking::send_shoot() 
+{
+	ShootMsg m;
+	m._type = _SHOOT;
+	m._client_id = clientId_;
+	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+}
+
+void Networking::handle_shoot(const ShootMsg &m) {
+	/*Game::instance()->get_bullets().shoot(Vector2D(m.x, m.y),
+			Vector2D(m.vx, m.vy), m.w, m.h, m.rot);*/
+
+	std::cout << "Sonidoooo" << std::endl;
+
+}
 
 //Envia el mensaje de la muerte
 void Networking::send_dead(Uint8 id) {

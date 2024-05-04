@@ -488,9 +488,10 @@ bool LittleWolf::shoot(Player &p) {
 	if (ihdrl.keyDownEvent() && ihdrl.isKeyDown(SDL_SCANCODE_SPACE)) {
 
 		// play gun shot sound
-		//Aun no suena según lejanía habrá que ver como hacerlo
-		//Probablemente haya que enviar un mensaje o algo así
-		sdlutils().soundEffects().at("gunshot").play();
+		//sdlutils().soundEffects().at("gunshot").play();
+		//shootSound();
+		//Game::instance()->get_networking().send_my_info(p.where, p.theta, p.state);
+		Game::instance()->get_networking().send_shoot();
 
 		// we shoot in several directions, because with projection what you see is not exact
 		for (float d = -0.05; d <= 0.05; d += 0.005) {
@@ -541,9 +542,22 @@ void LittleWolf::bringAllToLife() {
 		}
 	}
 }
+
+void LittleWolf::shootSound()
+{
+	//Recorremos todos los jugadores haciendo que se reproduzca el sonido
+	for (auto i = 0u; i < max_player; i++) {
+		//No se si lo deben escuchar todos los jugadores que haya en el juego o solo los vivos
+		if (players_[i].state == ALIVE) {
+			sdlutils().soundEffects().at("gunshot").play();
+		}
+	}
+}
+
 void LittleWolf::removePlayer(std::uint8_t id) {
 	players_[id].state = LittleWolf::NOT_USED;
 }
+
 void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot) {
 
 	Player& p = players_[id];
@@ -556,9 +570,11 @@ void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot) {
 	p.theta = rot;
 
 }
+
 void LittleWolf::killPlayer(std::uint8_t id) {
 	players_[id].state = LittleWolf::DEAD;
 }
+
 void LittleWolf::update_player_info(Uint8 id, float x, float y, float rot, uint8_t state) {
 	Player& p = players_[id];
 
@@ -569,6 +585,7 @@ void LittleWolf::update_player_info(Uint8 id, float x, float y, float rot, uint8
 	p.theta = rot;
 	p.state = static_cast<PlayerState>(state);
 }
+
 void LittleWolf::send_my_info() {
 	Player& p = players_[player_id_];
 

@@ -141,6 +141,9 @@ public:
 	// mark all (used) player alive
 	void bringAllToLife();
 
+	//Hace que todos escuchen el sonido del disparo
+	void shootSound();
+
 	// remove player with identifier <id>
 	void killPlayer(std::uint8_t id);
 
