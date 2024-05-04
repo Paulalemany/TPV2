@@ -488,9 +488,6 @@ bool LittleWolf::shoot(Player &p) {
 	if (ihdrl.keyDownEvent() && ihdrl.isKeyDown(SDL_SCANCODE_SPACE)) {
 
 		// play gun shot sound
-		//sdlutils().soundEffects().at("gunshot").play();
-		//shootSound();
-		//Game::instance()->get_networking().send_my_info(p.where, p.theta, p.state);
 		Game::instance()->get_networking().send_shoot();
 
 		// we shoot in several directions, because with projection what you see is not exact
@@ -545,6 +542,7 @@ void LittleWolf::bringAllToLife() {
 
 void LittleWolf::shootSound()
 {
+	std::cout << "¿¿¿Llega???" << std::endl;
 	//Recorremos todos los jugadores haciendo que se reproduzca el sonido
 	for (auto i = 0u; i < max_player; i++) {
 		//No se si lo deben escuchar todos los jugadores que haya en el juego o solo los vivos

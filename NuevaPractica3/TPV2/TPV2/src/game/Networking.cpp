@@ -193,6 +193,8 @@ void Networking::handle_shoot(const ShootMsg &m) {
 			Vector2D(m.vx, m.vy), m.w, m.h, m.rot);*/
 
 	std::cout << "Sonidoooo" << std::endl;
+	//sdlutils().soundEffects().at("gunshot").play();
+	Game::instance()->get_littleWolfs().shootSound();
 
 }
 
