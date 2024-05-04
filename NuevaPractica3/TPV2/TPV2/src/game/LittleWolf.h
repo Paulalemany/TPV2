@@ -142,7 +142,7 @@ public:
 	void bringAllToLife();
 
 	//Hace que todos escuchen el sonido del disparo
-	void shootSound();
+	void shootSound(float x, float y);
 
 	// remove player with identifier <id>
 	void killPlayer(std::uint8_t id);
