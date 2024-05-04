@@ -167,8 +167,16 @@ public:
 	//cambia la vista del jugador (juego normal o ver el mapa)
 	void setView(){ upView = !upView; }
 	bool getUpView() { return upView; }
+
+	void setGameRestart() { gameRestart = !gameRestart; }
+	bool getGameRestart() { return gameRestart; }
+
+	void setCountdown(int n) { countdown += n; }
+	int getCountdown() { return countdown; }
 private:
 	bool upView = false;
+	bool gameRestart = false;
+	int countdown = 5;
 	// Calculates wall size using the <corrected> ray to the wall.
 	Wall project(const int xres, const int yres, const float focal,
 			const Point corrected);
@@ -194,6 +202,8 @@ private:
 
 	// Render a list of current player
 	void render_players_info();
+	//renderizar mensaje the game restart
+	void render_game_restart();
 
 	// These are auxiliary function for vectors, colors, etc. All are from original littlewolf.
 
@@ -332,6 +342,8 @@ private:
 	// because it is an empty cell
 	inline uint32_t color(const uint8_t tile) {
 		switch (tile) {
+		case 0:
+			return 0xFFFFFFFF; //White
 		case 1:
 			return 0x00AA0000; // Red.
 		case 2:

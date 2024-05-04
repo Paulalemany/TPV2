@@ -202,6 +202,10 @@ void LittleWolf::render() {
 
 	// render the identifiers, state, etc
 	render_players_info();
+	//si se debe mostrar el mensaje game restart
+	if (gameRestart) {
+		render_game_restart();
+	}
 }
 
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
@@ -385,7 +389,6 @@ void LittleWolf::render_players_info() {
 
 	for (auto i = 0u; i < max_player; i++) {
 		PlayerState s = players_[i].state;
-
 		// render player info if it is used
 		if (s != NOT_USED) {
 
@@ -397,14 +400,24 @@ void LittleWolf::render_players_info() {
 					build_sdlcolor(color_rgba(i + 10)));
 
 			SDL_Rect dest = build_sdlrect(0, y, info.width(), info.height());
-
 			info.render(dest);
 			y += info.height() + 5;
 
 		}
 	}
 }
+void LittleWolf::render_game_restart() {
 
+	if (players_[player_id_].state != NOT_USED) {
+		Texture infoRestart(sdlutils().renderer(), "The game will restart in " + std::to_string(countdown) + " seconds",
+			sdlutils().fonts().at("ARIAL24"),
+			build_sdlcolor(color_rgba(0)));
+
+		SDL_Rect dest= build_sdlrect(sdlutils().width() /4, sdlutils().height() / 2, infoRestart.width(), infoRestart.height());
+		infoRestart.render(dest);
+
+	}
+}
 void LittleWolf::move(Player &p) {
 	auto &ihdrl = ih();
 
@@ -518,19 +531,6 @@ bool LittleWolf::shoot(Player &p) {
 	}
 	return false;
 }
-
-//void LittleWolf::switchToNextPlayer() {
-//
-//	// search the next player in the palyer's array
-//	int j = (player_id_ + 1) % max_player;
-//	while (j != player_id_ && players_[j].state == NOT_USED)
-//		j = (j + 1) % max_player;
-//
-//	// move to the next player view
-//	player_id_ = j;
-//
-//}
-
 void LittleWolf::bringAllToLife() {
 	// bring all dead players to life -- all stay in the same position
 	for (auto i = 0u; i < max_player; i++) {
@@ -596,6 +596,7 @@ void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot) {
 }
 
 void LittleWolf::killPlayer(std::uint8_t id) {
+	std::cout << "cambio a muerto " << std::endl;
 	players_[id].state = LittleWolf::DEAD;
 }
 
