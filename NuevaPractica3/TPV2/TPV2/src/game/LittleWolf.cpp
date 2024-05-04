@@ -144,11 +144,13 @@ void LittleWolf::load(std::string filename) {
 				}
 
 }
+
 void LittleWolf::addPlayer(std::uint8_t id) {
 	initPlayer(id);
 	player_id_ = id;
 	send_my_info();
 }
+
 void LittleWolf::initPlayer(std::uint8_t id) {
 	assert(id < players_.size() && players_[id].state == NOT_USED);
 	auto& rand = sdlutils().rand();
@@ -188,6 +190,7 @@ void LittleWolf::initPlayer(std::uint8_t id) {
 	players_[id] = p;
 	player_id_ = id;
 }
+
 void LittleWolf::render() {
 	// if the player is dead we only render upper view, otherwise the normal view
 	if (players_[player_id_].state == DEAD || upView) {
@@ -203,14 +206,18 @@ void LittleWolf::render() {
 
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
 		uint8_t **walling, bool ignore_players, bool ignore_deads) {
+
 	// Determine whether to step horizontally or vertically on the grid.
+
 	Point hor = sh(where, direction);
 	Point ver = sv(where, direction);
 	Point ray = mag(sub(hor, where)) < mag(sub(ver, where)) ? hor : ver;
+
 	// Due to floating point error, the step may not make it to the next grid square.
 	// Three directions (dy, dx, dc) of a tiny step will be added to the ray
 	// depending on if the ray hit a horizontal wall, a vertical wall, or the corner
 	// of two walls, respectively.
+
 	Point dc = mul(direction, 0.01f);
 	Point dx = { dc.x, 0.0f };
 	Point dy = { 0.0f, dc.y };
@@ -221,7 +228,9 @@ LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
 			dec(ray.x) == 0.0f ? dx :
 			// Tiny step for a horizontal grid square.
 					dy);
+
 	const Hit hit = { tile(test, walling), ray };
+
 	// If a wall was not hit, then continue advancing the ray.
 
 	if (hit.tile > 0 && hit.tile < 10) {
@@ -404,20 +413,27 @@ void LittleWolf::move(Player &p) {
 	const Point last = p.where, zero = { 0.0f, 0.0f };
 
 	// Accelerates with key held down.
-	if (ihdrl.isKeyDown(SDL_SCANCODE_W) || ihdrl.isKeyDown(SDL_SCANCODE_S)
-			|| ihdrl.isKeyDown(SDL_SCANCODE_D)
-			|| ihdrl.isKeyDown(SDL_SCANCODE_A)) {
+	if (ihdrl.isKeyDown(SDL_SCANCODE_W) 
+		|| ihdrl.isKeyDown(SDL_SCANCODE_S)
+		|| ihdrl.isKeyDown(SDL_SCANCODE_D)
+		|| ihdrl.isKeyDown(SDL_SCANCODE_A)) {
+
 		const Point reference = { 1.0f, 0.0f };
 		const Point direction = turn(reference, p.theta);
 		const Point acceleration = mul(direction, p.acceleration);
+
 		if (ihdrl.isKeyDown(SDL_SCANCODE_W))
 			p.velocity = add(p.velocity, acceleration);
+
 		if (ihdrl.isKeyDown(SDL_SCANCODE_S))
 			p.velocity = sub(p.velocity, acceleration);
+
 		if (ihdrl.isKeyDown(SDL_SCANCODE_D))
 			p.velocity = add(p.velocity, rag(acceleration));
+
 		if (ihdrl.isKeyDown(SDL_SCANCODE_A))
 			p.velocity = sub(p.velocity, rag(acceleration));
+
 	} else { // Otherwise, decelerates (exponential decay).
 		p.velocity = mul(p.velocity, 1.0f - p.acceleration / p.speed);
 	}
@@ -472,6 +488,8 @@ bool LittleWolf::shoot(Player &p) {
 	if (ihdrl.keyDownEvent() && ihdrl.isKeyDown(SDL_SCANCODE_SPACE)) {
 
 		// play gun shot sound
+		//Aun no suena según lejanía habrá que ver como hacerlo
+		//Probablemente haya que enviar un mensaje o algo así
 		sdlutils().soundEffects().at("gunshot").play();
 
 		// we shoot in several directions, because with projection what you see is not exact
@@ -493,6 +511,8 @@ bool LittleWolf::shoot(Player &p) {
 			if (hit.tile > 9 && mag(sub(p.where, hit.where)) < shoot_distace) {
 				uint8_t id = tile_to_player(hit.tile);
 				players_[id].state = DEAD;
+				//Sonido de muerte
+				//Aun no suena por cercanía
 				sdlutils().soundEffects().at("pain").play();
 				return true;
 			}

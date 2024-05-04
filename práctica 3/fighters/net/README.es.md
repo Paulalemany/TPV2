@@ -19,6 +19,8 @@ Para ejecutar el juego primero abrimos una consola y ejecutamos el programa en m
   c:
   cd c:\hlocal\TPV2\TPV2
   ..\bin\TPV2Debug.exe server 2000
+
+C:\Users\Paula\Clase\GitHub\TPV2\NuevaPractica3\TPV2\bin\TPV2Debug.exe server 2000
 ```
 
 y después para cada cliente abrimos una consola y ejecutamos el program en modo cliente
@@ -26,8 +28,9 @@ y después para cada cliente abrimos una consola y ejecutamos el program en modo
 
 ```
   c:
-  cd c:\hlocal\TPV2\TPV2
+  cd C:\Users\Paula\Clase\GitHub\TPV2\NuevaPractica3\TPV2\TPV2
   ..\bin\TPV2Debug.exe client localhost 2000
+
 ```
 
 Notase que tenemos que estar en el directorio ``c:\hlocal\TPV2\TPV2`` porque es el directorio que incluye el directorio ``resources``, y el programa supone que ``resources`` está en el directorio actual -- Cuando ejecutamos el programa desde Visual Studio esto se hace automáticamente porque en la configuración del proyecto hay una opción llamada *directorio de trabajo (working directory)* que ya está configurada con el valor ``c:\hlocal\TPV2\TPV2``.

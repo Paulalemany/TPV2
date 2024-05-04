@@ -41,6 +41,7 @@ bool Game::init(char* host, Uint16 port) {
 	return true;
 }
 
+//Bucle principal
 void Game::start() {
 
 	// a boolean to exit the loop
@@ -89,6 +90,7 @@ void Game::start() {
 	}
 	net_->disconnect();
 }
+
 //void Game::check_collisions() {
 //	if (!net_->is_master())
 //		return;
