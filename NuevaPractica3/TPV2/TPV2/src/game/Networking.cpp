@@ -180,21 +180,20 @@ void Networking::handle_player_state(const PlayerStateMsg &m) {
 //	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 //}
 
-void Networking::send_shoot() 
+void Networking::send_shoot(float x, float y)
 {
 	ShootMsg m;
 	m._type = _SHOOT;
 	m._client_id = clientId_;
+
+	//Guardamos la posición del disparo
+	m.x = x;
+	m.y = y;
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 
 void Networking::handle_shoot(const ShootMsg &m) {
-	/*Game::instance()->get_bullets().shoot(Vector2D(m.x, m.y),
-			Vector2D(m.vx, m.vy), m.w, m.h, m.rot);*/
-
-	std::cout << "Sonidoooo" << std::endl;
-	//sdlutils().soundEffects().at("gunshot").play();
-	Game::instance()->get_littleWolfs().shootSound();
+	Game::instance()->get_littleWolfs().shootSound(m.x, m.y);
 
 }
 

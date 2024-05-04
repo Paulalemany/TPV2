@@ -488,7 +488,7 @@ bool LittleWolf::shoot(Player &p) {
 	if (ihdrl.keyDownEvent() && ihdrl.isKeyDown(SDL_SCANCODE_SPACE)) {
 
 		// play gun shot sound
-		Game::instance()->get_networking().send_shoot();
+		Game::instance()->get_networking().send_shoot(p.where.x, p.where.y);
 
 		// we shoot in several directions, because with projection what you see is not exact
 		for (float d = -0.05; d <= 0.05; d += 0.005) {
@@ -540,13 +540,39 @@ void LittleWolf::bringAllToLife() {
 	}
 }
 
-void LittleWolf::shootSound()
+void LittleWolf::shootSound(float x, float y)
 {
-	std::cout << "¿¿¿Llega???" << std::endl;
 	//Recorremos todos los jugadores haciendo que se reproduzca el sonido
 	for (auto i = 0u; i < max_player; i++) {
 		//No se si lo deben escuchar todos los jugadores que haya en el juego o solo los vivos
 		if (players_[i].state == ALIVE) {
+
+			//Cálculo de la distancia
+			float c1 = x - players_[i].where.x;
+			float c2 = y - players_[i].where.y;
+
+			//Con los catetos calculamos la distancia
+			float d = sqrt((c1 * c1) + (c2 * c2));
+
+			if (d > 1000) {
+				std::cout << "Volumen 0" << std::endl;
+			}
+			else if (d > 750) {
+				std::cout << "Volumen al 25%" << std::endl;
+			}
+			else if (d > 500) {
+				std::cout << "Volumen al 50%" << std::endl;
+			}
+			else if (d > 250) {
+				std::cout << "Volumen 75%" << std::endl;
+			}
+			else {
+				std::cout << "Volumen 100" << std::endl;
+			}
+
+			players_[i].where;
+			//Dependiendo de la posicion del jugador respecto a la bala el volumen cambia
+			//if(players_[i].where - pos < 100)
 			sdlutils().soundEffects().at("gunshot").play();
 		}
 	}
