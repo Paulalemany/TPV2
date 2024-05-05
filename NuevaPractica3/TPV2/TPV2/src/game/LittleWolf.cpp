@@ -545,7 +545,7 @@ void LittleWolf::distanceSound(float x, float y, std::string sound)
 		//No se si lo deben escuchar todos los jugadores que haya en el juego o solo los vivos
 		if (players_[i].state == ALIVE) {
 
-			//Cálculo de la distancia
+			//Cï¿½lculo de la distancia
 			float c1 = x - players_[i].where.x;
 			float c2 = y - players_[i].where.y;
 
@@ -553,7 +553,7 @@ void LittleWolf::distanceSound(float x, float y, std::string sound)
 			float d = sqrt((c1 * c1) + (c2 * c2));
 
 			//Calcula el volumen haciendo un porcentaje de la distancia
-			//El 4.64 es la distancia máxima a la que se puede escuchar (A priori es la max distancia de mapa)
+			//El 4.64 es la distancia mï¿½xima a la que se puede escuchar (A priori es la max distancia de mapa)
 			float v = 100 - (d / 4.64);
 			if (v < 0) { v = 0; }
 			sdlutils().soundEffects().at("sound").setVolume(v);
@@ -564,6 +564,7 @@ void LittleWolf::distanceSound(float x, float y, std::string sound)
 
 void LittleWolf::removePlayer(std::uint8_t id) {
 	players_[id].state = LittleWolf::NOT_USED;
+	map_.walling[(int)players_[id].where.y][(int)players_[id].where.x] = 0;
 }
 
 void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot) {
