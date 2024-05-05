@@ -487,7 +487,7 @@ bool LittleWolf::shoot(Player &p) {
 	// Space shoot -- we use keyDownEvent to force a complete press/release for each bullet
 	if (ihdrl.keyDownEvent() && ihdrl.isKeyDown(SDL_SCANCODE_SPACE)) {
 
-		// play gun shot sound
+		//Envia el mensaje de que se ha disparado
 		Game::instance()->get_networking().send_shoot(p.where.x, p.where.y);
 
 		// we shoot in several directions, because with projection what you see is not exact
