@@ -134,9 +134,9 @@ public:
 	// add a new player with identifier <id>
 	void addPlayer(std::uint8_t id);
 
-	void wannaShoot();
+	//void wannaShoot();
 
-	void playerShoot(Uint8 id);
+	//void playerShoot(Uint8 id);
 
 	// add a new player with identifier <id>
 	void initPlayer(std::uint8_t id);
@@ -160,9 +160,6 @@ public:
 
 	void update_player_info(Uint8 id, float x, float y, /*float w, float h,*/
 		float rot, uint8_t state);
-
-	// switch to the view of the next player
-	//void switchToNextPlayer();
 
 	// render the walls, etc
 	void render();

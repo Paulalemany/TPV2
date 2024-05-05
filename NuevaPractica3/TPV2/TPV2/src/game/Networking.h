@@ -29,9 +29,9 @@ public:
 		Uint8 state);
 	
 	//void send_shoot(Vector2D p, Vector2D v, int width, int height, float r);
-	void send_wannashoot();
+	//void send_wannashoot();
 	void send_shoot(float x, float y);
-	void send_dead(float x, float y);
+	void send_dead(float x, float y, Uint8 id);
 	void send_restart();
 	void send_restart_text();
 	void send_update_time();

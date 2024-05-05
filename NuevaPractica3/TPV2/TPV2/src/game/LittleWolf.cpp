@@ -51,11 +51,11 @@ void LittleWolf::update() {
 
 	spin(p);  // handle spinning
 	move(p);  // handle moving
+	shoot(p); //handle shooting
 
-	//Intentando hacerlo por mensajes
-	//PASO 1: Si se pulsa la tecla enviamos el mensaje al master
-	if (ih().keyDownEvent() && ih().isKeyDown(SDL_SCANCODE_SPACE)) { wannaShoot(); }
-	//shoot(p); // handle shooting
+	////Intentando hacerlo por mensajes
+	////PASO 1: Si se pulsa la tecla enviamos el mensaje al master
+	//if (ih().keyDownEvent() && ih().isKeyDown(SDL_SCANCODE_SPACE)) { wannaShoot(); }
 
 	Game::instance()->get_networking().send_state(p.where, p.theta);
 }
@@ -155,15 +155,15 @@ void LittleWolf::addPlayer(std::uint8_t id) {
 	send_my_info();
 }
 
-void LittleWolf::wannaShoot()
-{
-	Game::instance()->get_networking().send_wannashoot();
-}
-
-void LittleWolf::playerShoot(Uint8 id)
-{
-	shoot(players_[id]);
-}
+//void LittleWolf::wannaShoot()
+//{
+//	Game::instance()->get_networking().send_wannashoot();
+//}
+//
+//void LittleWolf::playerShoot(Uint8 id)
+//{
+//	shoot(players_[id]);
+//}
 
 void LittleWolf::initPlayer(std::uint8_t id) {
 	assert(id < players_.size() && players_[id].state == NOT_USED);
@@ -513,47 +513,38 @@ void LittleWolf::spin(Player &p) {
 }
 
 bool LittleWolf::shoot(Player &p) {
+	auto& ihdrl = ih();
 
-	distanceSound(p.where.x, p.where.y, "gunshot");
+	if (ihdrl.keyDownEvent() && ihdrl.isKeyDown(SDL_SCANCODE_SPACE)) {
+		// play gun shot sound
+		//distanceSound(p.where.x, p.where.y, "gunshot");
+		Game::instance()->get_networking().send_shoot(p.where.x, p.where.y);
+		// we shoot in several directions, because with projection what you see is not exact
+		for (float d = -0.05; d <= 0.05; d += 0.005) {
 
-	// we shoot in several directions, because with projection what you see is not exact
-	for (float d = -0.05; d <= 0.05; d += 0.005) {
-
-		// search which tile was hit
-		const Line camera = rotate(p.fov, p.theta + d);
-		Point direction = lerp(camera, 0.5f);
-		direction.x = direction.x / mag(direction);
-		direction.y = direction.y / mag(direction);
-		const Hit hit = cast(p.where, direction, map_.walling, false, true);
+			// search which tile was hit
+			const Line camera = rotate(p.fov, p.theta + d);
+			Point direction = lerp(camera, 0.5f);
+			direction.x = direction.x / mag(direction);
+			direction.y = direction.y / mag(direction);
+			const Hit hit = cast(p.where, direction, map_.walling, false, true);
 
 #if _DEBUG
-			printf("Shoot by player %d hit a tile with value %d! at distance %f\n", p.id, hit.tile,mag(sub(p.where, hit.where)));
+			printf("Shoot by player %d hit a tile with value %d! at distance %f\n", p.id, hit.tile, mag(sub(p.where, hit.where)));
 #endif
 
-		// if we hit a tile with a player id and the distance from that tile is smaller
-		// than shoot_distace, we mark the player as dead
-		if (hit.tile > 9 && mag(sub(p.where, hit.where)) < shoot_distace) {
-			uint8_t id = tile_to_player(hit.tile);
-			players_[id].state = DEAD;
-			Game::instance()->get_networking().send_dead(p.where.x, p.where.y);
-			return true;
+			// if we hit a tile with a player id and the distance from that tile is smaller
+			// than shoot_distace, we send the message player is dead
+			if (hit.tile > 9 && mag(sub(p.where, hit.where)) < shoot_distace) {
+				uint8_t id = tile_to_player(hit.tile);
+				//players_[id].state = DEAD;
+				Game::instance()->get_networking().send_dead(p.where.x, p.where.y, id);
+				return true;
+			}
 		}
 	}
 	return false;
 }
-
-//void LittleWolf::switchToNextPlayer() {
-//
-//	// search the next player in the palyer's array
-//	int j = (player_id_ + 1) % max_player;
-//	while (j != player_id_ && players_[j].state == NOT_USED)
-//		j = (j + 1) % max_player;
-//
-//	// move to the next player view
-//	player_id_ = j;
-//
-//}
-
 void LittleWolf::bringAllToLife() {
 	for (auto i = 0u; i < max_player; i++) {
 		if (players_[i].state != NOT_USED) {
