@@ -558,37 +558,6 @@ void LittleWolf::shootSound(float x, float y)
 			float v = 100 - (d / 4.64);
 			if (v < 0) { v = 0; }
 			sdlutils().soundEffects().at("gunshot").setVolume(v);
-
-			//Versión 1
-			
-			/*if (d >= 500) {
-				std::cout << "Volumen 0" << std::endl;
-				sdlutils().soundEffects().at("gunshot").setVolume(0);
-			}
-			else if (d >= 400) {
-				std::cout << "Volumen al 20%" << std::endl;
-				sdlutils().soundEffects().at("gunshot").setVolume(20);
-			}
-			else if (d >= 300) {
-				std::cout << "Volumen al 40%" << std::endl;
-				sdlutils().soundEffects().at("gunshot").setVolume(40);
-			}
-			else if (d >= 200) {
-				std::cout << "Volumen 60%" << std::endl;
-				sdlutils().soundEffects().at("gunshot").setVolume(60);
-			}
-			else if (d >= 100) {
-				std::cout << "Volumen 80%" << std::endl;
-				sdlutils().soundEffects().at("gunshot").setVolume(80);
-			}
-			else {
-				std::cout << "Volumen 100" << std::endl;
-				sdlutils().soundEffects().at("gunshot").setVolume(100);
-			}*/
-
-			players_[i].where;
-			//Dependiendo de la posicion del jugador respecto a la bala el volumen cambia
-			//if(players_[i].where - pos < 100)
 			sdlutils().soundEffects().at("gunshot").play();
 		}
 	}
