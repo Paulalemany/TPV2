@@ -59,7 +59,6 @@ void Game::start() {
 			//No se si simplemente hay que quitarlo del codigo o el online va aparte
 			// ESC exists the game
 			if (ihdlr.isKeyDown(SDL_SCANCODE_ESCAPE)) {
-
 				exit = true;
 				continue;
 			}
@@ -89,7 +88,6 @@ void Game::start() {
 		if (frameTime < 10)
 			SDL_Delay(10 - frameTime);
 	}
-
 	net_->disconnect();
 }
 
