@@ -586,6 +586,7 @@ void LittleWolf::shootSound(float x, float y)
 
 void LittleWolf::removePlayer(std::uint8_t id) {
 	players_[id].state = LittleWolf::NOT_USED;
+	map_.walling[(int)players_[id].where.y][(int)players_[id].where.x] = 0;
 }
 
 void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot) {
