@@ -170,21 +170,48 @@ void Networking::handle_player_state(const PlayerStateMsg &m) {
 	}
 }
 
-void Networking::send_shoot()
+void Networking::send_shoot(float x, float y)
 {
 	ShootMsg m;
 	m._type = _SHOOT;
 	m._client_id = clientId_;
 
+	//Guardamos la posición del disparo
+	m.x = x;
+	m.y = y;
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
-
 }
 
-void Networking::handle_shoot(const ShootMsg& m) {
+void Networking::handle_shoot(const ShootMsg &m) {
 
-	if (is_master()) {
-		Game::instance()->get_littleWolfs().playerShoot(m._client_id);
-		//Game::instance()->get_littleWolfs().distanceSound(m._client_id, "gunshot");
+	Game::instance()->get_littleWolfs().distanceSound(m.x, m.y, "gunshot");
+
+	// we shoot in several directions, because with projection what you see is not exact
+	for (float d = -0.05; d <= 0.05; d += 0.005) {
+
+		///Habría que pasarle el jugador que está haciendo la acción para saber cual es el que dispara
+
+		// search which tile was hit
+		const Line camera = rotate(p.fov, p.theta + d);
+		Vector2D direction = lerp(camera, 0.5f);
+		direction.getX() = direction.getX() / mag(direction);
+		direction.getY() = direction.getY() / mag(direction);
+		const Hit hit = cast(p.where, direction, map_.walling, false, true);
+
+		///A partir de aquí es relativo a las muertes habría que ver si enviar el mensaje y tal
+
+//#if _DEBUG
+//		printf("Shoot by player %d hit a tile with value %d! at distance %f\n", p.id, hit.tile, mag(sub(p.where, hit.where)));
+//#endif
+//
+//		// if we hit a tile with a player id and the distance from that tile is smaller
+//		// than shoot_distace, we mark the player as dead
+//		if (hit.tile > 9 && mag(sub(p.where, hit.where)) < shoot_distace) {
+//			uint8_t id = tile_to_player(hit.tile);
+//			players_[id].state = DEAD;
+//			Game::instance()->get_networking().send_dead(p.where.x, p.where.y);
+//			return true;
+//		}
 	}
 }
 
@@ -201,7 +228,7 @@ void Networking::send_dead(float x, float y) {
 
 //Maneja la muerte
 void Networking::handle_dead(const DeadMsg&m) {
-	Game::instance()->get_littleWolfs().distanceSound(m._client_id, "pain");
+	Game::instance()->get_littleWolfs().distanceSound(m.x, m.y, "pain");
 }
 
 void Networking::send_my_info(const LittleWolf::Point& where,float rot,Uint8 state) {
