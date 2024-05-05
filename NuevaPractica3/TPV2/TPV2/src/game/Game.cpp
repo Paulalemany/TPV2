@@ -10,7 +10,9 @@
 
 Game::Game() :
 		little_wolfs_(nullptr),
-		net_(nullptr)//
+		net_(nullptr),
+		show_text(false),
+		countdown(5)//
 {
 }
 
@@ -67,31 +69,31 @@ void Game::start() {
 				little_wolfs_->setView();
 				viewChangeTime = sdlutils().virtualTimer().currTime();
 			}
-			if (!little_wolfs_->getGameRestart() && ihdlr.isKeyDown(SDL_SCANCODE_R)) {
-				little_wolfs_->setGameRestart();
-				changeNumberTime = sdlutils().virtualTimer().currTime();
-			}
 		}
 		//si el jugador ha cambiado de vista, pasados dos segundos vuelve a la vista normal
 		if (little_wolfs_->getUpView() && sdlutils().virtualTimer().currTime() > viewChangeTime + 2000) {
 			little_wolfs_->setView();
 		}
-		if (little_wolfs_->getGameRestart() && sdlutils().virtualTimer().currTime() > changeNumberTime + 1000) {
+		////si se debe reiniciar el juego y aun no se mostraba el texto, cogemos el tiempo para utilizarlo despues para cambiar el texto cada segundo
+		if (!show_text && net_->getIfRestart()) {
 			changeNumberTime = sdlutils().virtualTimer().currTime();
-			if (little_wolfs_->getCountdown() == 0) {
-				little_wolfs_->setGameRestart();
-				little_wolfs_->setCountdown(5);
+			show_text = true;
+		}
+		//mostrar el mensaje de reinicio de juego de 5 a 0 segundos, al llegar a 0 se reinicia el juego
+		if (show_text && sdlutils().virtualTimer().currTime() > changeNumberTime + 1000) {
+			changeNumberTime = sdlutils().virtualTimer().currTime();
+			countdown--;
+			if (countdown == 0) {
+				show_text = false;
+				net_->send_restart();
+				countdown = 5;
 			}
 			else {
-				little_wolfs_->setCountdown(-1);
+				net_->send_update_time();
 			}
 		}
 		little_wolfs_->update();
 		net_->update();
-
-		//check_collisions();
-		// the clear is not necessary since we copy the whole texture -- I guess ...
-		// sdlutils().clearRenderer();
 
 		little_wolfs_->render();
 		sdlutils().presentRenderer();

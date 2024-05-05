@@ -45,8 +45,8 @@ void LittleWolf::update() {
 
 	Player &p = players_[player_id_];
 
-	// dead player don't move/spin/shoot
-	if (p.state != ALIVE)
+	// while showing restart game or dead player don't move/spin/shoot 
+	if (p.state != ALIVE || p.restart)
 		return;
 
 	spin(p);  // handle spinning
@@ -182,7 +182,9 @@ void LittleWolf::initPlayer(std::uint8_t id) {
 					2.0f, 			            // Speed.
 					0.9f,		            	// Acceleration.
 					0.0f, 			            // Rotation angle in radians.
-					ALIVE                       // Player state
+					ALIVE,						// Player state
+					false,						// restart game
+					5							// countdown to restart game
 	};
 
 	// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
@@ -203,7 +205,7 @@ void LittleWolf::render() {
 	// render the identifiers, state, etc
 	render_players_info();
 	//si se debe mostrar el mensaje game restart
-	if (gameRestart) {
+	if (players_[player_id_].restart) {
 		render_game_restart();
 	}
 }
@@ -409,7 +411,8 @@ void LittleWolf::render_players_info() {
 void LittleWolf::render_game_restart() {
 
 	if (players_[player_id_].state != NOT_USED) {
-		Texture infoRestart(sdlutils().renderer(), "The game will restart in " + std::to_string(countdown) + " seconds",
+
+		Texture infoRestart(sdlutils().renderer(), "The game will restart in " + std::to_string(players_[player_id_].countdown) + " seconds",
 			sdlutils().fonts().at("ARIAL24"),
 			build_sdlcolor(color_rgba(0)));
 
@@ -521,7 +524,7 @@ bool LittleWolf::shoot(Player &p) {
 			// than shoot_distace, we mark the player as dead
 			if (hit.tile > 9 && mag(sub(p.where, hit.where)) < shoot_distace) {
 				uint8_t id = tile_to_player(hit.tile);
-				players_[id].state = DEAD;
+				Game::instance()->get_networking().send_dead(id);
 				//Sonido de muerte
 				//Aun no suena por cercanía
 				sdlutils().soundEffects().at("pain").play();
@@ -532,10 +535,13 @@ bool LittleWolf::shoot(Player &p) {
 	return false;
 }
 void LittleWolf::bringAllToLife() {
-	// bring all dead players to life -- all stay in the same position
 	for (auto i = 0u; i < max_player; i++) {
-		if (players_[i].state == DEAD) {
+		if (players_[i].state != NOT_USED) {
+			std::cout << players_[i].id << std::endl;
 			players_[i].state = ALIVE;
+			players_[i].restart = false;
+			players_[i].countdown = 5;
+			new_player_position(players_[i]);
 		}
 	}
 }
@@ -596,8 +602,12 @@ void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot) {
 }
 
 void LittleWolf::killPlayer(std::uint8_t id) {
-	std::cout << "cambio a muerto " << std::endl;
 	players_[id].state = LittleWolf::DEAD;
+	int cont = 0;
+	for (auto i = 0u; i < max_player; i++) {
+		if (players_[i].state == ALIVE) cont++;
+	}
+	if(cont < 2) Game::instance()->get_networking().send_restart_text();
 }
 
 void LittleWolf::update_player_info(Uint8 id, float x, float y, float rot, uint8_t state) {
@@ -615,4 +625,39 @@ void LittleWolf::send_my_info() {
 	Player& p = players_[player_id_];
 
 	Game::instance()->get_networking().send_my_info(p.where,p.theta, p.state);
+}
+void LittleWolf::new_player_position(Player& p) {
+	auto& rand = sdlutils().rand();
+	//borra la anterior posicion
+	map_.walling[(int)p.where.y][(int)p.where.x] = 0;
+
+	uint16_t orow = rand.nextInt(0, map_.walling_height);
+	uint16_t ocol = rand.nextInt(0, map_.walling_width);
+
+	uint16_t row = orow;
+	uint16_t col = (ocol + 1) % map_.walling_width;
+	while (!((orow == row) && (ocol == col)) && map_.walling[row][col] != 0) {
+		col = (col + 1) % map_.user_walling_width;
+		if (col == 0)
+			row = (row + 1) % map_.walling_height;
+	}
+	//actualizar posicion jugador
+	p.where.x = col + 0.5f;
+	p.where.y = row + 0.5f;
+	//actualizar posicion jugador en el mapa
+	map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(p.id);
+}
+void LittleWolf::showText() {
+	for (auto i = 0u; i < max_player; i++) {
+		if (players_[i].state != NOT_USED) {
+			players_[i].restart = true;
+		}
+	}
+}
+void LittleWolf::setCountdown(int n) {
+	for (auto i = 0u; i < max_player; i++) {
+		if (players_[i].state != NOT_USED) {
+			players_[i].countdown += n;
+		}
+	}
 }

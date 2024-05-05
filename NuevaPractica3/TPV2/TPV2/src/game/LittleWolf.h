@@ -74,6 +74,8 @@ public:
 		float acceleration;  // acceleration
 		float theta;         // rotation (in rad)
 		PlayerState state;   // the state
+		bool restart;		 //	restart game
+		int countdown;		 //coundown to restart game
 	};
 	//
 	// // maximum number of player
@@ -168,15 +170,11 @@ public:
 	void setView(){ upView = !upView; }
 	bool getUpView() { return upView; }
 
-	void setGameRestart() { gameRestart = !gameRestart; }
-	bool getGameRestart() { return gameRestart; }
+	void setCountdown(int n);
 
-	void setCountdown(int n) { countdown += n; }
-	int getCountdown() { return countdown; }
+	void showText();
 private:
 	bool upView = false;
-	bool gameRestart = false;
-	int countdown = 5;
 	// Calculates wall size using the <corrected> ray to the wall.
 	Wall project(const int xres, const int yres, const float focal,
 			const Point corrected);
@@ -204,7 +202,8 @@ private:
 	void render_players_info();
 	//renderizar mensaje the game restart
 	void render_game_restart();
-
+	//elegir nueva posicion aleatoria al reiniciar la partida
+	void new_player_position(Player& p);
 	// These are auxiliary function for vectors, colors, etc. All are from original littlewolf.
 
 	// Changes the field of view. A focal value of 1.0 is 90 degrees.
