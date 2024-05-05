@@ -65,7 +65,6 @@ struct ShootMsg: MsgWithId {
 	float y;
 
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y)
-
 };
 
 struct DeadMsg : MsgWithId {

@@ -51,7 +51,13 @@ void LittleWolf::update() {
 
 	spin(p);  // handle spinning
 	move(p);  // handle moving
-	shoot(p); // handle shooting
+
+	if (ih().keyDownEvent() && ih().isKeyDown(SDL_SCANCODE_SPACE)) { //Si pulsamos el espacio
+
+		//Le decimos al master que se ha disparado
+		Game::instance()->get_networking().send_shoot();
+	}
+	//shoot(p); // handle shooting
 
 	Game::instance()->get_networking().send_state(p.where, p.theta);
 }
@@ -482,36 +488,30 @@ void LittleWolf::spin(Player &p) {
 }
 
 bool LittleWolf::shoot(Player &p) {
-	auto &ihdrl = ih();
 
-	// Space shoot -- we use keyDownEvent to force a complete press/release for each bullet
-	if (ihdrl.keyDownEvent() && ihdrl.isKeyDown(SDL_SCANCODE_SPACE)) {
+	distanceSound(p.id, "gunshot");
 
-		//Envia el mensaje de que se ha disparado
-		Game::instance()->get_networking().send_shoot(p.where.x, p.where.y);
+	// we shoot in several directions, because with projection what you see is not exact
+	for (float d = -0.05; d <= 0.05; d += 0.005) {
 
-		// we shoot in several directions, because with projection what you see is not exact
-		for (float d = -0.05; d <= 0.05; d += 0.005) {
-
-			// search which tile was hit
-			const Line camera = rotate(p.fov, p.theta + d);
-			Point direction = lerp(camera, 0.5f);
-			direction.x = direction.x / mag(direction);
-			direction.y = direction.y / mag(direction);
-			const Hit hit = cast(p.where, direction, map_.walling, false, true);
+		// search which tile was hit
+		const Line camera = rotate(p.fov, p.theta + d);
+		Point direction = lerp(camera, 0.5f);
+		direction.x = direction.x / mag(direction);
+		direction.y = direction.y / mag(direction);
+		const Hit hit = cast(p.where, direction, map_.walling, false, true);
 
 #if _DEBUG
-			printf("Shoot by player %d hit a tile with value %d! at distance %f\n", p.id, hit.tile,mag(sub(p.where, hit.where)));
+		printf("Shoot by player %d hit a tile with value %d! at distance %f\n", p.id, hit.tile,mag(sub(p.where, hit.where)));
 #endif
 
-			// if we hit a tile with a player id and the distance from that tile is smaller
-			// than shoot_distace, we mark the player as dead
-			if (hit.tile > 9 && mag(sub(p.where, hit.where)) < shoot_distace) {
-				uint8_t id = tile_to_player(hit.tile);
-				players_[id].state = DEAD;
-				Game::instance()->get_networking().send_dead(p.where.x, p.where.y);
-				return true;
-			}
+		// if we hit a tile with a player id and the distance from that tile is smaller
+		// than shoot_distace, we mark the player as dead
+		if (hit.tile > 9 && mag(sub(p.where, hit.where)) < shoot_distace) {
+			uint8_t id = tile_to_player(hit.tile);
+			players_[id].state = DEAD;
+			Game::instance()->get_networking().send_dead(p.where.x, p.where.y);
+			return true;
 		}
 	}
 	return false;
@@ -538,7 +538,7 @@ void LittleWolf::bringAllToLife() {
 	}
 }
 
-void LittleWolf::distanceSound(float x, float y, std::string sound)
+void LittleWolf::distanceSound(std::uint8_t id, std::string sound)
 {
 	//Recorremos todos los jugadores haciendo que se reproduzca el sonido
 	for (auto i = 0u; i < max_player; i++) {
@@ -546,8 +546,8 @@ void LittleWolf::distanceSound(float x, float y, std::string sound)
 		if (players_[i].state == ALIVE) {
 
 			//Cálculo de la distancia
-			float c1 = x - players_[i].where.x;
-			float c2 = y - players_[i].where.y;
+			float c1 = players_[id].where.x - players_[i].where.x;
+			float c2 = players_[id].where.y - players_[i].where.y;
 
 			//Con los catetos calculamos la distancia
 			float d = sqrt((c1 * c1) + (c2 * c2));
@@ -556,14 +556,19 @@ void LittleWolf::distanceSound(float x, float y, std::string sound)
 			//El 4.64 es la distancia máxima a la que se puede escuchar (A priori es la max distancia de mapa)
 			float v = 100 - (d / 4.64);
 			if (v < 0) { v = 0; }
-			sdlutils().soundEffects().at("sound").setVolume(v);
-			sdlutils().soundEffects().at("sound").play();
+			sdlutils().soundEffects().at(sound).setVolume(v);
+			sdlutils().soundEffects().at(sound).play();
 		}
 	}
 }
 
 void LittleWolf::removePlayer(std::uint8_t id) {
 	players_[id].state = LittleWolf::NOT_USED;
+}
+
+void LittleWolf::playerShoot(std::uint8_t id)
+{
+	shoot(players_[id]);
 }
 
 void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot) {

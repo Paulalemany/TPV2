@@ -138,11 +138,14 @@ public:
 	// remove player with identifier <id>
 	void removePlayer(std::uint8_t id);
 
+	// el jugador <id> quiere disparar
+	void playerShoot(std::uint8_t id);
+
 	// mark all (used) player alive
 	void bringAllToLife();
 
 	//Hace que todos escuchen el sonido del disparo
-	void distanceSound(float x, float y, std::string sound);
+	void distanceSound(std::uint8_t id, std::string sound);
 
 	// remove player with identifier <id>
 	void killPlayer(std::uint8_t id);
@@ -167,34 +170,34 @@ public:
 	//cambia la vista del jugador (juego normal o ver el mapa)
 	void setView(){ upView = !upView; }
 	bool getUpView() { return upView; }
+
 private:
-	bool upView = false;
-	// Calculates wall size using the <corrected> ray to the wall.
-	Wall project(const int xres, const int yres, const float focal,
-			const Point corrected);
 
-	// Casts a ray from <where> in unit <direction> until a <walling> tile is hit.
-	Hit cast(const Point where, Point direction, uint8_t **walling,
-			bool ignore_players, bool ignore_deads);
-
-	// Moves the player when w,a,s,d are held down. Handles collision detection for the walls.
-	bool shoot(Player &p);
-
-	// Spins the player when keys grid_h,l are held down. When left-shit is held down the move is slower
-	inline void spin(Player &p);
-
-	// Moves the player when w,a,s,d are held down. Handles collision detection for the walls.
-	void move(Player &p);
+#pragma region Render
 
 	// Renders the entire scene from the <current player> perspective given a <map> and a software <gpu>.
-	void render_map(Player &p);
+	void render_map(Player& p);
 
 	// Renders the entire scene from the <current player> perspective given a <map> and a software <gpu>.
 	void render_upper_view();
 
 	// Render a list of current player
 	void render_players_info();
+#pragma endregion
 
+#pragma region Player
+
+	// Moves the player when w,a,s,d are held down. Handles collision detection for the walls.
+	bool shoot(Player& p);
+
+	// Spins the player when keys grid_h,l are held down. When left-shit is held down the move is slower
+	inline void spin(Player& p);
+
+	// Moves the player when w,a,s,d are held down. Handles collision detection for the walls.
+	void move(Player& p);
+#pragma endregion
+
+#pragma region Vectors
 	// These are auxiliary function for vectors, colors, etc. All are from original littlewolf.
 
 	// Changes the field of view. A focal value of 1.0 is 90 degrees.
@@ -262,33 +265,36 @@ private:
 
 	// Fast floor (math.grid_h is too slow).
 	inline int fl(const float x) {
-		return (int) x - (x < (int) x);
+		return (int)x - (x < (int)x);
 	}
 
 	// Fast ceil (math.grid_h is too slow).
 	inline int cl(const float x) {
-		return (int) x + (x > (int) x);
+		return (int)x + (x > (int) x);
 	}
 
 	// Returns a decimal value of the ascii tile value on the map.
-	inline uint8_t tile(const Point a, uint8_t **tiles) {
+	inline uint8_t tile(const Point a, uint8_t** tiles) {
 		const int x = a.x;
 		const int y = a.y;
 		return tiles[y][x];
 	}
 
 	inline Display lock(const Gpu gpu) {
-		void *screen;
+		void* screen;
 		int pitch;
 		SDL_LockTexture(gpu.texture, NULL, &screen, &pitch);
-		const Display display = { (uint32_t*) screen, pitch
-				/ (int) sizeof(uint32_t) };
+		const Display display = { (uint32_t*)screen, pitch
+				/ (int)sizeof(uint32_t) };
 		return display;
 	}
+#pragma endregion
+
+#pragma region Draw
 
 	// Places a pixels in gpu video memory.
 	inline void put(const Display display, const int x, const int y,
-			const uint32_t pixel) {
+		const uint32_t pixel) {
 		display.pixels[y + x * display.width] = pixel;
 	}
 
@@ -312,6 +318,20 @@ private:
 		const Point c = { x, y };
 		return c;
 	}
+#pragma endregion
+
+
+	bool upView = false;
+	// Calculates wall size using the <corrected> ray to the wall.
+	Wall project(const int xres, const int yres, const float focal,
+			const Point corrected);
+
+	// Casts a ray from <where> in unit <direction> until a <walling> tile is hit.
+	Hit cast(const Point where, Point direction, uint8_t **walling,
+			bool ignore_players, bool ignore_deads);
+
+
+	
 
 	// Floating point decimal.
 	inline float dec(const float x) {
