@@ -33,6 +33,9 @@ public:
 	void send_shoot(float x, float y);
 	void send_dead(float x, float y);
 	void send_restart();
+	void send_restart_text();
+	void send_update_time();
+	bool getIfRestart() { return restart; }
 
 private:
 
@@ -43,6 +46,8 @@ private:
 	void handle_shoot(const ShootMsg &m);
 	void handle_dead(const DeadMsg&m);
 	void handle_restart();
+	void handle_restart_text();
+	void handle_update_time();
 
 	UDPsocket sock_;
 	SDLNet_SocketSet socketSet_;
@@ -50,5 +55,6 @@ private:
 	IPaddress srvadd_;
 	Uint8 clientId_;
 	Uint8 masterId_;
+	bool restart;
 };
 

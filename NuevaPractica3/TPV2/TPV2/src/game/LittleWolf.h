@@ -74,6 +74,8 @@ public:
 		float acceleration;  // acceleration
 		float theta;         // rotation (in rad)
 		PlayerState state;   // the state
+		bool restart;		 //	restart game
+		int countdown;		 //coundown to restart game
 	};
 	//
 	// // maximum number of player
@@ -172,6 +174,9 @@ public:
 	void setView(){ upView = !upView; }
 	bool getUpView() { return upView; }
 
+	void setCountdown(int n);
+
+	void showText();
 private:
 	bool upView = false;
 	// Calculates wall size using the <corrected> ray to the wall.
@@ -199,6 +204,10 @@ private:
 
 	// Render a list of current player
 	void render_players_info();
+	//renderizar mensaje the game restart
+	void render_game_restart();
+	//elegir nueva posicion aleatoria al reiniciar la partida
+	void new_player_position(Player& p);
 
 	// These are auxiliary function for vectors, colors, etc. All are from original littlewolf.
 
@@ -337,6 +346,8 @@ private:
 	// because it is an empty cell
 	inline uint32_t color(const uint8_t tile) {
 		switch (tile) {
+		case 0:
+			return 0xFFFFFFFF; //White
 		case 1:
 			return 0x00AA0000; // Red.
 		case 2:

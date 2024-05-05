@@ -46,7 +46,7 @@ void LittleWolf::update() {
 	Player &p = players_[player_id_];
 
 	// dead player don't move/spin/shoot
-	if (p.state != ALIVE)
+	if (p.state != ALIVE || p.restart)
 		return;
 
 	spin(p);  // handle spinning
@@ -196,7 +196,9 @@ void LittleWolf::initPlayer(std::uint8_t id) {
 					2.0f, 			            // Speed.
 					0.9f,		            	// Acceleration.
 					0.0f, 			            // Rotation angle in radians.
-					ALIVE                       // Player state
+					ALIVE,                       // Player state
+					false,						// restart game
+					5							// countdown to restart game
 	};
 
 	// not that player <id> is stored in the map as player_to_tile(id) -- which is id+10
@@ -210,12 +212,15 @@ void LittleWolf::render() {
 	if (players_[player_id_].state == DEAD || upView) {
 		render_upper_view();
 	}
-		//render_upper_view();
 	else
 		render_map(players_[player_id_]);
 
 	// render the identifiers, state, etc
 	render_players_info();
+	//si se debe mostrar el mensaje game restart
+	if (players_[player_id_].restart) {
+		render_game_restart();
+	}
 }
 
 LittleWolf::Hit LittleWolf::cast(const Point where, Point direction,
@@ -418,7 +423,19 @@ void LittleWolf::render_players_info() {
 		}
 	}
 }
+void LittleWolf::render_game_restart() {
 
+	if (players_[player_id_].state != NOT_USED) {
+
+		Texture infoRestart(sdlutils().renderer(), "The game will restart in " + std::to_string(players_[player_id_].countdown) + " seconds",
+			sdlutils().fonts().at("ARIAL24"),
+			build_sdlcolor(color_rgba(0)));
+
+		SDL_Rect dest = build_sdlrect(sdlutils().width() / 4, sdlutils().height() / 2, infoRestart.width(), infoRestart.height());
+		infoRestart.render(dest);
+
+	}
+}
 void LittleWolf::move(Player &p) {
 	auto &ihdrl = ih();
 
@@ -539,10 +556,13 @@ bool LittleWolf::shoot(Player &p) {
 //}
 
 void LittleWolf::bringAllToLife() {
-	// bring all dead players to life -- all stay in the same position
 	for (auto i = 0u; i < max_player; i++) {
-		if (players_[i].state == DEAD) {
+		if (players_[i].state != NOT_USED) {
+			std::cout << players_[i].id << std::endl;
 			players_[i].state = ALIVE;
+			players_[i].restart = false;
+			players_[i].countdown = 5;
+			new_player_position(players_[i]);
 		}
 	}
 }
@@ -554,7 +574,7 @@ void LittleWolf::distanceSound(float x, float y, std::string sound)
 		//No se si lo deben escuchar todos los jugadores que haya en el juego o solo los vivos
 		if (players_[i].state == ALIVE) {
 
-			//Cálculo de la distancia
+			//Cï¿½lculo de la distancia
 			float c1 = x - players_[i].where.x;
 			float c2 = y - players_[i].where.y;
 
@@ -562,7 +582,7 @@ void LittleWolf::distanceSound(float x, float y, std::string sound)
 			float d = sqrt((c1 * c1) + (c2 * c2));
 
 			//Calcula el volumen haciendo un porcentaje de la distancia
-			//El 4.64 es la distancia máxima a la que se puede escuchar (A priori es la max distancia de mapa)
+			//El 4.64 es la distancia mï¿½xima a la que se puede escuchar (A priori es la max distancia de mapa)
 			float v = 100 - (d / 4.64);
 			if (v < 0) { v = 0; }
 			sdlutils().soundEffects().at(sound).setVolume(v);
@@ -573,6 +593,7 @@ void LittleWolf::distanceSound(float x, float y, std::string sound)
 
 void LittleWolf::removePlayer(std::uint8_t id) {
 	players_[id].state = LittleWolf::NOT_USED;
+	map_.walling[(int)players_[id].where.y][(int)players_[id].where.x] = 0;
 }
 
 void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot) {
@@ -590,6 +611,11 @@ void LittleWolf::update_player_state(Uint8 id, float x, float y, float rot) {
 
 void LittleWolf::killPlayer(std::uint8_t id) {
 	players_[id].state = LittleWolf::DEAD;
+	int cont = 0;
+	for (auto i = 0u; i < max_player; i++) {
+		if (players_[i].state == ALIVE) cont++;
+	}
+	if (cont < 2) Game::instance()->get_networking().send_restart_text();
 }
 
 void LittleWolf::update_player_info(Uint8 id, float x, float y, float rot, uint8_t state) {
@@ -607,4 +633,39 @@ void LittleWolf::send_my_info() {
 	Player& p = players_[player_id_];
 
 	Game::instance()->get_networking().send_my_info(p.where,p.theta, p.state);
+}
+void LittleWolf::new_player_position(Player& p) {
+	auto& rand = sdlutils().rand();
+	//borra la anterior posicion
+	map_.walling[(int)p.where.y][(int)p.where.x] = 0;
+
+	uint16_t orow = rand.nextInt(0, map_.walling_height);
+	uint16_t ocol = rand.nextInt(0, map_.walling_width);
+
+	uint16_t row = orow;
+	uint16_t col = (ocol + 1) % map_.walling_width;
+	while (!((orow == row) && (ocol == col)) && map_.walling[row][col] != 0) {
+		col = (col + 1) % map_.user_walling_width;
+		if (col == 0)
+			row = (row + 1) % map_.walling_height;
+	}
+	//actualizar posicion jugador
+	p.where.x = col + 0.5f;
+	p.where.y = row + 0.5f;
+	//actualizar posicion jugador en el mapa
+	map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(p.id);
+}
+void LittleWolf::showText() {
+	for (auto i = 0u; i < max_player; i++) {
+		if (players_[i].state != NOT_USED) {
+			players_[i].restart = true;
+		}
+	}
+}
+void LittleWolf::setCountdown(int n) {
+	for (auto i = 0u; i < max_player; i++) {
+		if (players_[i].state != NOT_USED) {
+			players_[i].countdown += n;
+		}
+	}
 }
