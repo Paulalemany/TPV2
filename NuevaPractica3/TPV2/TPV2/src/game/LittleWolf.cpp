@@ -556,8 +556,8 @@ void LittleWolf::distanceSound(float x, float y, std::string sound)
 			//El 4.64 es la distancia m�xima a la que se puede escuchar (A priori es la max distancia de mapa)
 			float v = 100 - (d / 4.64);
 			if (v < 0) { v = 0; }
-			sdlutils().soundEffects().at("sound").setVolume(v);
-			sdlutils().soundEffects().at("sound").play();
+			sdlutils().soundEffects().at(sound).setVolume(v);
+			sdlutils().soundEffects().at(sound).play();
 		}
 	}
 }
