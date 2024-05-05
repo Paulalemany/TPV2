@@ -54,7 +54,7 @@ void LittleWolf::update() {
 
 	//Intentando hacerlo por mensajes
 	//PASO 1: Si se pulsa la tecla enviamos el mensaje al master
-	if (ih().keyDownEvent() && ih().isKeyDown(SDL_SCANCODE_SPACE)) {  }
+	if (ih().keyDownEvent() && ih().isKeyDown(SDL_SCANCODE_SPACE)) { wannaShoot(); }
 	//shoot(p); // handle shooting
 
 	Game::instance()->get_networking().send_state(p.where, p.theta);
@@ -514,8 +514,7 @@ void LittleWolf::spin(Player &p) {
 
 bool LittleWolf::shoot(Player &p) {
 
-	// play gun shot sound
-	Game::instance()->get_networking().send_shoot(p.where.x, p.where.y);
+	distanceSound(p.where.x, p.where.y, "gunshot");
 
 	// we shoot in several directions, because with projection what you see is not exact
 	for (float d = -0.05; d <= 0.05; d += 0.005) {

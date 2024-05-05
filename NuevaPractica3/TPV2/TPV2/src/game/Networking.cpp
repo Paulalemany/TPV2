@@ -200,10 +200,8 @@ void Networking::handle_shoot(const ShootMsg &m) {
 	// El master procesa el disparo
 	if (is_master()) {
 		std::cout << "BANG" << "\n";
-		//Game::instance()->get_littlewolf().player_shoot(m._client_id);
+		Game::instance()->get_littleWolfs().playerShoot(m._client_id);
 	}
-
-	//Game::instance()->get_littleWolfs().distanceSound(m.x, m.y, "gunshot");
 }
 
 //Envia el mensaje de la muerte
