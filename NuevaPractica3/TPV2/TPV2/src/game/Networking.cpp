@@ -16,7 +16,8 @@ Networking::Networking() :
 		p_(), //
 		srvadd_(), //
 		clientId_(), //
-		masterId_() {
+		masterId_(),
+		restart(false) {
 }
 
 Networking::~Networking() {
@@ -136,7 +137,12 @@ void Networking::update() {
 		case _RESTART:
 			handle_restart();
 			break;
-
+		case _RESTART_TEXT:
+			handle_restart_text();
+			break;
+		case _UPDATE_TIME:
+			handle_update_time();
+			break;
 		default:
 			break;
 		}
@@ -221,12 +227,35 @@ void Networking::handle_player_info(const PlayerInfoMsg &m) {
 }
 
 void Networking::send_restart() {
-	Msg m;
-	m._type = _RESTART;
-	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+	if (is_master()) {
+		restart = false;
+		Msg m;
+		m._type = _RESTART;
+		SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+	}
 }
-
+void Networking::send_restart_text() {
+	if (is_master()) {
+		if (!restart) restart = true;
+		Msg m;
+		m._type = _RESTART_TEXT;
+		SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+	}
+}
+void Networking::send_update_time() {
+	if (is_master()) {
+		Msg m;
+		m._type = _UPDATE_TIME;
+		SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+	}
+}
 void Networking::handle_restart() {
 	Game::instance()->get_littleWolfs().bringAllToLife();
 
+}
+void Networking::handle_restart_text() {
+	Game::instance()->get_littleWolfs().showText();
+}
+void Networking::handle_update_time() {
+	Game::instance()->get_littleWolfs().setCountdown(-1);
 }
