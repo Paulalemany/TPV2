@@ -28,8 +28,5 @@ private:
 	Networking* net_;
 	//el jugador puede cambiar de vista pero solo durante 2 segundos
 	Uint32 viewChangeTime;
-	Uint32 changeNumberTime;
-	bool show_text;
-	int countdown;
 };
 
