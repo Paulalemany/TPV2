@@ -95,7 +95,7 @@ void Networking::update() {
 	MsgWithMasterId m1;
 	PlayerStateMsg m2;
 	ShootMsg m3;
-	MsgWithId m4;
+	DeadMsg m4;
 	PlayerInfoMsg m5;
 
 	while (SDLNetUtils::deserializedReceive(m0, p_, sock_) > 0) {
@@ -170,16 +170,6 @@ void Networking::handle_player_state(const PlayerStateMsg &m) {
 	}
 }
 
-//Relativo a los disparos
-//
-//void Networking::send_shoot(Vector2D p, Vector2D v, int width, int height,
-//		float r) {
-//	ShootMsg m;
-//	m._type = _SHOOT;
-//	m._client_id = clientId_;
-//	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
-//}
-
 void Networking::send_shoot(float x, float y)
 {
 	ShootMsg m;
@@ -193,22 +183,23 @@ void Networking::send_shoot(float x, float y)
 }
 
 void Networking::handle_shoot(const ShootMsg &m) {
-	Game::instance()->get_littleWolfs().shootSound(m.x, m.y);
-
+	Game::instance()->get_littleWolfs().distanceSound(m.x, m.y, "gunshot");
 }
 
 //Envia el mensaje de la muerte
-void Networking::send_dead(Uint8 id) {
-	MsgWithId m;
+void Networking::send_dead(float x, float y) {
+	DeadMsg m;
 	m._type = _DEAD;
-	m._client_id = id;
+
+	//Guardamos la posición del disparo
+	m.x = x;
+	m.y = y;
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 
 //Maneja la muerte
-void Networking::handle_dead(const MsgWithId &m) {
-	Game::instance()->get_littleWolfs().killPlayer(m._client_id);
-	//Sonido de muerte???
+void Networking::handle_dead(const DeadMsg&m) {
+	Game::instance()->get_littleWolfs().distanceSound(m.x, m.y, "pain");
 }
 
 void Networking::send_my_info(const LittleWolf::Point& where,float rot,Uint8 state) {

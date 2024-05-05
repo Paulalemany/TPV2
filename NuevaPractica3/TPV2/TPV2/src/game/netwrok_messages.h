@@ -67,3 +67,12 @@ struct ShootMsg: MsgWithId {
 	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x,y)
 
 };
+
+struct DeadMsg : MsgWithId {
+
+	//Posición de la muerte
+	float x;
+	float y;
+
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x, y)
+};

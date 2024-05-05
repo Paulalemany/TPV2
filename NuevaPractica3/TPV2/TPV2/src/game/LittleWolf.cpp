@@ -509,9 +509,7 @@ bool LittleWolf::shoot(Player &p) {
 			if (hit.tile > 9 && mag(sub(p.where, hit.where)) < shoot_distace) {
 				uint8_t id = tile_to_player(hit.tile);
 				players_[id].state = DEAD;
-				//Sonido de muerte
-				//Aun no suena por cercanía
-				sdlutils().soundEffects().at("pain").play();
+				Game::instance()->get_networking().send_dead(p.where.x, p.where.y);
 				return true;
 			}
 		}
@@ -540,7 +538,7 @@ void LittleWolf::bringAllToLife() {
 	}
 }
 
-void LittleWolf::shootSound(float x, float y)
+void LittleWolf::distanceSound(float x, float y, std::string sound)
 {
 	//Recorremos todos los jugadores haciendo que se reproduzca el sonido
 	for (auto i = 0u; i < max_player; i++) {
@@ -553,12 +551,13 @@ void LittleWolf::shootSound(float x, float y)
 
 			//Con los catetos calculamos la distancia
 			float d = sqrt((c1 * c1) + (c2 * c2));
-			std::cout << "Distancia " << d << std::endl;
 
+			//Calcula el volumen haciendo un porcentaje de la distancia
+			//El 4.64 es la distancia máxima a la que se puede escuchar (A priori es la max distancia de mapa)
 			float v = 100 - (d / 4.64);
 			if (v < 0) { v = 0; }
-			sdlutils().soundEffects().at("gunshot").setVolume(v);
-			sdlutils().soundEffects().at("gunshot").play();
+			sdlutils().soundEffects().at("sound").setVolume(v);
+			sdlutils().soundEffects().at("sound").play();
 		}
 	}
 }
