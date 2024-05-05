@@ -170,6 +170,14 @@ void Networking::handle_player_state(const PlayerStateMsg &m) {
 	}
 }
 
+void Networking::send_wannashoot()
+{
+	ShootMsg m;
+	m._type = _SHOOT;
+	m._client_id = clientId_;
+	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+}
+
 void Networking::send_shoot(float x, float y)
 {
 	ShootMsg m;
@@ -183,7 +191,13 @@ void Networking::send_shoot(float x, float y)
 }
 
 void Networking::handle_shoot(const ShootMsg &m) {
-	Game::instance()->get_littleWolfs().distanceSound(m.x, m.y, "gunshot");
+	// El master procesa el disparo
+	if (is_master()) {
+		std::cout << "BANG" << "\n";
+		//Game::instance()->get_littlewolf().player_shoot(m._client_id);
+	}
+
+	//Game::instance()->get_littleWolfs().distanceSound(m.x, m.y, "gunshot");
 }
 
 //Envia el mensaje de la muerte

@@ -132,6 +132,10 @@ public:
 	// add a new player with identifier <id>
 	void addPlayer(std::uint8_t id);
 
+	void wannaShoot();
+
+	void playerShoot(Uint8 id);
+
 	// add a new player with identifier <id>
 	void initPlayer(std::uint8_t id);
 
@@ -167,6 +171,7 @@ public:
 	//cambia la vista del jugador (juego normal o ver el mapa)
 	void setView(){ upView = !upView; }
 	bool getUpView() { return upView; }
+
 private:
 	bool upView = false;
 	// Calculates wall size using the <corrected> ray to the wall.
