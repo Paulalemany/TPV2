@@ -493,6 +493,9 @@ void LittleWolf::move(Player &p) {
 			map_.walling[y0][x0] = 0;
 		}
 	}
+
+	//Informamos al manager
+	send_my_info();
 }
 
 void LittleWolf::spin(Player &p) {
@@ -609,14 +612,67 @@ void LittleWolf::killPlayer(std::uint8_t id) {
 }
 
 void LittleWolf::update_player_info(Uint8 id, float x, float y, float rot, uint8_t state) {
+
 	Player& p = players_[id];
 
-	p.where.x = x;
-	p.where.y = y;
-	p.id = id;
-	map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
-	p.theta = rot;
-	p.state = static_cast<PlayerState>(state);
+	if (p.id == NOT_USED) {
+		p.where.x = x;
+		p.where.y = y;
+		p.id = id;
+		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
+		p.theta = rot;
+		p.state = static_cast<PlayerState>(state);
+	}
+	else {
+
+		// si somos el máster
+		if (Game::instance()->get_networking().is_master()) {
+			const Point last = p.where, zero = { 0.0f, 0.0f };
+
+			//SI HAY COLISION
+			if (tile(p.where, map_.walling) != player_to_tile(id)
+				&& tile(p.where, map_.walling) != 0) {
+
+				p.velocity = zero;
+				p.where = last;
+
+
+				//mandar mensaje de colision con la nueva info de todos los jugadores
+				std::cout << "colision" << std::endl;
+
+				send_syncroInfo();
+
+				return;
+			}
+		}
+
+		//sino somos el master o no hay colision...
+
+		//resetear el tile anterior
+		map_.walling[(int)p.where.y][(int)p.where.x] = 0;
+
+		//hacer el movimiento
+
+		p.where.x = x;
+		p.where.y = y;
+
+		p.theta = rot;
+
+		//marcar el tile
+		map_.walling[(int)p.where.y][(int)p.where.x] = player_to_tile(id);
+	}
+	
+}
+
+void LittleWolf::update_syncroInfo(int id, const Vector2D& pos)
+{
+	//resetear el tile anterior
+	map_.walling[(int)players_[id].where.y][(int)players_[id].where.x] = 0;
+
+	players_[id].where.x = pos.getX();
+	players_[id].where.y = pos.getY();
+
+	map_.walling[(int)players_[id].where.y][(int)players_[id].where.x] = player_to_tile(id);
 }
 
 void LittleWolf::send_my_info() {
@@ -624,6 +680,17 @@ void LittleWolf::send_my_info() {
 
 	Game::instance()->get_networking().send_my_info(p.where,p.theta, p.state);
 }
+
+void LittleWolf::send_syncroInfo()
+{
+	for (int i = 0; i < max_player; i++) {
+		if (players_[i].state != NOT_USED) {
+
+			Game::instance()->get_networking().send_syncroInfo(i, Vector2D(players_[i].where.x, players_[i].where.y));
+		}
+	}
+}
+
 void LittleWolf::new_player_position(Player& p) {
 	auto& rand = sdlutils().rand();
 	//borra la anterior posicion

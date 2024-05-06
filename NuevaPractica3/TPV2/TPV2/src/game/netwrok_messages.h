@@ -18,7 +18,8 @@ enum MsgType : Uint8 {
 	_DEAD, //
 	_RESTART,
 	_RESTART_TEXT,
-	_UPDATE_TIME
+	_UPDATE_TIME,
+	_SYNCRO
 };
 
 struct Msg {
@@ -77,6 +78,15 @@ struct ShootMsg: MsgWithId {
 struct DeadMsg : MsgWithId {
 
 	//Posición de la muerte
+	float x;
+	float y;
+
+	_IMPL_SERIALIAZION_WITH_BASE_(MsgWithId, x, y)
+};
+
+struct SyncroMsg : MsgWithId {
+
+	//Posición
 	float x;
 	float y;
 

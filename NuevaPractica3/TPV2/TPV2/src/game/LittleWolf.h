@@ -14,6 +14,7 @@
 #include <fstream>
 
 #include "../sdlutils/InputHandler.h"
+#include "../utils/Vector2D.h"
 
 class LittleWolf {
 public:
@@ -155,11 +156,18 @@ public:
 
 	void send_my_info();
 
+	void send_syncroInfo();
+
 	void update_player_state(Uint8 id, float x, float y, /*float w, float h,*/
 		float rot);
 
 	void update_player_info(Uint8 id, float x, float y, /*float w, float h,*/
 		float rot, uint8_t state);
+
+	void update_syncroInfo(int id, const Vector2D & pos);
+
+	// switch to the view of the next player
+	//void switchToNextPlayer();
 
 	// render the walls, etc
 	void render();

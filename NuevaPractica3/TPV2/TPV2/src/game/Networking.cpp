@@ -190,9 +190,6 @@ void Networking::send_shoot(float x, float y)
 	m._type = _SHOOT;
 	m._client_id = clientId_;
 
-	//Guardamos la posición del disparo
-	m.x = x;
-	m.y = y;
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 
@@ -209,11 +206,11 @@ void Networking::handle_shoot(const ShootMsg &m) {
 void Networking::send_dead(float x, float y, Uint8 id) {
 	DeadMsg m;
 	m._type = _DEAD;
+	m._client_id = clientId_;
 
-	//Guardamos la posición del disparo
+	//Guardamos la posiciï¿½n del disparo
 	m.x = x;
 	m.y = y;
-	m._client_id = id;
 	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 }
 
@@ -260,6 +257,7 @@ void Networking::send_restart() {
 		SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 	}
 }
+
 void Networking::send_restart_text() {
 	if (is_master()) {
 		if (!restart) restart = true;
@@ -268,6 +266,7 @@ void Networking::send_restart_text() {
 		SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 	}
 }
+
 void Networking::send_update_time() {
 	if (is_master()) {
 		Msg m;
@@ -275,13 +274,35 @@ void Networking::send_update_time() {
 		SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
 	}
 }
+
+void Networking::send_syncroInfo(int id, const Vector2D& pos)
+{
+	SyncroMsg m;
+
+	m._client_id = clientId_;
+	m._type = _SYNCRO;
+
+	m.x = pos.getX();
+	m.y = pos.getY();
+
+	SDLNetUtils::serializedSend(m, p_, sock_, srvadd_);
+}
+
 void Networking::handle_restart() {
 	Game::instance()->get_littleWolfs().bringAllToLife();
 
 }
+
 void Networking::handle_restart_text() {
 	Game::instance()->get_littleWolfs().showText();
 }
+
+void Networking::hadle_syncroInfo(const SyncroMsg& m)
+{
+	//Game::instance()->getLittleWolf()->update_syncro_info(m._client_id, Vector2D(m.posX, m.posY));
+	//Game::instance()->get_littleWolfs()
+}
+
 void Networking::handle_update_time() {
 	Game::instance()->get_littleWolfs().setCountdown(-1);
 }

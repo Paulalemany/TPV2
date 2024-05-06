@@ -35,6 +35,7 @@ public:
 	void send_restart();
 	void send_restart_text();
 	void send_update_time();
+	void send_syncroInfo(int id, const Vector2D& pos);
 	bool getIfRestart() { return restart; }
 
 private:
@@ -47,6 +48,7 @@ private:
 	void handle_dead(const DeadMsg&m);
 	void handle_restart();
 	void handle_restart_text();
+	void hadle_syncroInfo(const SyncroMsg&m);
 	void handle_update_time();
 
 	UDPsocket sock_;
