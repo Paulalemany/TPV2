@@ -206,7 +206,7 @@ void Networking::handle_shoot(const ShootMsg &m) {
 void Networking::send_dead(float x, float y, Uint8 id) {
 	DeadMsg m;
 	m._type = _DEAD;
-	m._client_id = clientId_;
+	m._client_id = id;
 
 	//Guardamos la posici�n del disparo
 	m.x = x;
