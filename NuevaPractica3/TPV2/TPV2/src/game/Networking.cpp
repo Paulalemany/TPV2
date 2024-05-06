@@ -299,8 +299,7 @@ void Networking::handle_restart_text() {
 
 void Networking::hadle_syncroInfo(const SyncroMsg& m)
 {
-	//Game::instance()->getLittleWolf()->update_syncro_info(m._client_id, Vector2D(m.posX, m.posY));
-	//Game::instance()->get_littleWolfs()
+	Game::instance()->get_littleWolfs().update_syncroInfo(m._client_id, Vector2D(m.x, m.y));
 }
 
 void Networking::handle_update_time() {
