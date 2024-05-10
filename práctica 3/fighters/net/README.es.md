@@ -20,7 +20,8 @@ Para ejecutar el juego primero abrimos una consola y ejecutamos el programa en m
   cd c:\hlocal\TPV2\TPV2
   ..\bin\TPV2Debug.exe server 2000
 
-C:\Users\Paula\Clase\GitHub\TPV2\NuevaPractica3\TPV2\bin\TPV2Debug.exe server 2000
+cd C:\Users\Paula\Clase\GitHub\TPV2\NuevaPractica3\TPV2\bin\
+TPV2Debug.exe server 2000
 ```
 
 y después para cada cliente abrimos una consola y ejecutamos el program en modo cliente
