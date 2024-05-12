@@ -139,8 +139,9 @@ void FoodSystem::recieve(const Message& m)
 	{
 	case _m_PACMAN_FOOD_COLLISION: {
 		fruitEaten(m.pacman_food_collision_data.e);
-		break;
+		
 	}
+	break;
 	case _m_NEW_GAME: {
 		//Reseteamos las frutas
 		//Borramos las que quedasen
@@ -148,6 +149,7 @@ void FoodSystem::recieve(const Message& m)
 		//Volvemos a ponerlas
 		generateFruits();
 	}
+	break;
 	default:
 		break;
 	}
