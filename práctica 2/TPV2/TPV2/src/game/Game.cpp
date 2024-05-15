@@ -5,6 +5,10 @@
 #include "../ecs/Manager.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../utils/Vector2D.h"
+#include "../utils/Collisions.h"
+
+//Systems
 #include "../systems/CollisionsSystem.h"
 #include "../systems/PacManSystem.h"
 #include "../systems/GameCtrlSystem.h"
@@ -12,8 +16,7 @@
 #include "../systems/GhostSystem.h"
 #include "../systems/ImmunitySystem.h"
 #include "../systems/FoodSystem.h"
-#include "../utils/Vector2D.h"
-#include "../utils/Collisions.h"
+
 
 //Estados de juego
 #include "PauseState.h"
@@ -22,6 +25,7 @@
 #include "RunningState.h"
 #include "GameOverState.h"
 
+//Incluimos el manager
 using ecs::Manager;
 
 Game::Game() :

@@ -22,6 +22,7 @@ public:
 	void setMilagro();
 	void outMilagro();
 
+private:
 	uint32_t N, M;
 	uint32_t tiempo;
 

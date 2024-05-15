@@ -17,6 +17,8 @@ NewGameState::NewGameState()
 	textRect = build_sdlrect((sdlutils().width()/ 2) - textTexture->width() / 3,
 		((sdlutils().height() / 2) - textTexture->height() / 3),
 		textTexture->width()/1.5, textTexture->height()/1.5);
+
+	//Sonido
 	sdlutils().soundEffects().at("intro").play(0, 1);
 }
 

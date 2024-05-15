@@ -20,6 +20,7 @@ void GhostSystem::remove_all_ghosts() {
 
 void GhostSystem::initSystem() {
 }
+
 void GhostSystem::addGhost() {
 	if (currNumOfGhosts_ != ghostsLimit_) {
 		//a�adir la entidad al manager

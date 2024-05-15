@@ -46,6 +46,7 @@ public:
 		current_state_->enter();
 	}
 
+	//Sistemas
 	ecs::System* pacmanSys_;
 	ecs::System* gameCtrlSys_;
 	ecs::System* renderSys_;
@@ -57,6 +58,7 @@ public:
 private:
 	ecs::Manager *mngr_;
 	
+	//Estados de juego
 	GameState* current_state_;
 	GameState* paused_state_;
 	GameState* runing_state_;

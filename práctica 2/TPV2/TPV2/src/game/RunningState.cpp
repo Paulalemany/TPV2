@@ -47,6 +47,7 @@ void RunningState::update()
 	auto pacman = mngr_->getHandler(ecs::hdlr::PACMAN);
 	auto pacHealth = mngr_->getComponent<Health>(pacman);
 	auto pacImmunity = mngr_->getComponent<Immunity>(pacman);
+
 	//chequear si ha habido colision del pacman
 	if (pacHealth->changeState()) {
 		if (pacHealth->get_num_lives() > 0) {
@@ -57,6 +58,7 @@ void RunningState::update()
 		}
 		pacHealth->setChangeState();
 	}
+
 	//generar fantasmas cada 5 segundos
 	if (!pacImmunity->isImmunity() && sdlutils().virtualTimer().currTime() > lastTimeGeneratedGhosts_ + 5000) {
 		Message m;

@@ -7,7 +7,7 @@ class Game;
 class GameState {
 public:
 
-	GameState() { }
+	GameState() { mngr_ = nullptr, game = nullptr; }
 
 	virtual ~GameState() { }
 
